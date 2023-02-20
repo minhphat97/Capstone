@@ -17,15 +17,15 @@ try:
     while True:
         print("Setting to zero...")
         pwm.ChangeDutyCycle(5) 
-        time.sleep(1)
+        time.sleep(15)
 
         print("Setting to 180...")
         pwm.ChangeDutyCycle(10) 
-        time.sleep(1)
+        time.sleep(15)
 
         print("Setting to 90...")
         pwm.ChangeDutyCycle(7.5) 
-        time.sleep(1)
+        time.sleep(15)
 except KeyboardInterrupt:
     pwm.stop() 
     GPIO.cleanup()
