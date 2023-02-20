@@ -16,15 +16,15 @@ pwm.start(5)
 try:
     while True:
         print("Setting to zero...")
-        pwm.ChangeDutyCycle(5) 
+        pwm.ChangeDutyCycle(3) 
         time.sleep(15)
 
         print("Setting to 180...")
-        pwm.ChangeDutyCycle(10) 
+        pwm.ChangeDutyCycle(13) 
         time.sleep(15)
 
         print("Setting to 90...")
-        pwm.ChangeDutyCycle(7.5) 
+        pwm.ChangeDutyCycle(8) 
         time.sleep(15)
 except KeyboardInterrupt:
     pwm.stop() 
