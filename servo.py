@@ -1,38 +1,74 @@
 import RPi.GPIO as GPIO
 import time
 
-servoPIN = 17
+# setup RPi
+GPIO.setwarnings(False)
+servo_pin = 17
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(servoPIN, GPIO.OUT)
+GPIO.setup(servo_pin,GPIO.OUT)
 
-p = GPIO.PWM(servoPIN, 50) # GPIO 17 for PWM with 50Hz
-p.start(2.5) # Initialization
+# 50 Hz or 20 ms PWM period
+pwm = GPIO.PWM(servo_pin,50) 
 
-angle = 90
-duty = angle / 18 + 2
-GPIO.output(servoPIN, True)
-p.ChangeDutyCycle(0)
-p.ChangeDutyCycle(duty)
-print("sleeping for 15s")
-time.sleep(15)
-p.ChangeDutyCycle(0)
-GPIO.output(servoPIN, False)
-print("already back to angle of 0 degree and waiting 50s")
-time.sleep(50)
+print("Starting at zero...")
+pwm.start(5) 
 
-angle = 90
-duty = angle / 18 + 2
-GPIO.output(servoPIN, True)
-p.ChangeDutyCycle(0)
-p.ChangeDutyCycle(duty)
-print("sleeping for 15s")
-time.sleep(15)
-p.ChangeDutyCycle(0)
-GPIO.output(servoPIN, False)
+try:
+    while True:
+        print("Setting to zero...")
+        pwm.ChangeDutyCycle(5) 
+        time.sleep(1)
+
+        print("Setting to 180...")
+        pwm.ChangeDutyCycle(10) 
+        time.sleep(1)
+
+        print("Setting to 90...")
+        pwm.ChangeDutyCycle(7.5) 
+        time.sleep(1)
+except KeyboardInterrupt:
+    pwm.stop() 
+    GPIO.cleanup()
+    print("Program stopped")
 
 
-p.stop()
-GPIO.cleanup()
+
+
+# import RPi.GPIO as GPIO
+# import time
+
+# servoPIN = 17
+# GPIO.setmode(GPIO.BCM)
+# GPIO.setup(servoPIN, GPIO.OUT)
+
+# p = GPIO.PWM(servoPIN, 50) # GPIO 17 for PWM with 50Hz
+# p.start(2.5) # Initialization
+
+# angle = 90
+# duty = angle / 18 + 2
+# GPIO.output(servoPIN, True)
+# p.ChangeDutyCycle(0)
+# p.ChangeDutyCycle(duty)
+# print("sleeping for 15s")
+# time.sleep(15)
+# p.ChangeDutyCycle(0)
+# GPIO.output(servoPIN, False)
+# print("already back to angle of 0 degree and waiting 50s")
+# time.sleep(50)
+
+# angle = 90
+# duty = angle / 18 + 2
+# GPIO.output(servoPIN, True)
+# p.ChangeDutyCycle(0)
+# p.ChangeDutyCycle(duty)
+# print("sleeping for 15s")
+# time.sleep(15)
+# p.ChangeDutyCycle(0)
+# GPIO.output(servoPIN, False)
+
+
+# p.stop()
+# GPIO.cleanup()
 
 # import RPi.GPIO as GPIO
 # import time
