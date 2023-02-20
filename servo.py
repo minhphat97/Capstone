@@ -14,19 +14,20 @@ GPIO.output(servoPIN, True)
 p.ChangeDutyCycle(duty)
 print("sleeping for 3s")
 time.sleep(3)
-GPIO.output(servoPIN, False)
 p.ChangeDutyCycle(0)
+GPIO.output(servoPIN, False)
 print("already back to angle of 0 degree and waiting 50s")
 time.sleep(50)
 
-angle = 45
+angle = 90
 duty = angle / 18 + 2
 GPIO.output(servoPIN, True)
 p.ChangeDutyCycle(duty)
 print("sleeping for 3s")
 time.sleep(3)
-GPIO.output(servoPIN, False)
 p.ChangeDutyCycle(0)
+GPIO.output(servoPIN, False)
+
 
 p.stop()
 GPIO.cleanup()
