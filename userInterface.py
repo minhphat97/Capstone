@@ -1,34 +1,60 @@
+import tkinter as tk
 from tkinter import *
 
-root = Tk()  # create root window
-root.title("IronFoot Technologies")  # title of the GUI window
-root.maxsize(900, 600)  # specify the max size the window can expand to
-root.config(bg="pink")  # specify background color
+def reset():
+    #do_nothing
+    print("do nothing")
+def show_frame(frame):
+    frame.tkraise()
 
-# Create left and right frames
-left_frame = Frame(root, width=200, height=400, bg='grey')
+x_point = 30
+y_point = 30
+
+root = tk.Tk()  # create root window
+root.maxsize(880,330)
+root.geometry("880x330")
+root.title("IronFoot Technologies")  # title of the GUI window
+root.config(bg="pink")  # specify background color
+p1 = PhotoImage(file = "icon.png")
+root.iconphoto(False, p1)
+root.rowconfigure(0, weight=1)
+root.columnconfigure(0, weight=1)
+frame1 = tk.Frame(root)
+frame2 = tk.Frame(root)
+for frame in (frame1, frame2):
+    frame.grid(row=0, column=0, sticky='nsew')
+
+#============Frame 1 code===========
+bg = PhotoImage(file='wall2 (1).png', master=frame1)
+image_label = Label(frame1, image = bg)
+image_label.place(relx=0.5, rely=0.5, anchor=CENTER)
+frame1_btn = tk.Button(frame1, text='Enter', command=lambda:show_frame(frame2))
+frame1_btn.pack()
+show_frame(frame1)
+
+#============Frame 2 code===========
+frame2.config(bg="pink")  # specify background color
+left_frame = Frame(frame2, width=200, height=400, bg='pink')
 left_frame.grid(row=0, column=0, padx=10, pady=10)
 
-right_frame = Frame(root, width=650, height=400, bg='grey')
+right_frame = Frame(frame2, width=650, height=400, bg='pink')
 right_frame.grid(row=0, column=1, padx=10, pady=10)
 
-
-# load image to be "edited"
-image = PhotoImage(file="testPhoto.png")
+image = PhotoImage(file="ironfoot.png")
 original_image = image.subsample(3,3)  # resize image using subsample
 Label(left_frame, image=original_image).grid(row=0, column=0, padx=5, pady=5)
-
-# Display image in right_frame
-image2 = PhotoImage(file="net2-PhotoRoom.png")
+image2 = PhotoImage(file="save2.png")
 Label(right_frame, image=image2).grid(row=0,column=0, padx=5, pady=5)
-
-# Create tool bar frame
-tool_bar = Frame(left_frame, width=180, height=185)
+tool_bar = Frame(left_frame, width=180, height=185, bg='pink')
 tool_bar.grid(row=2, column=0, padx=5, pady=5)
 textbox = Text(left_frame, width=15, height=5)
-# Example labels that serve as placeholders for other widgets
-Label(tool_bar, text="Done", relief=RAISED).grid(row=0, column=0, padx=5, pady=3, ipadx=10)  # ipadx is padding inside the Label widget
-Label(tool_bar, text="Reset", relief=RAISED).grid(row=1, column=0, padx=5, pady=3, ipadx=10)
-Label(tool_bar, text="Perfomance Score", relief=RAISED).grid(row=2, column=0, padx=5, pady=3, ipadx=10)
+exit_image=PhotoImage(file='exit.png')
+Button(tool_bar, text="Exit", image=exit_image,command=root.quit, bg='red3').grid(row=0, column=0, padx=5, pady=3, ipadx=10) 
+
+reset_image=PhotoImage(file='reset.png')
+
+Button(tool_bar, text="Reset", image=reset_image, command=reset, bg='aquamarine').grid(row=1, column=0, padx=5, pady=3, ipadx=10)
+Label(tool_bar, text="PERFORMANCE RATE:",font=("Comic Sans MS", 15, "bold"),bg='pink').grid(row=2, column=0, padx=5, pady=3, ipadx=10)
 textbox.grid(row=3, column=0, padx=5, pady=3, ipadx=10)
+
 root.mainloop()
