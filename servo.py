@@ -16,16 +16,23 @@ pwm.start(5)
 try:
     while True:
         print("Setting to zero...")
-        pwm.ChangeDutyCycle(3) 
-        time.sleep(15)
+        angle = 0
+        duty = angle / 27 + 2
+        pwm.ChangeDutyCycle(duty) 
+        time.sleep(3)
 
         print("Setting to 180...")
+        duty = angle / 27 + 2
+        pwm.ChangeDutyCycle(duty) 
         pwm.ChangeDutyCycle(13) 
-        time.sleep(15)
+        time.sleep(3)
 
         print("Setting to 90...")
+        angle = 90
+        duty = angle / 27 + 2
         pwm.ChangeDutyCycle(8) 
-        time.sleep(15)
+        time.sleep(3)
+
 except KeyboardInterrupt:
     pwm.stop() 
     GPIO.cleanup()
