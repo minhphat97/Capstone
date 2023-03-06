@@ -11,7 +11,7 @@ camera = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 while True:
     temp, frame = camera.read()
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    boxes, weights = hog.detectMultiScale(frame, winStride=(8,8))
+    boxes, weights = hog.detectMultiScale(frame,winStride=(8, 8), padding=(4, 4),scale=1.05)
     for (x, y, w, h) in boxes:
         pad_w, pad_h = int(0.15 * w), int(0.01 * h)
         cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)

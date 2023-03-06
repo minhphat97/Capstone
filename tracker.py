@@ -12,8 +12,9 @@ fgbg = cv2.createBackgroundSubtractorMOG2()
 temp, frame = camera.read()
 rows, cols, temp2 = frame.shape
 x_medium = int(cols/2)
+y_medium = 0
 center = int(cols/2)
-position = 90
+angle = 90
 
 while True:
     temp, frame = camera.read()
@@ -41,20 +42,21 @@ while True:
     cv2.line(frame, (320, 0), (320, 480), (255, 255, 0), 2)
     cv2.line(frame, (0, 240), (640, 240), (255, 255, 0), 2)
     cv2.imshow("Faces", frame)
-    cv2.imshow("SUbtract Backgorund", fgmask)
+    cv2.imshow("Subtract Backgorund", fgmask)
 
     if cv2.waitKey(1) == ord("q"):
         break
     #move sensor
     if x_medium < center - 20:
-        position = position + 1
+        angle = angle + 1
     elif x_medium > center + 20:
-        position = position - 1
+        angle = angle - 1
     elif x_medium == center:
-        position  = position
-    print("Position is: ", position)
+        angle = angle
+    print("Servo Angle is: ", angle)
     print("x_medium is: ", x_medium)
     print("center: ", center)
+ 
     
 camera.release()
 cv2.destroyAllWindows()

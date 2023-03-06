@@ -27,9 +27,11 @@ for frame in (frame1, frame2):
 #============Frame 1 code===========
 bg = PhotoImage(file='wall2 (1).png', master=frame1)
 image_label = Label(frame1, image = bg)
+next_image=PhotoImage("exit.png")
 image_label.place(relx=0.5, rely=0.5, anchor=CENTER)
-frame1_btn = tk.Button(frame1, text='Enter', command=lambda:show_frame(frame2))
-frame1_btn.pack()
+frame1_btn = tk.Button(frame1, text='Next', image=next_image, command=lambda:show_frame(frame2), bg='cyan2', compound = LEFT)
+frame1_btn.place(x=440, y=200)
+frame1_btn.pack(side=TOP)
 show_frame(frame1)
 
 #============Frame 2 code===========
