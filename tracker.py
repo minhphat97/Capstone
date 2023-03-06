@@ -11,8 +11,12 @@ rows, cols, temp2 = frame.shape
 x_medium = int(cols/2)
 center = int(cols/2)
 position = 90
+
 while True:
     temp, frame = camera.read()
+    (h, w) = frame.shape[:2]
+    print("height frame is: ", h)
+    print("width frame is: ", w)
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     faces = clf.detectMultiScale(
         gray,
@@ -25,9 +29,13 @@ while True:
     for (x, y, width, height) in faces:
         cv2.rectangle(frame, (x, y), (x+width, y+height), (255, 255, 0), 2)
         x_medium = int((x + x + width) / 2)
+        y_medium = int((y + y + height) / 2)
         break
 
     cv2.line(frame, (x_medium, 0), (x_medium, 480), (255, 255, 0), 2)
+    cv2.line(frame, (0, y_medium), (640, y_medium), (255, 255, 0), 2)
+    cv2.line(frame, (320, 0), (320, 480), (255, 255, 0), 2)
+    cv2.line(frame, (0, 240), (640, 240), (255, 255, 0), 2)
     cv2.imshow("Faces", frame)
     if cv2.waitKey(1) == ord("q"):
         break
