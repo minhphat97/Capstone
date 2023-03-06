@@ -6,6 +6,7 @@ cascade_path = pathlib.Path(cv2.__file__).parent.absolute() / "data/haarcascade_
 print(cascade_path)
 clf = cv2.CascadeClassifier(str(cascade_path))
 camera = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+fgbg = cv2.createBackgroundSubtractorMOG2()
 # camera.set(3, 1920) # [640, 480], [1280, 720], [1920, 1080] 
 # camera.set(4, 1080)
 temp, frame = camera.read()
@@ -16,6 +17,7 @@ position = 90
 
 while True:
     temp, frame = camera.read()
+    fgmask = fgbg.apply(frame)
     (h, w) = frame.shape[:2]
     print("height frame is: ", h)
     print("width frame is: ", w)
@@ -39,6 +41,8 @@ while True:
     cv2.line(frame, (320, 0), (320, 480), (255, 255, 0), 2)
     cv2.line(frame, (0, 240), (640, 240), (255, 255, 0), 2)
     cv2.imshow("Faces", frame)
+    cv2.imshow("SUbtract Backgorund", fgmask)
+
     if cv2.waitKey(1) == ord("q"):
         break
     #move sensor
