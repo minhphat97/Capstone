@@ -84,7 +84,7 @@ while(True):
         angle = angle + 1
     elif x_medium > center + 20:
         angle = angle - 1
-    elif x_medium == center:
+    else:
         angle = angle
     print("Servo Angle is: ", angle)
     print("Human Center is: ", x_medium)
