@@ -57,7 +57,6 @@ original_image = image.subsample(3,3)  # resize image using subsample
 Label(left_frame, image=original_image).grid(row=0, column=0, padx=5, pady=5)
 image2 = PhotoImage(file="save2.png")
 
-
 canvas = Canvas(right_frame, bg = "green", height = 300, width = 550)
 canvas.pack(padx = 5, pady = 5)
 canvas.create_image(0, 0, anchor=NW, image=image2)
@@ -77,22 +76,35 @@ Label(tool_bar, text="PERFORMANCE RATE:",font=("Comic Sans MS", 15, "bold"),bg='
 textbox.grid(row=3, column=0, padx=5, pady=3, ipadx=10)
 
 #============Frame 3 code===========
-# frame3.config(bg="pink")  # specify background color
-# left_frame = Frame(frame3, width=200, height=400, bg='pink')
-# left_frame.grid(row=0, column=0, padx=10, pady=10)
+frame3.config(bg="pink")  # specify background color
+left_frame = Frame(frame3, width=200, height=400, bg='pink')
+left_frame.grid(row=0, column=0, padx=10, pady=10)
 
-# right_frame = Frame(frame3, width=650, height=400, bg='pink')
-# right_frame.grid(row=0, column=1, padx=10, pady=10)
+right_frame = Frame(frame3, width=650, height=400, bg='pink')
+right_frame.grid(row=0, column=1, padx=10, pady=10)
 
+Label(left_frame, image=original_image).grid(row=0, column=0, padx=5, pady=5)
 
-# Label(left_frame, image=original_image).grid(row=0, column=0, padx=5, pady=5)
+# canvas = Canvas(right_frame, bg = "green", height = 300, width = 550)
+# canvas.pack(padx = 5, pady = 5)
+# canvas.create_image(0, 0, anchor=NW, image=image2)
+# canvas.create_oval(x_ball-radius, y_ball-radius, x_ball+radius, y_ball+radius, outline="blue", width=3)
+
+tool_bar = Frame(left_frame, width=180, height=185, bg='pink')
+tool_bar.grid(row=2, column=0, padx=5, pady=5)
+textbox = Text(left_frame, width=15, height=5)
+Button(tool_bar, text="Exit", image=exit_image,command=root.quit, bg='red3').grid(row=0, column=0, padx=5, pady=3, ipadx=10) 
+Button(tool_bar, text="Reset", image=reset_image, command=reset, bg='aquamarine').grid(row=1, column=0, padx=5, pady=3, ipadx=10)
+
+Label(tool_bar, text="PERFORMANCE RATE:",font=("Comic Sans MS", 15, "bold"),bg='pink').grid(row=4, column=0, padx=5, pady=3, ipadx=10)
+textbox.grid(row=3, column=0, padx=5, pady=3, ipadx=10)
 
 vid = cv2.VideoCapture(0, cv2.CAP_DSHOW)
-width, height = 800, 600
+width, height = 550, 300
 vid.set(cv2.CAP_PROP_FRAME_WIDTH, width)
 vid.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
-frame3.bind('<Escape>', lambda e: frame2.quit())
-label_widget = Label(frame3)
+right_frame.bind('<Escape>', lambda e: right_frame.quit())
+label_widget = Label(right_frame)
 label_widget.pack()
 
 def open_camera():
@@ -104,6 +116,10 @@ def open_camera():
     label_widget.configure(image=photo_image)
     label_widget.after(5, open_camera)
 
-button1 = Button(frame3, text="Oen Camera", command=open_camera)
-button1.pack()
+Button(tool_bar, text="OpenCamera", command=open_camera, bg='aquamarine').grid(row=2, column=0, padx=5, pady=3, ipadx=10)
+# button1 = Button(right_frame, text="Oen Camera", command=open_camera)
+# button1.pack()
+
+
+
 root.mainloop()
