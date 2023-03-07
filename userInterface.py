@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import *
 import cv2
 from PIL import Image, ImageTk
+import pathlib
 
 def reset():
     #do_nothing
@@ -14,7 +15,8 @@ y_ball = 100
 radius = 10
 color = (255, 0, 0)
 thickness = 3
-
+cascade_path = pathlib.Path(cv2.__file__).parent.absolute() / "data/haarcascade_frontalface_default.xml"
+clf = cv2.CascadeClassifier(str(cascade_path))
 root = tk.Tk()  # create root window
 root.maxsize(2000,1000)
 root.geometry("1000x500")
@@ -108,10 +110,33 @@ vid.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
 right_frame.bind('<Escape>', lambda e: right_frame.quit())
 label_widget = Label(right_frame)
 label_widget.pack(padx = 0, pady = 0)
+# gray = cv2.cvtColor(right_frame, cv2.COLOR_BGR2GRAY)
+# faces = clf.detectMultiScale(
+#     gray,
+#     scaleFactor=1.1,
+#     minNeighbors=5,
+#     minSize=(30, 30),
+#     flags=cv2.CASCADE_SCALE_IMAGE
+# )
 
+# for (x, y, width, height) in faces:
+#     cv2.rectangle(right_frame, (x, y), (x+width, y+height), (255, 255, 0), 2)
+#     break
 def open_camera():
     _, frame = vid.read()
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    faces = clf.detectMultiScale(
+        gray,
+        scaleFactor=1.1,
+        minNeighbors=5,
+        minSize=(30, 30),
+        flags=cv2.CASCADE_SCALE_IMAGE
+    )
+    for (x, y, width, height) in faces:
+        cv2.rectangle(frame, (x, y), (x+width, y+height), (255, 255, 0), 2)
+        break
     opencv_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
+    #cv2.imshow("Frame", frame)
     captured_image = Image.fromarray(opencv_image)
     photo_image = ImageTk.PhotoImage(image=captured_image)
     label_widget.photo_image = photo_image
@@ -121,7 +146,5 @@ def open_camera():
 Button(tool_bar, text="OpenCamera", command=open_camera, bg='aquamarine').grid(row=2, column=0, padx=5, pady=3, ipadx=10)
 # button1 = Button(right_frame, text="Oen Camera", command=open_camera)
 # button1.pack()
-
-
 
 root.mainloop()
