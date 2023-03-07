@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import *
 import cv2
-from PIL import Image
+from PIL import Image, ImageTk
 
 def reset():
     #do_nothing
@@ -38,6 +38,9 @@ image_label.place(relx=0.5, rely=0.5, anchor=CENTER)
 frame1_btn = tk.Button(frame1, text='Next', image=next_image, command=lambda:show_frame(frame2), bg='cyan2', compound = LEFT)
 frame1_btn.place(x=440, y=200)
 frame1_btn.pack(side=BOTTOM)
+frame1_btn_2 = tk.Button(frame1, text='Page2', image=next_image, command=lambda:show_frame(frame3), bg='cyan2', compound = LEFT)
+frame1_btn_2.place(x=440, y=200)
+frame1_btn_2.pack(side=BOTTOM)
 show_frame(frame1)
 
 #============Frame 2 code===========
@@ -74,15 +77,33 @@ Label(tool_bar, text="PERFORMANCE RATE:",font=("Comic Sans MS", 15, "bold"),bg='
 textbox.grid(row=3, column=0, padx=5, pady=3, ipadx=10)
 
 #============Frame 3 code===========
-frame3.config(bg="pink")  # specify background color
-left_frame = Frame(frame3, width=200, height=400, bg='pink')
-left_frame.grid(row=0, column=0, padx=10, pady=10)
+# frame3.config(bg="pink")  # specify background color
+# left_frame = Frame(frame3, width=200, height=400, bg='pink')
+# left_frame.grid(row=0, column=0, padx=10, pady=10)
 
-right_frame = Frame(frame3, width=650, height=400, bg='pink')
-right_frame.grid(row=0, column=1, padx=10, pady=10)
-
-
-Label(left_frame, image=original_image).grid(row=0, column=0, padx=5, pady=5)
+# right_frame = Frame(frame3, width=650, height=400, bg='pink')
+# right_frame.grid(row=0, column=1, padx=10, pady=10)
 
 
+# Label(left_frame, image=original_image).grid(row=0, column=0, padx=5, pady=5)
+
+vid = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+width, height = 800, 600
+vid.set(cv2.CAP_PROP_FRAME_WIDTH, width)
+vid.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
+frame3.bind('<Escape>', lambda e: frame2.quit())
+label_widget = Label(frame3)
+label_widget.pack()
+
+def open_camera():
+    _, frame = vid.read()
+    opencv_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
+    captured_image = Image.fromarray(opencv_image)
+    photo_image = ImageTk.PhotoImage(image=captured_image)
+    label_widget.photo_image = photo_image
+    label_widget.configure(image=photo_image)
+    label_widget.after(5, open_camera)
+
+button1 = Button(frame3, text="Oen Camera", command=open_camera)
+button1.pack()
 root.mainloop()
