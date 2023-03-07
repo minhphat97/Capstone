@@ -3,7 +3,8 @@ from tkinter import *
 import cv2
 from PIL import Image, ImageTk
 import pathlib
-
+import datetime as dt
+from time import strftime
 def reset():
     #do_nothing
     print("do nothing")
@@ -33,8 +34,14 @@ frame3 = tk.Frame(root)
 for frame in (frame1, frame2, frame3):
     frame.grid(row=0, column=0, sticky='nsew')
 
-#============Frame 1 code===========
+#============================================Frame 1 code============================================
 bg = PhotoImage(file='wall2 (1).png', master=frame1)
+date = dt.datetime.now()
+time_string = strftime('%H:%M:%S %p')
+label = Label(frame1, text=f"{date:%A, %B %d, %Y}", font="Calibri, 20")
+label.pack(pady=20)
+label = Label(frame1, text=strftime('%H:%M:%S %p'), font="Calibri, 20")
+label.pack(pady=20)
 image_label = Label(frame1, image = bg)
 next_image=PhotoImage("exit.png")
 image_label.place(relx=0.5, rely=0.5, anchor=CENTER)
@@ -46,7 +53,7 @@ frame1_btn_2.place(x=440, y=200)
 frame1_btn_2.pack(side=BOTTOM)
 show_frame(frame1)
 
-#============Frame 2 code===========
+#============================================Frame 2 code===========================================
 frame2.config(bg="pink")  # specify background color
 left_frame = Frame(frame2, width=200, height=400, bg='pink')
 left_frame.grid(row=0, column=0, padx=10, pady=10)
@@ -78,7 +85,7 @@ Button(tool_bar, text="Reset", image=reset_image, command=reset, bg='aquamarine'
 Label(tool_bar, text="PERFORMANCE RATE:",font=("Comic Sans MS", 15, "bold"),bg='pink').grid(row=2, column=0, padx=5, pady=3, ipadx=10)
 textbox.grid(row=3, column=0, padx=5, pady=3, ipadx=10)
 
-#============Frame 3 code===========
+#==============================================Frame 3 code=========================================
 frame3.config(bg="pink")  # specify background color
 left_frame = Frame(frame3, width=200, height=400, bg='pink')
 left_frame.grid(row=0, column=0, padx=10, pady=10)
@@ -110,18 +117,7 @@ vid.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
 right_frame.bind('<Escape>', lambda e: right_frame.quit())
 label_widget = Label(right_frame)
 label_widget.pack(padx = 0, pady = 0)
-# gray = cv2.cvtColor(right_frame, cv2.COLOR_BGR2GRAY)
-# faces = clf.detectMultiScale(
-#     gray,
-#     scaleFactor=1.1,
-#     minNeighbors=5,
-#     minSize=(30, 30),
-#     flags=cv2.CASCADE_SCALE_IMAGE
-# )
 
-# for (x, y, width, height) in faces:
-#     cv2.rectangle(right_frame, (x, y), (x+width, y+height), (255, 255, 0), 2)
-#     break
 def open_camera():
     _, frame = vid.read()
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
