@@ -16,8 +16,9 @@ color = (255, 0, 0)
 thickness = 3
 
 root = tk.Tk()  # create root window
-root.maxsize(880,330)
-root.geometry("880x330")
+root.maxsize(2000,1000)
+root.geometry("1000x500")
+#root.geometry("1000x500")
 root.title("IronFoot Technologies")  # title of the GUI window
 root.config(bg="pink")  # specify background color
 p1 = PhotoImage(file = "icon.png")
@@ -81,6 +82,7 @@ left_frame = Frame(frame3, width=200, height=400, bg='pink')
 left_frame.grid(row=0, column=0, padx=10, pady=10)
 
 right_frame = Frame(frame3, width=650, height=400, bg='pink')
+
 right_frame.grid(row=0, column=1, padx=10, pady=10)
 
 Label(left_frame, image=original_image).grid(row=0, column=0, padx=5, pady=5)
@@ -100,12 +102,12 @@ Label(tool_bar, text="PERFORMANCE RATE:",font=("Comic Sans MS", 15, "bold"),bg='
 textbox.grid(row=3, column=0, padx=5, pady=3, ipadx=10)
 
 vid = cv2.VideoCapture(0, cv2.CAP_DSHOW)
-width, height = 550, 300
+width, height = 50, 20
 vid.set(cv2.CAP_PROP_FRAME_WIDTH, width)
 vid.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
 right_frame.bind('<Escape>', lambda e: right_frame.quit())
 label_widget = Label(right_frame)
-label_widget.pack()
+label_widget.pack(padx = 0, pady = 0)
 
 def open_camera():
     _, frame = vid.read()
