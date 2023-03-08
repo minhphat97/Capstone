@@ -19,8 +19,8 @@ thickness = 3
 cascade_path = pathlib.Path(cv2.__file__).parent.absolute() / "data/haarcascade_frontalface_default.xml"
 clf = cv2.CascadeClassifier(str(cascade_path))
 root = tk.Tk()  # create root window
-root.maxsize(2000,1000)
-root.geometry("1000x500")
+root.maxsize(2000, 1000)
+root.geometry("1080x566")
 #root.geometry("1000x500")
 root.title("IronFoot Technologies")  # title of the GUI window
 root.config(bg="pink")  # specify background color
@@ -35,22 +35,25 @@ for frame in (frame1, frame2, frame3):
     frame.grid(row=0, column=0, sticky='nsew')
 
 #============================================Frame 1 code============================================
-bg = PhotoImage(file='wall2 (1).png', master=frame1)
+bg_img = PhotoImage(file='imagBall.png', master=frame1)
+label = Label(root, image = bg_img)
+label.pack
+canvas = Canvas(frame1, width=1080, height=566)
+canvas.pack()
+
+canvas.create_image(0, 0, anchor=NW, image=bg_img)
+canvas.create_rectangle(3, 3, 1075, 556, outline = "red", width = 60)
+frame1_btn = tk.Button(frame1, text='PAGE1', command=lambda:show_frame(frame2), bg='cyan2', compound = LEFT)
+frame1_btn.place(x=405, y=530)
+frame1_btn_2 = tk.Button(frame1, text='PAGE2', command=lambda:show_frame(frame3), bg='cyan2', compound = LEFT)
+frame1_btn_2.place(x=590, y=530)
+
 date = dt.datetime.now()
-time_string = strftime('%H:%M:%S %p')
 label = Label(frame1, text=f"{date:%A, %B %d, %Y}", font="Calibri, 20")
-label.pack(pady=20)
+label.place(x=360, y=460)
+
 label = Label(frame1, text=strftime('%H:%M:%S %p'), font="Calibri, 20")
-label.pack(pady=20)
-image_label = Label(frame1, image = bg)
-next_image=PhotoImage("exit.png")
-image_label.place(relx=0.5, rely=0.5, anchor=CENTER)
-frame1_btn = tk.Button(frame1, text='Next', image=next_image, command=lambda:show_frame(frame2), bg='cyan2', compound = LEFT)
-frame1_btn.place(x=440, y=200)
-frame1_btn.pack(side=BOTTOM)
-frame1_btn_2 = tk.Button(frame1, text='Page2', image=next_image, command=lambda:show_frame(frame3), bg='cyan2', compound = LEFT)
-frame1_btn_2.place(x=440, y=200)
-frame1_btn_2.pack(side=BOTTOM)
+label.place(x=440, y=80)
 show_frame(frame1)
 
 #============================================Frame 2 code===========================================
