@@ -110,16 +110,19 @@ Button(tool_bar, text="Reset", image=reset_image, command=reset, bg='aquamarine'
 Label(tool_bar, text="PERFORMANCE RATE:",font=("Comic Sans MS", 15, "bold"),bg='pink').grid(row=5, column=0, padx=5, pady=3, ipadx=10)
 textbox.grid(row=6, column=0, padx=5, pady=3, ipadx=10)
 
-vid = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+vid = cv2.VideoCapture(0)
 # width, height = 50, 20
-vid.set(cv2.CAP_PROP_FRAME_WIDTH, 700)
-# vid.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
+vid.set(cv2.CAP_PROP_FRAME_WIDTH, 720)
+vid.set(cv2.CAP_PROP_FRAME_HEIGHT, 1280)
 right_frame.bind('<Escape>', lambda e: right_frame.quit())
 label_widget = Label(right_frame)
 label_widget.pack(padx = 0, pady = 0)
 
 def open_camera():
     _, frame = vid.read()
+    if frame is None:
+        print("Frame is empty")
+        return
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     faces = clf.detectMultiScale(
         gray,
