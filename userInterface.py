@@ -113,8 +113,8 @@ textbox.grid(row=6, column=0, padx=5, pady=3, ipadx=10)
 
 vid = cv2.VideoCapture(0)
 # width, height = 50, 20
-vid.set(cv2.CAP_PROP_FRAME_WIDTH, 720)
-vid.set(cv2.CAP_PROP_FRAME_HEIGHT, 1280)
+vid.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+vid.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 right_frame.bind('<Escape>', lambda e: right_frame.quit())
 label_widget = Label(right_frame)
 label_widget.pack(padx = 0, pady = 0)
