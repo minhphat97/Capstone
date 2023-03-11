@@ -16,7 +16,8 @@ y_ball = 100
 radius = 18
 color = (255, 0, 0)
 thickness = 4
-cascade_path = pathlib.Path(cv2.__file__).parent.absolute() / "data/haarcascade_frontalface_default.xml"
+# cascade_path = pathlib.Path(cv2.__file__).parent.absolute() / "data/haarcascade_frontalface_default.xml"
+cascade_path = "haarcascade_frontalface_default.xml"
 clf = cv2.CascadeClassifier(str(cascade_path))
 root = tk.Tk()  # create root window
 root.maxsize(2000, 1000)
