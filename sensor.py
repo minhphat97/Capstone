@@ -59,14 +59,14 @@ while True:
         GPIO.output(PIN_TRIGGER, GPIO.LOW)
         GPIO.output(PIN_TRIGGER2, GPIO.LOW)
         GPIO.output(PIN_TRIGGER3, GPIO.LOW)
-        print("Waiting for sensor 1 to settle")
+        # print("Waiting for sensor 1 to settle")
         # time.sleep(2)
 
-        print("Waiting for sensor 2 to settle")
-        print("Waiting for sensor 3 to settle")
-        time.sleep(3)
+        # print("Waiting for sensor 2 to settle")
+        # print("Waiting for sensor 3 to settle")
+        time.sleep(0.05)
 
-        print("Calculating distance 1")
+        # print("Calculating distance 1")
         GPIO.output(PIN_TRIGGER, GPIO.HIGH)
         time.sleep(0.00001)
         GPIO.output(PIN_TRIGGER, GPIO.LOW)
@@ -80,7 +80,7 @@ while True:
         distance = round(pulse_duration * 34300 * 0.5)
         print("Distance 1 (cm): ", distance)
 
-        print("Calculating distance 2")
+        # print("Calculating distance 2")
         GPIO.output(PIN_TRIGGER2, GPIO.HIGH)
         time.sleep(0.00001)
         GPIO.output(PIN_TRIGGER2, GPIO.LOW)
@@ -92,9 +92,9 @@ while True:
 
         pulse_duration = pulse_end_time - pulse_start_time
         distance2 = round(pulse_duration * 34300 * 0.5)
-        print("Distance 2 (cm): ", distance2)
+        # print("Distance 2 (cm): ", distance2)
 
-        print("Calculating distance 3")
+        # print("Calculating distance 3")
         GPIO.output(PIN_TRIGGER3, GPIO.HIGH)
         time.sleep(0.00001)
         GPIO.output(PIN_TRIGGER3, GPIO.LOW)

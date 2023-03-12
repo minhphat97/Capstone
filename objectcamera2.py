@@ -51,7 +51,7 @@
 
 import numpy as np
 import cv2
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(2)
 fgbg = cv2.createBackgroundSubtractorMOG2()
 hog = cv2.HOGDescriptor()
 hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
