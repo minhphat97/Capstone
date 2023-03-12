@@ -19,7 +19,7 @@ thickness = 4
 cascade_path = pathlib.Path(cv2.__file__).parent.absolute() / "data/haarcascade_frontalface_default.xml"
 clf = cv2.CascadeClassifier(str(cascade_path))
 root = tk.Tk()  # create root window
-root.maxsize(2000, 1000)
+root.maxsize(1080, 566)
 root.geometry("1080x566")
 #root.geometry("1000x500")
 root.title("IronFoot Technologies")  # title of the GUI window
