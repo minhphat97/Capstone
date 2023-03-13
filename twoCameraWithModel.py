@@ -7,7 +7,8 @@ cap1 = cv2.VideoCapture(0)
 cap2 = cv2.VideoCapture(2)
 
 # Load the Haar Cascade classifier for human detection
-human_cascade = cv2.CascadeClassifier('haarcascade_fullbody.xml')
+# human_cascade = cv2.CascadeClassifier('haarcascade_fullbody.xml')
+human_cascade = "haarcascade_frontalface_default.xml"
 
 # Check if the cameras have been successfully opened
 if not cap1.isOpened() or not cap2.isOpened():
