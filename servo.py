@@ -8,6 +8,7 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(servo_pin,GPIO.OUT)
 
 # 50 Hz or 20 ms PWM period
+# 2.90 A on 7.4V
 pwm = GPIO.PWM(servo_pin,50) 
 
 print("Starting at zero...")
