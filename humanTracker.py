@@ -6,7 +6,7 @@ import numpy as np
 
 hog = cv2.HOGDescriptor()
 hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
-camera = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+camera = cv2.VideoCapture(0)
 
 while True:
     temp, frame = camera.read()
