@@ -93,23 +93,26 @@ while(True):
     cv2.line(frame, (int(width/2), 0), (int(width/2), 480), (255, 255, 0), 2)
     cv2.line(frame, (0, int(height/2)), (640, int(height/2)), (255, 255, 0), 2)
     cv2.imshow("Human", frame)
-    if x_medium < center - 60:
+    if x_medium < center - 30:
         angle = angle + 1
         duty = angle / 27 + 2
         pwm.ChangeDutyCycle(duty)
-    elif x_medium > center + 60:
+    elif x_medium > center + 30:
         angle = angle - 1
         duty = angle / 27 + 2
         pwm.ChangeDutyCycle(duty)
     else:
         angle = angle
         duty = angle / 27 + 2
-        # pwm.ChangeDutyCycle(duty)
-    print("Servo Angle is: ", angle)
+        # pwm.ChangeDutyCycl2e(duty)
+    print("Servo Angle is: ", angle)  
     print("Human Center is: ", x_medium)
     print("Frame Center is: ", center)
     print()
     if cv2.waitKey(1) == ord("q"):
+        angle = 90
+        duty = angle / 27 + 2
+        pwm.ChangeDutyCycle(duty)
         break
 cap.release()
 cv2.destroyAllWindows()
