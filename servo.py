@@ -8,7 +8,9 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(servo_pin,GPIO.OUT)
 
 # 50 Hz or 20 ms PWM period
-# 2.90 A on 7.4V
+# 2.90 A on 7.4V with lab power supply
+# 90 degrees will be treated as 0
+# With power supply, we are using 8.4 V and unknown amps
 pwm = GPIO.PWM(servo_pin,50) 
 
 print("Starting at zero...")
@@ -17,19 +19,19 @@ pwm.start(5)
 try:
     while True:
         print("Setting to zero...")
-        angle = 0
+        angle = 90
         duty = angle / 27 + 2
         pwm.ChangeDutyCycle(duty) 
         time.sleep(3)
 
         print("Setting to 180...")
-        angle = 180 
+        angle = 135 
         duty = angle / 27 + 2
         pwm.ChangeDutyCycle(duty) 
         time.sleep(3)
 
         print("Setting to 90...")
-        angle = 90
+        angle = 180
         duty = angle / 27 + 2
         pwm.ChangeDutyCycle(duty) 
         time.sleep(3)
@@ -37,7 +39,7 @@ try:
 except KeyboardInterrupt:
     pwm.stop() 
     GPIO.cleanup()
-    print("Program stopped")
+    print("Program, stopped")
 
 
 
