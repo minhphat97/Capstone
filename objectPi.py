@@ -31,7 +31,7 @@ while True:
             x_medium = values["x_medium"]
             center = values["center"]
 
-            if x_medium < center - 30:
+            if x_medium < center - 60:
                 if angle >= 140:
                     angle = 140
                     duty = angle / 27 + 2
@@ -41,7 +41,7 @@ while True:
                     duty = angle / 27 + 2
                     pwm.ChangeDutyCycle(duty)
                     time.sleep(0.01)
-            elif x_medium > center + 30:
+            elif x_medium > center + 60:
                 if angle <= 40:
                     angle = 40
                     duty = angle / 27 + 2

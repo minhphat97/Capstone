@@ -19,14 +19,14 @@ port = 12345  # Choose a unique port number for the communication
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((host, port))
 
+x_medium = 0
+y_medium = 0
+
 while True:
     ret, frame = cap.read()
     height, width, _ = frame.shape
     center = int(width / 2)
     boxes, weights = hog.detectMultiScale(frame, winStride=(8, 8), padding=(4, 4), scale=1.05)
-    
-    x_medium = 0
-    y_medium = 0
     
     for (x, y, w, h) in boxes:
         pad_w, pad_h = int(0.15 * w), int(0.01 * h)
