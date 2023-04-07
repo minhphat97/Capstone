@@ -13,8 +13,8 @@ cap.set(4, 480)
 object_detector = cv2.createBackgroundSubtractorMOG2(history=10, varThreshold=5)
 
 # Socket setup
-# Run `ifconfig` on Pi and look at inet under wlan0 to find IP address`
-host = "192.168.1.74" #"raspberrypi.local"  # Change this to the hostname or IP address of your Raspberry Pi
+# Run `ifconfig` on Pi and look at inet under wlan0 to find IP address or look at connections in Mobile Hotspot if that is used
+host = "192.168.111.151" #"raspberrypi.local"  # Change this to the hostname or IP address of your Raspberry Pi
 port = 12345  # Choose a unique port number for the communication
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((host, port))
