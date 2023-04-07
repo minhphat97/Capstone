@@ -13,7 +13,7 @@ cap.set(4, 480)
 object_detector = cv2.createBackgroundSubtractorMOG2(history=10, varThreshold=5)
 
 # Socket setup
-host = "raspberrypi.local"  # Change this to the hostname or IP address of your Raspberry Pi
+host = "192.168.1.71" #"raspberrypi.local"  # Change this to the hostname or IP address of your Raspberry Pi
 port = 12345  # Choose a unique port number for the communication
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((host, port))
@@ -37,7 +37,10 @@ while True:
     # Send the x_medium value to Raspberry Pi
     data = {"x_medium": x_medium, "center": center}
     s.sendall(pickle.dumps(data))
-
+    cv2.line(frame, (x_medium, 0), (x_medium, 480), (255, 255, 0), 2)
+    cv2.line(frame, (0, y_medium), (640, y_medium), (255, 255, 0), 2)
+    cv2.line(frame, (int(width/2), 0), (int(width/2), 480), (255, 255, 0), 2)
+    cv2.line(frame, (0, int(height/2)), (640, int(height/2)), (255, 255, 0), 2)
     cv2.imshow("Human", frame)
 
     if cv2.waitKey(1) == ord("q"):
