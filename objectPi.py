@@ -8,7 +8,7 @@ GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(servo_pin, GPIO.OUT)
 pwm = GPIO.PWM(servo_pin, 50)
-print("Starting at zero...")
+print("Starting at 90...")
 pwm.start(5)
 
 angle = 90  # set angle Servo
