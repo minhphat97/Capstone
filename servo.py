@@ -24,14 +24,14 @@ try:
         pwm.ChangeDutyCycle(duty) 
         time.sleep(3)
 
-        print("Setting to 70...")
-        angle = 70
+        print("Setting to 120...")
+        angle = 120
         duty = angle / 27 + 2
         pwm.ChangeDutyCycle(duty) 
         time.sleep(3)
 
-        print("Setting to 110...")
-        angle = 110
+        print("Setting to 100...")
+        angle = 100
         duty = angle / 27 + 2
         pwm.ChangeDutyCycle(duty) 
         time.sleep(3)
