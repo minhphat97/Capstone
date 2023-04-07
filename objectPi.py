@@ -36,14 +36,17 @@ while True:
                     angle = 180
                 else:
                     angle = angle + 1
+                    duty = angle / 27 + 2
                     pwm.ChangeDutyCycle(duty)
             elif x_medium > center + 30:
                 if angle <= 0:
                     angle = 0
                 else: 
                     angle = angle - 1
+                    duty = angle / 27 + 2
                     pwm.ChangeDutyCycle(duty)
             else:
+                angle = angle
                 duty = angle / 27 + 2
                 pwm.ChangeDutyCycle(duty)
 
