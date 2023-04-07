@@ -18,7 +18,7 @@ pwm.start(5)
 
 try:
     while True:
-        print("Setting to 90...")
+        print("Setting to 100...")
         angle = 90
         duty = angle / 27 + 2
         pwm.ChangeDutyCycle(duty) 
