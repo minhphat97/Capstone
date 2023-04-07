@@ -48,7 +48,11 @@ while True:
         angle = 90
         duty = angle / 27 + 2
         pwm.ChangeDutyCycle(duty)
-        print("Shuttindgdown")
+        print("")
+        print("**************************************************************")
+        print("Shutting down")
+        print("**************************************************************")
+        print("")
         break
 
 conn.close()
