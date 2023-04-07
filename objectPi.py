@@ -32,23 +32,23 @@ while True:
             center = values["center"]
 
             if x_medium < center - 30:
-                if angle >= 140:
-                    angle = 140
-                    duty = angle / 27 + 2
-                    pwm.ChangeDutyCycle(duty)
-                else:
-                    angle = angle + 1
-                    duty = angle / 27 + 2
-                    pwm.ChangeDutyCycle(duty)
+                # if angle >= 140:
+                #     angle = 140
+                #     duty = angle / 27 + 2
+                #     pwm.ChangeDutyCycle(duty)
+                # else:
+                angle = angle + 1
+                duty = angle / 27 + 2
+                pwm.ChangeDutyCycle(duty)
             elif x_medium > center + 30:
-                if angle <= 40:
-                    angle = 40
-                    duty = angle / 27 + 2
-                    pwm.ChangeDutyCycle(duty)
-                else: 
-                    angle = angle - 1
-                    duty = angle / 27 + 2
-                    pwm.ChangeDutyCycle(duty)
+                # if angle <= 40:
+                #     angle = 40
+                #     duty = angle / 27 + 2
+                #     pwm.ChangeDutyCycle(duty)
+                # else: 
+                angle = angle - 1
+                duty = angle / 27 + 2
+                pwm.ChangeDutyCycle(duty)
             else:
                 angle = angle
                 duty = angle / 27 + 2
