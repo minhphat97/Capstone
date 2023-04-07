@@ -35,9 +35,9 @@ while True:
                 angle = angle + 1
             elif x_medium > center + 30:
                 angle = angle - 1
-
-            duty = angle / 27 + 2
-            pwm.ChangeDutyCycle(duty)
+            else:
+                duty = angle / 27 + 2
+                pwm.ChangeDutyCycle(duty)
 
             print("Servo Angle is: ", angle)
             print("Human Center is: ", x_medium)
