@@ -40,18 +40,18 @@ while True:
                     angle = angle + 1
                     duty = angle / 27 + 2
                     pwm.ChangeDutyCycle(duty)
-                    time.sleep(0.01)
+                    time.sleep(0.1)
             elif x_medium > center + 60:
                 if angle <= 40:
                     angle = 40
                     duty = angle / 27 + 2
                     pwm.ChangeDutyCycle(duty)
-                    time.sleep(0.01)
+                    time.sleep(0.1)
                 else: 
                     angle = angle - 1
                     duty = angle / 27 + 2
                     pwm.ChangeDutyCycle(duty)
-                    time.sleep(0.01)
+                    time.sleep(0.1)
             else:
                 angle = angle
                 duty = angle / 27 + 2
