@@ -50,7 +50,7 @@ frame1_btn_2.place(x=590, y=530)
 
 date = dt.datetime.now()
 label = Label(frame1, text=f"{date:%A, %B %d, %Y}", font="Calibri, 20")
-label.place(x=340, y=460)
+label.place(x=380, y=450)
 
 label = Label(frame1, text=strftime('%H:%M:%S %p'), font="Calibri, 20")
 label.place(x=440, y=80)

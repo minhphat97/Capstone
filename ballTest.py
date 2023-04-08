@@ -4,10 +4,11 @@ import math
 
 # Known diameter of the soccer ball in meters.
 soccer_ball_diameter = 0.22
-
+radius = 0
 # Known distance from the camera to the soccer ball in meters.
 soccer_ball_distance = 1.5
-
+x = 0
+y = 0
 # Start the webcam stream.
 cap = cv2.VideoCapture(0)
 
@@ -32,7 +33,7 @@ while True:
 
     # Detect the contours of the ball region.
     contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-
+    
     # Draw a bounding box around the ball region if a contour is detected.
     if len(contours) > 0:
         contour_sizes = [(cv2.contourArea(contour), contour) for contour in contours]
@@ -47,15 +48,21 @@ while True:
         ball_size = radius * 2
         distance = (2*radius*soccer_ball_distance) / (soccer_ball_diameter)
         #radius_m = (soccer_ball_diameter * cap.get(3) * soccer_ball_distance) / (radius * 1000)
-        cv2.putText(frame, f"Distance: {distance:.2f}m", (int(x - radius), int(y - radius) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+        cv2.putText(frame, f"Distance: {distance:.2f}cm", (int(x - radius), int(y - radius) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
         cv2.putText(frame, f"Radius: {radius :.2f}cm", (int(x - radius), int(y - radius) - 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
     # Display the resulting frame with the ball region highlighted.
     cv2.imshow("frame", frame)
-
-    # Wait for a key press and exit if 'q' is pressed.
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
+    #if cv2.waitKey(1) & 0xFF == ord('k'):
+    
+    if radius == 45.00:
+        #if result:
+        result, image = cap.read()
+        cv2.imshow("Ball", image)
+        # print ("X: ", x)
+        # print ("Y: ", y)
 
 # Release the webcam and close all windows.
 cap.release()

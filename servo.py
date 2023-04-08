@@ -1,13 +1,11 @@
 import RPi.GPIO as GPIO
 import time
 
-# setup RPi
 GPIO.setwarnings(False)
 servo_pin = 17
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(servo_pin,GPIO.OUT)
 
-# 50 Hz or 20 ms PWM period
 pwm = GPIO.PWM(servo_pin,50) 
 
 print("Starting at zero...")
@@ -22,9 +20,9 @@ try:
         time.sleep(3)
 
         print("Setting to 180...")
+        angle = 180
         duty = angle / 27 + 2
-        pwm.ChangeDutyCycle(duty) 
-        pwm.ChangeDutyCycle(13) 
+        pwm.ChangeDutyCycle(duty)  
         time.sleep(3)
 
         print("Setting to 90...")

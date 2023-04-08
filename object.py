@@ -91,7 +91,7 @@ while(True):
     cv2.line(frame, (int(width/2), 0), (int(width/2), 480), (255, 255, 0), 2)
     cv2.line(frame, (0, int(height/2)), (640, int(height/2)), (255, 255, 0), 2)
     cv2.imshow("Human", frame)
-    if x_medium < center - 20:
+    if x_medium < center - 40:
         angle = angle + 1
         duty = angle / 27 + 2
         pwm.ChangeDutyCycle(duty)
