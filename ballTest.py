@@ -58,7 +58,7 @@ while True:
         break
     #if cv2.waitKey(1) & 0xFF == ord('k'):
     
-    if radius >= 30.00 and radius <= 50.00:
+    if radius >= 55.00 and radius <= 90.00:
         #if result:
         result, image = cap.read()
         print("result: ", result)
