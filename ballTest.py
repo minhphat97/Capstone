@@ -10,7 +10,7 @@ soccer_ball_distance = 1.5
 x = 0
 y = 0
 # Start the webcam stream.
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(2)
 
 while True:
     count = 0
