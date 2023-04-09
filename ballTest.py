@@ -13,6 +13,7 @@ y = 0
 cap = cv2.VideoCapture(0)
 
 while True:
+    count = 0
     # Capture a frame from the webcam.
     ret, frame = cap.read()
 
@@ -57,12 +58,19 @@ while True:
         break
     #if cv2.waitKey(1) & 0xFF == ord('k'):
     
-    if radius >= 35.00 and radius <= 45.00:
+    if radius >= 30.00 and radius <= 50.00:
         #if result:
         result, image = cap.read()
-        cv2.imshow("Ball", image)
-        # print ("X: ", x)
-        # print ("Y: ", y)
+        print("result: ", result)
+        if result == True:
+            x_list = []
+            y_list = []
+            cv2.imshow("Ball", image)
+            print ("X: ", x)
+            print ("Y: ", y)
+            #count = count + 1
+            #if count == 1:
+
 
 # Release the webcam and close all windows.
 cap.release()
