@@ -22,9 +22,24 @@ git checkout linux-version2
 ```
 
 ## Running Code
-Look at [Service-Information](objectPiservice-Information.md) to set up the Pi to run its program on start.
-On the laptop, run 
+SSH into the Pi using PuTTY. Both the laptop and the Pi should be on the same network. For the demonstration, we are using the mobile hotspot SM-Company3. 
+On the laptop, first open objectLaptop.py then make sure
+```python
+host = "192.168.210.151"
+```
+is the IP address of the Pi. The address can change on startup, so make sure it's correct. The IP address can be found in the mobile hotspot settings or by running
+```bash
+ifconfig
+```
+on the Pi. Afterwards, run
+```bash
+python3 objectPi.py
+```
+Then run 
 ```bash
 python3 objectLaptop.py
 ```
-**after** the Pi has started up. Make sure a webcam is connected to the laptop and the Pi has the appropriate connections to the servo.
+Make sure it is **after** the program on the Pi is running. Also ensure a webcam is connected to the laptop and the Pi has the appropriate connections to the servo.
+
+## Extra (In The Future)
+Look at [Service-Information](objectPiservice-Information.md) to set up the Pi to run its program on start.
