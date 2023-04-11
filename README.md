@@ -27,15 +27,17 @@ On the laptop, first open objectLaptop.py then make sure
 ```python
 host = "192.168.210.151"
 ```
-is the IP address of the Pi. The address can change on startup, so make sure it's correct. The IP address can be found in the mobile hotspot settings or by running
+is the IP address of the Pi. The address can change on startup, so double check it is correct. The IP address can be found in the mobile hotspot settings or by running
 ```bash
 ifconfig
 ```
-on the Pi. Afterwards, run
+on the Pi. 
+
+After the IP address is verified as correct, go to the terminal on the Pi and run
 ```bash
 python3 objectPi.py
 ```
-Then run 
+Then navigate to the terminal on the laptop and run 
 ```bash
 python3 objectLaptop.py
 ```
