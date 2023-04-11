@@ -22,7 +22,7 @@ git checkout linux-version2
 ```
 
 ## Running Code
-SSH into the Pi using PuTTY. The hostname should be ```raspberrypi.local```, the port ```22```, and the connection type ```SSH```. Both the laptop and the Pi should be on the same network. For the demonstration, we are using the mobile hotspot SM-Company3. 
+SSH into the Pi using PuTTY. The hostname should be ```raspberrypi.local```, the port ```22```, and the connection type ```SSH```. Both the laptop and the Pi should be on the same network. For the demonstration, we are using the mobile hotspot ```SM-Company3```. 
 On the laptop, first open objectLaptop.py then make sure
 ```python
 host = "192.168.210.151"
