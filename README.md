@@ -12,6 +12,7 @@ The following packages should be downloaded on the laptop:
 The following packages should be downloaded on the Pi
 - pickle
 - RPi.GPIO
+
 The RPi.GPIO should come built-in for the Pi.
 
 ## Downloading Code
