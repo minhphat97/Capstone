@@ -32,7 +32,7 @@ is the IP address of the Pi. The address can change on startup, so double check 
 ```bash
 ifconfig
 ```
-on the Pi. 
+in the terminal of the Pi. 
 
 After the IP address is verified as correct, go to the terminal on the Pi and run
 ```bash
