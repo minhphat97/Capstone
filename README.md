@@ -35,7 +35,7 @@ ifconfig
 ```
 in the terminal of the Pi. 
 
-After the IP address is verified as correct, go to the terminal on the Pi and run
+After the IP address is verified as correct or the ```host``` variable is updated, go to the terminal on the Pi and run
 ```bash
 python3 objectPi.py
 ```
