@@ -6,11 +6,15 @@ import pathlib
 import datetime as dt
 import csv
 from time import strftime
+import time
 def reset():
     #do_nothing
     print("do nothing")
 def show_frame(frame):
     frame.tkraise()
+    
+X = []
+Y = []
 
 with open('outputtest.csv') as file:
     for row in file:
