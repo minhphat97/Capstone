@@ -11,8 +11,11 @@ def reset():
 def show_frame(frame):
     frame.tkraise()
 
-x_ball = 50
-y_ball = 100
+with open('outputtest.csv') as file:
+    for row in file:
+        X.append(row.split(",")[0])
+        Y.append(row.split(",")[1])
+
 radius = 18
 color = (255, 0, 0)
 thickness = 4
@@ -73,7 +76,8 @@ image2 = PhotoImage(file="netImage.png")
 canvas = Canvas(right_frame, bg = "green", height = 532, width = 760)
 canvas.pack(padx = 5, pady = 5)
 canvas.create_image(0, 0, anchor=NW, image=image2)
-canvas.create_oval(x_ball-radius, y_ball-radius, x_ball+radius, y_ball+radius, outline="blue", width=3)
+for i in range(len(X)):
+   canvas.create_oval(float(X[i])-radius, float(Y[i])-radius, float(X[i])+radius, float(Y[i])+radius, outline="blue", width=3) 
 
 
 tool_bar = Frame(left_frame, width=180, height=185, bg='pink')
