@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import math
+from csv import writer
 
 # Known diameter of the soccer ball in meters.
 soccer_ball_diameter = 0.22
@@ -58,7 +59,7 @@ while True:
         break
     #if cv2.waitKey(1) & 0xFF == ord('k'):
     
-    if radius >= 55.00 and radius <= 90.00:
+    if radius >= 30.00 and radius <= 50.00:
         #if result:
         result, image = cap.read()
         print("result: ", result)
@@ -68,8 +69,11 @@ while True:
             cv2.imshow("Ball", image)
             print ("X: ", x)
             print ("Y: ", y)
-            #count = count + 1
-            #if count == 1:
+            List = [x, y]
+            with open("outputtest.csv", 'a', newline='') as csvfile:
+                writer_object = writer(csvfile)
+                writer_object.writerow(List)
+                csvfile.close()
 
 
 # Release the webcam and close all windows.
