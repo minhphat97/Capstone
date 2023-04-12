@@ -5,14 +5,34 @@ from PIL import Image, ImageTk
 import pathlib
 import datetime as dt
 from time import strftime
+import csv
+import time
 def reset():
     #do_nothing
     print("do nothing")
 def show_frame(frame):
     frame.tkraise()
 
-x_ball = 50
-y_ball = 100
+# x_ball = 50
+# y_ball = 100
+# x_ball_1 = 100
+# y_ball_1 = 50
+# x_ball_2 = 500
+# y_ball_2 = 500
+X = []
+Y = []
+with open('outputtest.csv') as file:
+    for row in file:
+        X.append(row.split(",")[0])
+        Y.append(row.split(",")[1])
+
+# for x in range(len(X)):
+#     print (X[x])
+# for x in range(len(Y)):
+#     print (Y[x])
+
+# time.sleep(5000)
+
 radius = 18
 color = (255, 0, 0)
 thickness = 4
@@ -73,7 +93,10 @@ image2 = PhotoImage(file="netImage.png")
 canvas = Canvas(right_frame, bg = "green", height = 532, width = 760)
 canvas.pack(padx = 5, pady = 5)
 canvas.create_image(0, 0, anchor=NW, image=image2)
-canvas.create_oval(x_ball-radius, y_ball-radius, x_ball+radius, y_ball+radius, outline="blue", width=3)
+
+for i in range(len(X)):
+   canvas.create_oval(float(X[i])-radius, float(Y[i])-radius, float(X[i])+radius, float(Y[i])+radius, outline="blue", width=3) 
+
 
 
 tool_bar = Frame(left_frame, width=180, height=185, bg='pink')

@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 import math
-
+from csv import writer
 # Known diameter of the soccer ball in meters.
 soccer_ball_diameter = 0.22
 radius = 0
@@ -68,6 +68,11 @@ while True:
             cv2.imshow("Ball", image)
             print ("X: ", x)
             print ("Y: ", y)
+            List = [x, y]
+            with open("outputtest.csv", 'a', newline='') as csvfile:
+                writer_object = writer(csvfile)
+                writer_object.writerow(List)
+                csvfile.close()
             #count = count + 1
             #if count == 1:
 
