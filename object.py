@@ -1,54 +1,3 @@
-# import numpy as np
-# import cv2
-# cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
-# fgbg = cv2.createBackgroundSubtractorMOG2()
-# cap.set(3, 640)
-# cap.set(4, 480)
-
-# object_detector = cv2.createBackgroundSubtractorMOG2(history=10, varThreshold=5)
-
-# while(True):
-#     ret, frame = cap.read()
-#     height, width, _ = frame.shape
-#     roi = frame[0:480, 0:640]
-#     mask = object_detector.apply(roi)
-#     # remove everything below 254 (get only white
-#     # not sure this is needed
-#     #_, mask = cv2.threshold(mask, 128, 255, cv2.THRESH_BINARY)
-
-#     contours, hierarchy = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-#     detections = []
-#     biggest_index = 0
-#     biggest_area = 0
-#     ind = 0
-#     for cnt in contours:
-#         area = cv2.contourArea(cnt)
-#         if area > 200:
-#             #cv2.drawContours(roi, [cnt], -1, (0, 255, 0), 2)
-#             x,y,w,h = cv2.boundingRect(cnt)
-#             detections.append([x,y,w,h])
-#             area = w*h
-#             if area > biggest_area:
-#                 biggest_area = area
-#                 biggest_index = ind
-#             ind = ind + 1
-
-#     if (len(detections) > 0):
-#         x,y,w,h = detections[biggest_index]
-#         cv2.rectangle(roi, (x,y), (x+w, y+h), (255, 255, 0), 3)
-            
-
-#     cv2.line(roi, (int(width/2), 0), (int(width/2), 480), (255, 255, 0), 2)
-#     cv2.line(roi, (0, int(height/2)), (640, int(height/2)), (255, 255, 0), 2)
-#     cv2.imshow("Human", frame)
-#     cv2.imshow("ROI", roi)
-#     cv2.imshow("Mask", mask)
-#     if cv2.waitKey(1) == ord("q"):
-#         break
-
-# cap.release()
-# cv2.destroyAllWindows()
-
 import numpy as np
 import cv2
 import RPi.GPIO as GPIO
@@ -91,11 +40,11 @@ while(True):
     cv2.line(frame, (int(width/2), 0), (int(width/2), 480), (255, 255, 0), 2)
     cv2.line(frame, (0, int(height/2)), (640, int(height/2)), (255, 255, 0), 2)
     cv2.imshow("Human", frame)
-    if x_medium < center - 40:
+    if x_medium < center - 30:
         angle = angle + 1
         duty = angle / 27 + 2
         pwm.ChangeDutyCycle(duty)
-    elif x_medium > center + 20:
+    elif x_medium > center + 30:
         angle = angle - 1
         duty = angle / 27 + 2
         pwm.ChangeDutyCycle(duty)
