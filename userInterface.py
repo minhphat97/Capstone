@@ -51,7 +51,8 @@ root.columnconfigure(0, weight=1)
 frame1 = tk.Frame(root)
 frame2 = tk.Frame(root)
 frame3 = tk.Frame(root)
-for frame in (frame1, frame2, frame3):
+frame4 = tk.Frame(root)
+for frame in (frame1, frame2, frame3, frame4):
     frame.grid(row=0, column=0, sticky='nsew')
 
 #============================================Frame 1 code============================================
@@ -66,7 +67,10 @@ canvas.create_rectangle(3, 3, 1075, 556, outline = "lightpink2", width = 60)
 frame1_btn = tk.Button(frame1, text='PAGE 1', command=lambda:show_frame(frame2), bg='cyan2', compound = LEFT)
 frame1_btn.place(x=408, y=530)
 frame1_btn_2 = tk.Button(frame1, text='PAGE 2', command=lambda:show_frame(frame3), bg='cyan2', compound = LEFT)
-frame1_btn_2.place(x=590, y=530)
+frame1_btn_2.place(x=500, y=530)
+frame1_btn_3 = tk.Button(frame1, text='PAGE 3', command=lambda:show_frame(frame4), bg='cyan2', compound = LEFT)
+frame1_btn_3.place(x=592, y=530)
+
 
 date = dt.datetime.now()
 label = Label(frame1, text=f"{date:%A, %B %d, %Y}", font="Calibri, 20")
@@ -168,12 +172,5 @@ Button(tool_bar, text="Webcam", image=webcam_image, command=open_camera, bg='aqu
 Button(tool_bar, text="Home", image=home_image, command=lambda:show_frame(frame1), bg='dodgerblue1', width = 50).grid(row=3, column=0, padx=5, pady=3, ipadx=10)
 back_image=PhotoImage(file='back.png')
 Button(tool_bar, text="Back", image=back_image, command=lambda:show_frame(frame2), bg='khaki1', width = 50).grid(row=4, column=0, padx=5, pady=3, ipadx=10)
-
-
-
-
-
-
-
 
 root.mainloop()
