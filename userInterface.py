@@ -92,7 +92,7 @@ image = PhotoImage(file="ironfoot.png")
 original_image = image.subsample(3,3)  # resize image using subsample
 
 Label(left_frame, image=original_image).grid(row=0, column=0, padx=5, pady=5)
-image2 = PhotoImage(file="netImage.png")
+image2 = PhotoImage(file="netImage.png") #760x532
 
 canvas = Canvas(right_frame, bg = "green", height = 532, width = 760)
 canvas.pack(padx = 5, pady = 5)
@@ -173,4 +173,35 @@ Button(tool_bar, text="Home", image=home_image, command=lambda:show_frame(frame1
 back_image=PhotoImage(file='back.png')
 Button(tool_bar, text="Back", image=back_image, command=lambda:show_frame(frame2), bg='khaki1', width = 50).grid(row=4, column=0, padx=5, pady=3, ipadx=10)
 
+#==============================================Frame 4 code=========================================
+frame4.config(bg="pink")  # specify background color
+left_frame = Frame(frame4, width=200, height=400, bg='pink')
+left_frame.grid(row=0, column=0, padx=10, pady=10)
+
+right_frame = Frame(frame4, width=650, height=400, bg='pink')
+right_frame.grid(row=0, column=1, padx=10, pady=10)
+
+image = PhotoImage(file="ironfoot.png")
+original_image = image.subsample(3,3)  # resize image using subsample
+Label(left_frame, image=original_image).grid(row=0, column=0, padx=5, pady=5)
+
+image4 = PhotoImage(file="soccerfield.png") #760x532
+canvas = Canvas(right_frame, bg = "green", height = 532, width = 760)
+canvas.pack(padx = 5, pady = 5)
+canvas.create_image(0, 0, anchor=NW, image=image4)
+
+tool_bar = Frame(left_frame, width=180, height=185, bg='pink')
+tool_bar.grid(row=2, column=0, padx=5, pady=5)
+textbox = Text(left_frame, width=20, height=10)
+exit_image=PhotoImage(file='exit.png')
+Button(tool_bar, text="Exit", image=exit_image,command=root.quit, bg='red3', width = 50).grid(row=0, column=0, padx=5, pady=3, ipadx=10) 
+reset_image=PhotoImage(file='reset.png')
+Button(tool_bar, text="Reset", image=reset_image, command=reset, bg='aquamarine', width = 50).grid(row=1, column=0, padx=5, pady=3, ipadx=10)
+home_image=PhotoImage(file = "home.png")
+Button(tool_bar, text="Home", image=home_image, command=lambda:show_frame(frame1), bg='dodgerblue1', width = 50).grid(row=2, column=0, padx=5, pady=3, ipadx=10)
+next_image=PhotoImage(file = "next.png")
+Button(tool_bar, text="Next", image=next_image, command=lambda:show_frame(frame3), bg='khaki1', width = 50).grid(row=3, column=0, padx=5, pady=3, ipadx=10)
+
+Label(tool_bar, text="PERFORMANCE RATE:",font=("Comic Sans MS", 15, "bold"),bg='pink').grid(row=4, column=0, padx=5, pady=3, ipadx=10)
+textbox.grid(row=5, column=0, padx=5, pady=3, ipadx=10)
 root.mainloop()
