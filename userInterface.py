@@ -21,10 +21,14 @@ def show_frame(frame):
 # y_ball_2 = 500
 X = []
 Y = []
+X_player = []
+Y_player = []
 with open('outputtest.csv') as file:
     for row in file:
         X.append(row.split(",")[0])
         Y.append(row.split(",")[1])
+        X_player.append(row.split(",")[0])
+        Y_player.append(row.split(",")[1])
 
 # for x in range(len(X)):
 #     print (X[x])
@@ -169,7 +173,7 @@ def open_camera():
 #Button(tool_bar, text="Open Camera", command=open_camera, bg='aquamarine').grid(row=2, column=0, padx=5, pady=3, ipadx=10)
 webcam_image=PhotoImage(file='webcam.png')
 Button(tool_bar, text="Webcam", image=webcam_image, command=open_camera, bg='aqua', width = 50).grid(row=2, column=0, padx=5, pady=3, ipadx=10)
-Button(tool_bar, text="Home", image=home_image, command=lambda:show_frame(frame1), bg='dodgerblue1', width = 50).grid(row=3, column=0, padx=5, pady=3, ipadx=10)
+Button(tool_bar, text="Next", image=next_image, command=lambda:show_frame(frame4), bg='dodgerblue1', width = 50).grid(row=3, column=0, padx=5, pady=3, ipadx=10)
 back_image=PhotoImage(file='back.png')
 Button(tool_bar, text="Back", image=back_image, command=lambda:show_frame(frame2), bg='khaki1', width = 50).grid(row=4, column=0, padx=5, pady=3, ipadx=10)
 
@@ -181,8 +185,6 @@ left_frame.grid(row=0, column=0, padx=10, pady=10)
 right_frame = Frame(frame4, width=650, height=400, bg='pink')
 right_frame.grid(row=0, column=1, padx=10, pady=10)
 
-image = PhotoImage(file="ironfoot.png")
-original_image = image.subsample(3,3)  # resize image using subsample
 Label(left_frame, image=original_image).grid(row=0, column=0, padx=5, pady=5)
 
 image4 = PhotoImage(file="soccerfield.png") #760x532
@@ -190,18 +192,17 @@ canvas = Canvas(right_frame, bg = "green", height = 532, width = 760)
 canvas.pack(padx = 5, pady = 5)
 canvas.create_image(0, 0, anchor=NW, image=image4)
 
+for i in range(len(X_player)):
+   canvas.create_oval(float(X_player[i])-radius, float(Y_player[i])-radius, float(X_player[i])+radius, float(Y_player[i])+radius, outline="blue", width=3)
+
 tool_bar = Frame(left_frame, width=180, height=185, bg='pink')
 tool_bar.grid(row=2, column=0, padx=5, pady=5)
 textbox = Text(left_frame, width=20, height=10)
-exit_image=PhotoImage(file='exit.png')
-Button(tool_bar, text="Exit", image=exit_image,command=root.quit, bg='red3', width = 50).grid(row=0, column=0, padx=5, pady=3, ipadx=10) 
-reset_image=PhotoImage(file='reset.png')
-Button(tool_bar, text="Reset", image=reset_image, command=reset, bg='aquamarine', width = 50).grid(row=1, column=0, padx=5, pady=3, ipadx=10)
-home_image=PhotoImage(file = "home.png")
-Button(tool_bar, text="Home", image=home_image, command=lambda:show_frame(frame1), bg='dodgerblue1', width = 50).grid(row=2, column=0, padx=5, pady=3, ipadx=10)
-next_image=PhotoImage(file = "next.png")
-Button(tool_bar, text="Next", image=next_image, command=lambda:show_frame(frame3), bg='khaki1', width = 50).grid(row=3, column=0, padx=5, pady=3, ipadx=10)
 
-Label(tool_bar, text="PERFORMANCE RATE:",font=("Comic Sans MS", 15, "bold"),bg='pink').grid(row=4, column=0, padx=5, pady=3, ipadx=10)
-textbox.grid(row=5, column=0, padx=5, pady=3, ipadx=10)
+Button(tool_bar, text="Exit", image=exit_image,command=root.quit, bg='red3', width = 50).grid(row=0, column=0, padx=5, pady=3, ipadx=10) 
+Button(tool_bar, text="Reset", image=reset_image, command=reset, bg='aquamarine', width = 50).grid(row=1, column=0, padx=5, pady=3, ipadx=10)
+Button(tool_bar, text="Home", image=home_image, command=lambda:show_frame(frame1), bg='dodgerblue1', width = 50).grid(row=2, column=0, padx=5, pady=3, ipadx=10)
+Button(tool_bar, text="Back", image=back_image, command=lambda:show_frame(frame3), bg='khaki1', width = 50).grid(row=3, column=0, padx=5, pady=3, ipadx=10)
+
+Label(tool_bar, text="PLAYER POSITION",font=("Comic Sans MS", 15, "bold"),bg='pink').grid(row=4, column=0, padx=5, pady=3, ipadx=10)
 root.mainloop()
