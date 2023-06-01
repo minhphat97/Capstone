@@ -14,16 +14,12 @@ while True:
         imlist = hand[0]
         if imlist:
             fingerup = detector.fingersUp(imlist)
-            if fingerup == [0, 1, 0, 0, 0]:
+            if fingerup == [1, 1, 0, 0, 1]:
                 print("It s 1")
-            if fingerup == [0, 1, 1, 0, 0]:
+            elif fingerup == [0, 1, 1, 0, 0]:
                 print("It s 2")
-            if fingerup == [0, 1, 1, 1, 0]:
+            elif fingerup == [0, 1, 1, 1, 0]:
                 print("It s 3")
-            if fingerup == [0, 1, 1, 1, 1]:
-                print("It s 4")
-            if fingerup == [1, 1, 1, 1, 1]:
-                print("It s 5")
     
     # fing = cv2.resize(fing, (220, 180))
     # img[50:330, 20:240] = fing

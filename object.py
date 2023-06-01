@@ -22,7 +22,6 @@ angle = 90 #set angle Servo
 duty = angle / 27 + 2
 pwm.ChangeDutyCycle(duty) 
 
-
 object_detector = cv2.createBackgroundSubtractorMOG2(history=10, varThreshold=5)
 while(True):
     ret, frame = cap.read()
