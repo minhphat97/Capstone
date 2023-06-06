@@ -1,9 +1,9 @@
 import cv2
 import pathlib
 import time
-DECLARED_LEN = 70
+DECLARED_LEN = 60
 DECLARED_WID = 14.3
-focal_length_found = (140 * 60) / 14.3
+focal_length_found = (140 * DECLARED_LEN) / DECLARED_WID
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 WHITE = (255, 255, 255)

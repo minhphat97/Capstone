@@ -2,7 +2,22 @@ import numpy as np
 import cv2
 import RPi.GPIO as GPIO
 import time
+import math
+from csv import writer
 from cvzone.HandTrackingModule import HandDetector
+
+DECLARED_LEN = 60
+DECLARED_WID = 14.3
+focal_length_found = (140 * DECLARED_LEN) / DECLARED_WID
+GREEN = (0, 255, 0)
+RED = (255, 0, 0)
+WHITE = (255, 255, 255)
+fonts = cv2.FONT_HERSHEY_COMPLEX
+
+def distance_finder(focal_length, real_face_width, face_width_in_frame):  
+    distance = (real_face_width * focal_length) / face_width_in_frame  
+    return distance
+
 GPIO.setwarnings(False)
 servo_pin = 17
 GPIO.setmode(GPIO.BCM)
@@ -38,6 +53,10 @@ while(True):
         x_medium = int((x + x + w) / 2)
         y_medium = int((y + y + h) / 2)
         break
+
+    Distance = distance_finder(focal_length_found, DECLARED_WID, w)
+    cv2.putText(frame, f"Distance = {round(Distance,2)} CM", (50, 50), fonts, 1, (WHITE), 2) 
+
     
     new_x_medium = x_medium
     if hand:
