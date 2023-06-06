@@ -5,7 +5,7 @@ import time
 cascade_path = pathlib.Path(cv2.__file__).parent.absolute() / "data/haarcascade_frontalface_default.xml"
 print(cascade_path)
 clf = cv2.CascadeClassifier(str(cascade_path))
-camera = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+camera = cv2.VideoCapture(0)
 fgbg = cv2.createBackgroundSubtractorMOG2()
 # camera.set(3, 1920) # [640, 480], [1280, 720], [1920, 1080] 
 # camera.set(4, 1080)

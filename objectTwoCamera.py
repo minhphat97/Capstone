@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 import time
 
-cap1 = cv2.VideoCapture(2) # First webcam
+cap1 = cv2.VideoCapture(1) # First webcam
 cap2 = cv2.VideoCapture(0) # Second webcam
 
 fgbg = cv2.createBackgroundSubtractorMOG2()
