@@ -40,6 +40,7 @@ duty = angle / 27 + 2
 pwm.ChangeDutyCycle(duty) 
 
 object_detector = cv2.createBackgroundSubtractorMOG2(history=10, varThreshold=5)
+flag = 3
 while(True):
     ret, frame = cap.read()
     height, width, _ = frame.shape
@@ -57,18 +58,26 @@ while(True):
     Distance = distance_finder(focal_length_found, DECLARED_WID, w)
     cv2.putText(frame, f"Distance = {round(Distance,2)} CM", (50, 50), fonts, 1, (WHITE), 2) 
 
-    
-    #new_x_medium = x_medium
     if hand:
         imlist = hand[0]
         if imlist:
             fingerup = detector.fingersUp(imlist)
             if fingerup == [1, 1, 0, 0, 1]:
                 new_x_medium = x_medium + 20
+                flag = 1
             elif fingerup == [0, 1, 1, 0, 0]:
                 new_x_medium = x_medium - 20
+                flag = 2
             elif fingerup == [0, 1, 1, 1, 0]:
                 new_x_medium = x_medium
+                flag = 3
+
+    if flag == 1:
+        new_x_medium = x_medium + 20
+    elif flag == 2:
+        new_x_medium = x_medium - 20
+    elif flag == 3:
+        new_x_medium = x_medium
 
     cv2.line(frame, (new_x_medium, 0), (new_x_medium, 480), (255, 255, 0), 2)
     cv2.line(frame, (0, y_medium), (640, y_medium), (255, 255, 0), 2)
