@@ -65,16 +65,10 @@ while(True):
             fingerup = detector.fingersUp(imlist)
             if fingerup == [1, 1, 0, 0, 1]:
                 new_x_medium = x_medium + 20
-                print("It s 1")
-                print("New value: ", new_x_medium)
             elif fingerup == [0, 1, 1, 0, 0]:
                 new_x_medium = x_medium - 20
-                print("It s 2")
-                print("New value: ", new_x_medium)
             elif fingerup == [0, 1, 1, 1, 0]:
                 new_x_medium = x_medium
-                print("It s 3")
-                print("New value: ", new_x_medium)
 
     cv2.line(frame, (new_x_medium, 0), (new_x_medium, 480), (255, 255, 0), 2)
     cv2.line(frame, (0, y_medium), (640, y_medium), (255, 255, 0), 2)
