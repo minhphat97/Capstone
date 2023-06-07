@@ -6,6 +6,7 @@ import math
 from csv import writer
 from cvzone.HandTrackingModule import HandDetector
 
+position_laucnher_x_direction = 30
 DECLARED_LEN = 60
 DECLARED_WID = 14.3
 focal_length_found = (140 * DECLARED_LEN) / DECLARED_WID
@@ -96,10 +97,21 @@ while(True):
         angle = angle
         duty = angle / 27 + 2
         pwm.ChangeDutyCycle(duty)
+
+    if angle >= 90:
+        new_angle = abs(angle - 90)
+        position_player_x_direction = (math.sin(math.radian(new_angle)) * Distance) + position_laucnher_x_direction
+        position_player_y_direction = math.cos(math.radian(new_angle)) * Distance
+    else:
+        new_angle = abs(90 - angle)
+        position_player_x_direction = position_laucnher_x_direction - (math.sin(math.radian(new_angle)) * Distance) 
+        position_player_y_direction = math.cos(math.radian(new_angle)) * Distance
+
+
     # print("Servo Angle is: ", angle)
     # print("Human Center is: ", new_x_medium)
     # print("Frame Center is: ", center)
-    print()
+
     if cv2.waitKey(1) == ord("q"):
         break
 cap.release()
