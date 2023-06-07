@@ -58,7 +58,7 @@ while(True):
     cv2.putText(frame, f"Distance = {round(Distance,2)} CM", (50, 50), fonts, 1, (WHITE), 2) 
 
     
-    new_x_medium = x_medium
+    #new_x_medium = x_medium
     if hand:
         imlist = hand[0]
         if imlist:
@@ -93,9 +93,9 @@ while(True):
         angle = angle
         duty = angle / 27 + 2
         pwm.ChangeDutyCycle(duty)
-    print("Servo Angle is: ", angle)
-    print("Human Center is: ", new_x_medium)
-    print("Frame Center is: ", center)
+    # print("Servo Angle is: ", angle)
+    # print("Human Center is: ", new_x_medium)
+    # print("Frame Center is: ", center)
     print()
     if cv2.waitKey(1) == ord("q"):
         break
