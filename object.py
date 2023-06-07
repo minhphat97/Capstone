@@ -1,6 +1,6 @@
 import numpy as np
 import cv2
-import RPi.GPIO as GPIO
+import Jetson.GPIO as GPIO
 import time
 import math
 from csv import writer
@@ -19,14 +19,14 @@ def distance_finder(focal_length, real_face_width, face_width_in_frame):
     return distance
 
 GPIO.setwarnings(False)
-servo_pin = 17
+servo_pin = 13
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(servo_pin,GPIO.OUT)
 pwm = GPIO.PWM(servo_pin,50) 
 print("Starting at zero...")
 pwm.start(5) 
 
-cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+cap = cv2.VideoCapture(0)
 detector = HandDetector(maxHands=1, detectionCon=0.8)
 fgbg = cv2.createBackgroundSubtractorMOG2()
 hog = cv2.HOGDescriptor()
@@ -38,6 +38,10 @@ y_medium = 0
 angle = 90 #set angle Servo
 duty = angle / 27 + 2
 pwm.ChangeDutyCycle(duty) 
+x = 0
+y = 0
+w = 1
+h = 0
 
 object_detector = cv2.createBackgroundSubtractorMOG2(history=10, varThreshold=5)
 while(True):
@@ -45,8 +49,8 @@ while(True):
     height, width, _ = frame.shape
     center = int(width/2)
     boxes, weights = hog.detectMultiScale(frame,winStride=(8, 8), padding=(4, 4),scale=1.05)
-    img = cv2.flip(img, 1)
-    hand = detector.findHands(img, draw=False)
+    frame = cv2.flip(frame, 1)
+    hand = detector.findHands(frame, draw=False)
     for (x, y, w, h) in boxes:
         pad_w, pad_h = int(0.15 * w), int(0.01 * h)
         cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 255, 0), 2)
@@ -101,3 +105,5 @@ while(True):
         break
 cap.release()
 cv2.destroyAllWindows()
+
+

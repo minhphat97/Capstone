@@ -30,7 +30,7 @@ def face_data(image):
         face_width = w
     return face_width
 
-cap = cv2.VideoCapture(0,cv2.CAP_DSHOW)
+cap = cv2.VideoCapture(0)
 while True:
     ret, frame = cap.read()
     face_width_in_frame = face_data(frame)
