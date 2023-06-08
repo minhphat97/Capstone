@@ -28,6 +28,7 @@ print("Starting at zero...")
 pwm.start(5) 
 
 cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+cap2 = cv2.VideoCapture(1, cv2.CAP_DSHOW)
 detector = HandDetector(maxHands=1, detectionCon=0.8)
 fgbg = cv2.createBackgroundSubtractorMOG2()
 hog = cv2.HOGDescriptor()
@@ -44,6 +45,7 @@ object_detector = cv2.createBackgroundSubtractorMOG2(history=10, varThreshold=5)
 flag = 3
 while(True):
     ret, frame = cap.read()
+    ret2, frame2 = cap.read()
     height, width, _ = frame.shape
     center = int(width/2)
     boxes, weights = hog.detectMultiScale(frame,winStride=(8, 8), padding=(4, 4),scale=1.05)
@@ -85,6 +87,8 @@ while(True):
     cv2.line(frame, (int(width/2), 0), (int(width/2), 480), (255, 255, 0), 2)
     cv2.line(frame, (0, int(height/2)), (640, int(height/2)), (255, 255, 0), 2)
     cv2.imshow("Human", frame)
+    cv2.imshow("Ball", frame2)
+
     if new_x_medium < center - 30:
         angle = angle + 1
         duty = angle / 27 + 2
