@@ -28,7 +28,7 @@ try:
         print("Setting to 90...")
         angle = 90
         duty = angle / 27 + 2
-        pwm.ChangeDutyCycle(8) 
+        pwm.ChangeDutyCycle(duty) 
         time.sleep(3)
 
 except KeyboardInterrupt:
