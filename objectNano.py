@@ -25,7 +25,7 @@ def distance_finder(focal_length, real_face_width, face_width_in_frame):
     return distance
 
 cap = cv2.VideoCapture(0)
-cap2 = cv2.VideoCapture(1)
+# cap2 = cv2.VideoCapture(1)
 detector = HandDetector(maxHands=1, detectionCon=0.8)
 fgbg = cv2.createBackgroundSubtractorMOG2()
 hog = cv2.HOGDescriptor()
@@ -53,7 +53,7 @@ flag = 3
 kernel = np.ones((5, 5), np.uint8)
 while(True):
     ret, frame = cap.read()
-    ret2, frame2 = cap2.read()
+    #ret2, frame2 = cap2.read()
     height, width, _ = frame.shape
     center = int(width/2)
     boxes, weights = hog.detectMultiScale(frame,winStride=(8, 8), padding=(4, 4),scale=1.05)
@@ -109,31 +109,31 @@ while(True):
 
 
     
-    if radius >= 30.00 and radius <= 50.00:
-        result, image = cap.read()
-        if result == True:
-            Distance = distance_finder(focal_length_found, DECLARED_WID, w)
-            if rot_angle >= 90:
-                new_angle = abs(rot_angle - 90)
-                position_player_x_direction = (math.sin(math.radian(new_angle)) * Distance) + position_laucnher_x_direction
-                position_player_y_direction = math.cos(math.radian(new_angle)) * Distance
-            else:
-                new_angle = abs(90 - rot_angle)
-                position_player_x_direction = position_laucnher_x_direction - (math.sin(math.radian(new_angle)) * Distance) 
-                position_player_y_direction = math.cos(math.radian(new_angle)) * Distance
+    # if radius >= 30.00 and radius <= 50.00:
+    #     result, image = cap.read()
+    #     if result == True:
+    #         Distance = distance_finder(focal_length_found, DECLARED_WID, w)
+    #         if rot_angle >= 90:
+    #             new_angle = abs(rot_angle - 90)
+    #             position_player_x_direction = (math.sin(math.radian(new_angle)) * Distance) + position_laucnher_x_direction
+    #             position_player_y_direction = math.cos(math.radian(new_angle)) * Distance
+    #         else:
+    #             new_angle = abs(90 - rot_angle)
+    #             position_player_x_direction = position_laucnher_x_direction - (math.sin(math.radian(new_angle)) * Distance) 
+    #             position_player_y_direction = math.cos(math.radian(new_angle)) * Distance
 
-            cv2.imshow("Ball", image)
-            print ("X: ", x_ball)
-            print ("Y: ", y_ball)
-            List = [x_ball, y_ball, position_player_x_direction, position_player_y_direction]
-            with open("outputtest.csv", 'a', newline='') as csvfile:
-                writer_object = writer(csvfile)
-                writer_object.writerow(List)
-                csvfile.close()
+    #         cv2.imshow("Ball", image)
+    #         print ("X: ", x_ball)
+    #         print ("Y: ", y_ball)
+    #         List = [x_ball, y_ball, position_player_x_direction, position_player_y_direction]
+    #         with open("outputtest.csv", 'a', newline='') as csvfile:
+    #             writer_object = writer(csvfile)
+    #             writer_object.writerow(List)
+    #             csvfile.close()
 
 
     cv2.imshow("Human", frame)
-    cv2.imshow("Ball", frame2)
+    # cv2.imshow("Ball", frame2)
     if cv2.waitKey(1) == ord("q"):
         break
 cap.release()

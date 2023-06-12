@@ -3,30 +3,48 @@ import time
 servo_pin = 0
 kit = ServoKit(channels=16)
 while True:
-    kit.servo[servo_pin].angle=0
-    print("Angle is 0")
-    time.sleep(3)
-    kit.servo[servo_pin].angle=5
-    print("Angle is 5")
-    time.sleep(3)
-    kit.servo[servo_pin].angle=10
-    print("Angle is 10")
-    time.sleep(3)
-    kit.servo[servo_pin].angle=15
-    print("Angle is 15")
-    time.sleep(3)
-    kit.servo[servo_pin].angle=20
-    print("Angle is 20")
-    time.sleep(3)
-    kit.servo[servo_pin].angle=25
-    print("Angle is 25")
-    time.sleep(3)
-    kit.servo[servo_pin].angle=90
-    print("Angle is 90")
-    time.sleep(3)
-    kit.servo[servo_pin].angle=180
-    print("Angle is 180")
-    time.sleep(3)
+    # kit.servo[servo_pin].angle=0
+    # print("Angle is 0")
+    # time.sleep(3)
+    i = 90 # angle
+    direction = 0 # 0 is positive, 1 is negative
+    step = 10 # change in angle
+    while True:
+        kit.servo[servo_pin].angle=i
+        result = f'Angle is {i}'
+        print(result)
+        time.sleep(1)
+        if i >= 180:
+            direction = 1
+        elif i <= 0:
+            direction = 0
+        
+        if direction == 0:
+            i = i + step
+        elif direction >= 1:
+            i = i - step
+
+    # kit.servo[servo_pin].angle=5
+    # print("Angle is 5")
+    # time.sleep(3)
+    # kit.servo[servo_pin].angle=10
+    # print("Angle is 10")
+    # time.sleep(3)
+    # kit.servo[servo_pin].angle=15
+    # print("Angle is 15")
+    # time.sleep(3)
+    # kit.servo[servo_pin].angle=20
+    # print("Angle is 20")
+    # time.sleep(3)
+    # kit.servo[servo_pin].angle=25
+    # print("Angle is 25")
+    # time.sleep(3)
+    # kit.servo[servo_pin].angle=90
+    # print("Angle is 90")
+    # time.sleep(3)
+    # kit.servo[servo_pin].angle=180
+    # print("Angle is 180")
+    # time.sleep(3) 
 
 # # import time
 # # from adafruit_servokit import ServoKit
