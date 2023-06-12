@@ -43,8 +43,8 @@ y_ball = 0
 rot_angle = 90
 kit.servo[servo_pin].angle=rot_angle
 print("ANGLE IS 90")
-print("SLEEPING FOR 15 S")
-time.sleep(15)
+print("SLEEPING FOR 5 S")
+time.sleep(5)
 
 lower_range = np.array([30, 50, 50])
 upper_range = np.array([80, 255, 255])
@@ -59,36 +59,37 @@ while(True):
     boxes, weights = hog.detectMultiScale(frame,winStride=(8, 8), padding=(4, 4),scale=1.05)
     frame = cv2.flip(frame, 1)
     hand = detector.findHands(frame, draw=False)
-    hsv = cv2.cvtColor(frame2, cv2.COLOR_BGR2HSV)
+    # hsv = cv2.cvtColor(frame2, cv2.COLOR_BGR2HSV)
     for (x, y, w, h) in boxes:
+        cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 255, 0), 2)
         x_medium = int((x + x + w) / 2)
         y_medium = int((y + y + h) / 2)
         break
 
     # Distance = distance_finder(focal_length_found, DECLARED_WID, w)
  
-    mask = cv2.inRange(hsv, lower_range, upper_range)
-    mask = cv2.erode(mask, kernel, iterations=2)
-    mask = cv2.dilate(mask, kernel, iterations=2)
-    contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-    if len(contours) > 0:
-        contour_sizes = [(cv2.contourArea(contour), contour) for contour in contours]
-        largest_contour = max(contour_sizes, key=lambda x: x[0])[1]
-        (x_ball, y_ball), radius = cv2.minEnclosingCircle(largest_contour)
-        radius = int(radius)
+    # mask = cv2.inRange(hsv, lower_range, upper_range)
+    # mask = cv2.erode(mask, kernel, iterations=2)
+    # mask = cv2.dilate(mask, kernel, iterations=2)
+    # contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    # if len(contours) > 0:
+    #     contour_sizes = [(cv2.contourArea(contour), contour) for contour in contours]
+    #     largest_contour = max(contour_sizes, key=lambda x: x[0])[1]
+    #     (x_ball, y_ball), radius = cv2.minEnclosingCircle(largest_contour)
+    #     radius = int(radius)
     if hand:
         imlist = hand[0]
         if imlist:
             fingerup = detector.fingersUp(imlist)
             if fingerup == [1, 1, 0, 0, 1]:
                 flag = 1
-                #print("detect 1")
+                print("detect 1")
             elif fingerup == [0, 1, 1, 0, 0]:
                 flag = 2
-                #print("detect 2")
+                print("detect 2")
             elif fingerup == [0, 1, 1, 1, 0]:
                 flag = 3
-                #print("detect 3")
+                print("detect 3")
 
     if flag == 1:
         x_medium = x_medium + 20
@@ -98,9 +99,17 @@ while(True):
         x_medium = x_medium
 
     if x_medium < center - 90:
+        if rot_angle >=180:
+            rot_angle = 178
+        elif rot_angle <= 0:
+            rot_angle = 2
         rot_angle = rot_angle + 2
         kit.servo[servo_pin].angle=rot_angle    
     elif x_medium > center + 90:
+        if rot_angle >=180:
+            rot_angle = 178
+        elif rot_angle <= 0:
+            rot_angle = 2
         rot_angle = rot_angle - 2
         kit.servo[servo_pin].angle=rot_angle
     else:
