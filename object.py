@@ -86,8 +86,6 @@ while(True):
     cv2.line(frame, (0, y_medium), (640, y_medium), (255, 255, 0), 2)
     cv2.line(frame, (int(width/2), 0), (int(width/2), 480), (255, 255, 0), 2)
     cv2.line(frame, (0, int(height/2)), (640, int(height/2)), (255, 255, 0), 2)
-    cv2.imshow("Human", frame)
-    cv2.imshow("Ball", frame2)
 
     if new_x_medium < center - 30:
         angle = angle + 1
@@ -112,10 +110,8 @@ while(True):
         position_player_y_direction = math.cos(math.radian(new_angle)) * Distance
 
 
-    # print("Servo Angle is: ", angle)
-    # print("Human Center is: ", new_x_medium)
-    # print("Frame Center is: ", center)
-
+    cv2.imshow("Human", frame)
+    cv2.imshow("Ball", frame2)
     if cv2.waitKey(1) == ord("q"):
         break
 cap.release()

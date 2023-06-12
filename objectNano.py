@@ -18,17 +18,11 @@ soccer_ball_distance = 1.5
 soccer_ball_diameter = 0.22
 radius = 0
 
+servo_pin = 0
+kit = ServoKit(channels=16)
 def distance_finder(focal_length, real_face_width, face_width_in_frame):  
     distance = (real_face_width * focal_length) / face_width_in_frame  
     return distance
-
-# GPIO.setwarnings(False)
-# servo_pin = 17
-# GPIO.setmode(GPIO.BCM)
-# GPIO.setup(servo_pin,GPIO.OUT)
-# pwm = GPIO.PWM(servo_pin,50) 
-# print("Starting at zero...")
-# pwm.start(5) 
 
 cap = cv2.VideoCapture(0)
 cap2 = cv2.VideoCapture(1)
@@ -44,9 +38,14 @@ x = 0
 y = 0
 w = 1
 h = 0
-# angle = 90 #set angle Servo
-# duty = angle / 27 + 2
-# pwm.ChangeDutyCycle(duty) 
+x_ball = 0
+y_ball = 0
+rot_angle = 90
+kit.servo[servo_pin].angle=rot_angle
+print("ANGLE IS 90")
+print("SLEEPING FOR 15 S")
+time.sleep(15)
+
 lower_range = np.array([30, 50, 50])
 upper_range = np.array([80, 255, 255])
 object_detector = cv2.createBackgroundSubtractorMOG2(history=10, varThreshold=5)
@@ -75,63 +74,66 @@ while(True):
     if len(contours) > 0:
         contour_sizes = [(cv2.contourArea(contour), contour) for contour in contours]
         largest_contour = max(contour_sizes, key=lambda x: x[0])[1]
-        (x, y), radius = cv2.minEnclosingCircle(largest_contour)
-        center = (int(x), int(y))
+        (x_ball, y_ball), radius = cv2.minEnclosingCircle(largest_contour)
         radius = int(radius)
-        cv2.circle(frame2, center, radius, (0, 255, 0), 2)
-        ball_size = radius * 2
-        distance = (2*radius*soccer_ball_distance) / (soccer_ball_diameter)
     if hand:
         imlist = hand[0]
         if imlist:
             fingerup = detector.fingersUp(imlist)
             if fingerup == [1, 1, 0, 0, 1]:
-                new_x_medium = x_medium + 20
                 flag = 1
-                print("detect 1")
+                #print("detect 1")
             elif fingerup == [0, 1, 1, 0, 0]:
-                new_x_medium = x_medium - 20
                 flag = 2
-                print("detect 2")
+                #print("detect 2")
             elif fingerup == [0, 1, 1, 1, 0]:
-                new_x_medium = x_medium
                 flag = 3
-                print("detect 3")
+                #print("detect 3")
 
     if flag == 1:
-        new_x_medium = x_medium + 20
+        x_medium = x_medium + 20
     elif flag == 2:
-        new_x_medium = x_medium - 20
+        x_medium = x_medium - 20
     elif flag == 3:
-        new_x_medium = x_medium
+        x_medium = x_medium
+
+    if x_medium < center - 90:
+        rot_angle = rot_angle + 2
+        kit.servo[servo_pin].angle=rot_angle    
+    elif x_medium > center + 90:
+        rot_angle = rot_angle - 2
+        kit.servo[servo_pin].angle=rot_angle
+    else:
+        rot_angle = rot_angle
+        kit.servo[servo_pin].angle=rot_angle
+
+
+    
+    if radius >= 30.00 and radius <= 50.00:
+        result, image = cap.read()
+        if result == True:
+            Distance = distance_finder(focal_length_found, DECLARED_WID, w)
+            if rot_angle >= 90:
+                new_angle = abs(rot_angle - 90)
+                position_player_x_direction = (math.sin(math.radian(new_angle)) * Distance) + position_laucnher_x_direction
+                position_player_y_direction = math.cos(math.radian(new_angle)) * Distance
+            else:
+                new_angle = abs(90 - rot_angle)
+                position_player_x_direction = position_laucnher_x_direction - (math.sin(math.radian(new_angle)) * Distance) 
+                position_player_y_direction = math.cos(math.radian(new_angle)) * Distance
+
+            cv2.imshow("Ball", image)
+            print ("X: ", x_ball)
+            print ("Y: ", y_ball)
+            List = [x_ball, y_ball, position_player_x_direction, position_player_y_direction]
+            with open("outputtest.csv", 'a', newline='') as csvfile:
+                writer_object = writer(csvfile)
+                writer_object.writerow(List)
+                csvfile.close()
 
 
     cv2.imshow("Human", frame)
     cv2.imshow("Ball", frame2)
-
-    # if new_x_medium < center - 30:
-    #     angle = angle + 1
-    #     duty = angle / 27 + 2
-    #     pwm.ChangeDutyCycle(duty)
-    # elif new_x_medium > center + 30:
-    #     angle = angle - 1
-    #     duty = angle / 27 + 2
-    #     pwm.ChangeDutyCycle(duty)
-    # else:
-    #     angle = angle
-    #     duty = angle / 27 + 2
-    #     pwm.ChangeDutyCycle(duty)
-
-    # if angle >= 90:
-    #     new_angle = abs(angle - 90)
-    #     position_player_x_direction = (math.sin(math.radian(new_angle)) * Distance) + position_laucnher_x_direction
-    #     position_player_y_direction = math.cos(math.radian(new_angle)) * Distance
-    # else:
-    #     new_angle = abs(90 - angle)
-    #     position_player_x_direction = position_laucnher_x_direction - (math.sin(math.radian(new_angle)) * Distance) 
-    #     position_player_y_direction = math.cos(math.radian(new_angle)) * Distance
-
-
     if cv2.waitKey(1) == ord("q"):
         break
 cap.release()
