@@ -1,10 +1,10 @@
 import numpy as np
 import cv2
-#import RPi.GPIO as GPIO
 import time
 import math
 from csv import writer
 from cvzone.HandTrackingModule import HandDetector
+from adafruit_servokit import ServoKit
 
 position_laucnher_x_direction = 30
 DECLARED_LEN = 60
@@ -62,16 +62,13 @@ while(True):
     hand = detector.findHands(frame, draw=False)
     hsv = cv2.cvtColor(frame2, cv2.COLOR_BGR2HSV)
     for (x, y, w, h) in boxes:
-        # pad_w, pad_h = int(0.15 * w), int(0.01 * h)
-        # cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 255, 0), 2)
         x_medium = int((x + x + w) / 2)
         y_medium = int((y + y + h) / 2)
         break
 
     # Distance = distance_finder(focal_length_found, DECLARED_WID, w)
-    # cv2.putText(frame, f"Distance = {round(Distance,2)} CM", (50, 50), fonts, 1, (WHITE), 2) 
+ 
     mask = cv2.inRange(hsv, lower_range, upper_range)
-    # kernel = np.ones((5, 5), np.uint8)
     mask = cv2.erode(mask, kernel, iterations=2)
     mask = cv2.dilate(mask, kernel, iterations=2)
     contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
@@ -108,10 +105,7 @@ while(True):
     elif flag == 3:
         new_x_medium = x_medium
 
-    # cv2.line(frame, (new_x_medium, 0), (new_x_medium, 480), (255, 255, 0), 2)
-    # cv2.line(frame, (0, y_medium), (640, y_medium), (255, 255, 0), 2)
-    # cv2.line(frame, (int(width/2), 0), (int(width/2), 480), (255, 255, 0), 2)
-    # cv2.line(frame, (0, int(height/2)), (640, int(height/2)), (255, 255, 0), 2)
+
     cv2.imshow("Human", frame)
     cv2.imshow("Ball", frame2)
 
@@ -137,10 +131,6 @@ while(True):
     #     position_player_x_direction = position_laucnher_x_direction - (math.sin(math.radian(new_angle)) * Distance) 
     #     position_player_y_direction = math.cos(math.radian(new_angle)) * Distance
 
-
-    # print("Servo Angle is: ", angle)
-    # print("Human Center is: ", new_x_medium)
-    # print("Frame Center is: ", center)
 
     if cv2.waitKey(1) == ord("q"):
         break
