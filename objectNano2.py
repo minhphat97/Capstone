@@ -22,6 +22,7 @@ cap.set(4, 480)
 hog = cv2.HOGDescriptor()
 hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
 x_medium_prev = 0
+x_medium = 0
 
 while True:
     ret, frame = cap.read()
