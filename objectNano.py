@@ -26,7 +26,7 @@ def distance_finder(focal_length, real_face_width, face_width_in_frame):
 
 cap = cv2.VideoCapture(0)
 # cap2 = cv2.VideoCapture(1)
-fgbg = cv2.createBackgroundSubtractorMOG2() ##HERE
+#fgbg = cv2.createBackgroundSubtractorMOG2() ##HERE##########################################
 hog = cv2.HOGDescriptor()
 hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
 cap.set(3, 640)
@@ -40,15 +40,15 @@ h = 0
 x_ball = 0
 y_ball = 0
 rot_angle = 90
-kit.servo[servo_pin].angle=rot_angle
+#kit.servo[servo_pin].angle=rot_angle
 print("ANGLE IS 90")
-print("SLEEPING FOR 15 S")
-time.sleep(15)
+print("SLEEPING FOR 3 S")
+time.sleep(2)
 
 lower_range = np.array([30, 50, 50])
 upper_range = np.array([80, 255, 255])
 object_detector = cv2.createBackgroundSubtractorMOG2(history=10, varThreshold=5)
-flag = 3
+flag = 2
 kernel = np.ones((5, 5), np.uint8)
 while(True):
     ret, frame = cap.read()
@@ -56,25 +56,8 @@ while(True):
     height, width, _ = frame.shape
     center = int(width/2)
     boxes, weights = hog.detectMultiScale(frame,winStride=(8, 8), padding=(4, 4),scale=1.05)
-    frame = cv2.flip(frame, 1)
-    #hsv = cv2.cvtColor(frame2, cv2.COLOR_BGR2HSV)
-    for (x, y, w, h) in boxes:
-        x_medium = int((x + x + w) / 2)
-        y_medium = int((y + y + h) / 2)
-        break
 
-    # Distance = distance_finder(focal_length_found, DECLARED_WID, w)
- 
-    # mask = cv2.inRange(hsv, lower_range, upper_range)
-    # mask = cv2.erode(mask, kernel, iterations=2)
-    # mask = cv2.dilate(mask, kernel, iterations=2)
-    # contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-    # if len(contours) > 0:
-    #     contour_sizes = [(cv2.contourArea(contour), contour) for contour in contours]
-    #     largest_contour = max(contour_sizes, key=lambda x: x[0])[1]
-    #     (x_ball, y_ball), radius = cv2.minEnclosingCircle(largest_contour)
-    #     radius = int(radius)
-    
+    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     if keyboard.is_pressed("a"):
         flag = 1
         print("a is pressed")
@@ -84,14 +67,19 @@ while(True):
     elif keyboard.is_pressed("d"):
         flag = 3
         print("d is pressed")
-
-    if flag == 1:
-        x_medium = x_medium + 20
-    elif flag == 2:
-        x_medium = x_medium - 20
-    elif flag == 3:
-        x_medium = x_medium
-
+    for (x, y, w, h) in boxes:
+        if flag == 1:
+            x_medium = int((x + x + w) / 2) - 80
+            y_medium = int((y + y + h) / 2)
+        elif flag == 2:
+            x_medium = int((x + x + w) / 2) 
+            y_medium = int((y + y + h) / 2)
+        elif flag == 3:
+            x_medium = int((x + x + w) / 2) + 80
+            y_medium = int((y + y + h) / 2)  
+        break
+    cv2.line(frame, (x_medium, 0), (x_medium, 480), (255, 255, 0), 2)
+    cv2.line(frame, (0, y_medium), (640, y_medium), (255, 255, 0), 2)
     if x_medium < center - 90:
         rot_angle = rot_angle + 2
         kit.servo[servo_pin].angle=rot_angle    
@@ -108,6 +96,18 @@ while(True):
 
 
 
+    # Distance = distance_finder(focal_length_found, DECLARED_WID, w)
+ 
+    # mask = cv2.inRange(hsv, lower_range, upper_range)
+    # mask = cv2.erode(mask, kernel, iterations=2)
+    # mask = cv2.dilate(mask, kernel, iterations=2)
+    # contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    # if len(contours) > 0:
+    #     contour_sizes = [(cv2.contourArea(contour), contour) for contour in contours]
+    #     largest_contour = max(contour_sizes, key=lambda x: x[0])[1]
+    #     (x_ball, y_ball), radius = cv2.minEnclosingCircle(largest_contour)
+    #     radius = int(radius)
+    
     
     # if radius >= 30.00 and radius <= 50.00:
     #     result, image = cap.read()
