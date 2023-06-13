@@ -3,9 +3,9 @@ import cv2
 import time
 import math
 from csv import writer
-from cvzone.HandTrackingModule import HandDetector
 from adafruit_servokit import ServoKit
 import keyboard
+
 position_laucnher_x_direction = 30
 DECLARED_LEN = 60
 DECLARED_WID = 14.3
