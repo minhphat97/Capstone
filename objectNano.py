@@ -5,7 +5,7 @@ import math
 from csv import writer
 from cvzone.HandTrackingModule import HandDetector
 from adafruit_servokit import ServoKit
-
+import keyboard
 position_laucnher_x_direction = 30
 DECLARED_LEN = 60
 DECLARED_WID = 14.3
@@ -26,8 +26,7 @@ def distance_finder(focal_length, real_face_width, face_width_in_frame):
 
 cap = cv2.VideoCapture(0)
 # cap2 = cv2.VideoCapture(1)
-detector = HandDetector(maxHands=1, detectionCon=0.8)
-fgbg = cv2.createBackgroundSubtractorMOG2()
+fgbg = cv2.createBackgroundSubtractorMOG2() ##HERE
 hog = cv2.HOGDescriptor()
 hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
 cap.set(3, 640)
@@ -36,7 +35,7 @@ x_medium = 0
 y_medium = 0
 x = 0
 y = 0
-w = 1
+w = 0
 h = 0
 x_ball = 0
 y_ball = 0
@@ -58,8 +57,7 @@ while(True):
     center = int(width/2)
     boxes, weights = hog.detectMultiScale(frame,winStride=(8, 8), padding=(4, 4),scale=1.05)
     frame = cv2.flip(frame, 1)
-    hand = detector.findHands(frame, draw=False)
-    hsv = cv2.cvtColor(frame2, cv2.COLOR_BGR2HSV)
+    #hsv = cv2.cvtColor(frame2, cv2.COLOR_BGR2HSV)
     for (x, y, w, h) in boxes:
         x_medium = int((x + x + w) / 2)
         y_medium = int((y + y + h) / 2)
@@ -67,28 +65,25 @@ while(True):
 
     # Distance = distance_finder(focal_length_found, DECLARED_WID, w)
  
-    mask = cv2.inRange(hsv, lower_range, upper_range)
-    mask = cv2.erode(mask, kernel, iterations=2)
-    mask = cv2.dilate(mask, kernel, iterations=2)
-    contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-    if len(contours) > 0:
-        contour_sizes = [(cv2.contourArea(contour), contour) for contour in contours]
-        largest_contour = max(contour_sizes, key=lambda x: x[0])[1]
-        (x_ball, y_ball), radius = cv2.minEnclosingCircle(largest_contour)
-        radius = int(radius)
-    if hand:
-        imlist = hand[0]
-        if imlist:
-            fingerup = detector.fingersUp(imlist)
-            if fingerup == [1, 1, 0, 0, 1]:
-                flag = 1
-                #print("detect 1")
-            elif fingerup == [0, 1, 1, 0, 0]:
-                flag = 2
-                #print("detect 2")
-            elif fingerup == [0, 1, 1, 1, 0]:
-                flag = 3
-                #print("detect 3")
+    # mask = cv2.inRange(hsv, lower_range, upper_range)
+    # mask = cv2.erode(mask, kernel, iterations=2)
+    # mask = cv2.dilate(mask, kernel, iterations=2)
+    # contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    # if len(contours) > 0:
+    #     contour_sizes = [(cv2.contourArea(contour), contour) for contour in contours]
+    #     largest_contour = max(contour_sizes, key=lambda x: x[0])[1]
+    #     (x_ball, y_ball), radius = cv2.minEnclosingCircle(largest_contour)
+    #     radius = int(radius)
+    
+    if keyboard.is_pressed("a"):
+        flag = 1
+        print("a is pressed")
+    elif keyboard.is_pressed("s"):
+        flag = 2
+        print("s is pressed")
+    elif keyboard.is_pressed("d"):
+        flag = 3
+        print("d is pressed")
 
     if flag == 1:
         x_medium = x_medium + 20
@@ -106,6 +101,11 @@ while(True):
     else:
         rot_angle = rot_angle
         kit.servo[servo_pin].angle=rot_angle
+
+
+
+
+
 
 
     
