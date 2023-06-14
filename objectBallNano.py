@@ -11,7 +11,7 @@ y_ball = 0
 lower_range = np.array([30, 50, 50])
 upper_range = np.array([80, 255, 255])
 kernel = np.ones((5, 5), np.uint8)
-cap2 = cv2.VideoCapture(0)
+cap2 = cv2.VideoCapture(1)
 
 while True:
     ret2, frame2 = cap2.read()
