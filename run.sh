@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-python objectNano.py &
-python objectBallNano.py &
+python3 objectNano.py &
+python3 objectBallNano.py &

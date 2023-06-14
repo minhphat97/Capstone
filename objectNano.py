@@ -3,7 +3,7 @@ import cv2
 import time
 import math
 from csv import writer
-from adafruit_servokit import ServoKit
+# from adafruit_servokit import ServoKit
 import keyboard
 
 position_laucnher_x_direction = 30
@@ -19,7 +19,7 @@ soccer_ball_diameter = 0.22
 radius = 0
 
 servo_pin = 0
-kit = ServoKit(channels=16)
+# kit = ServoKit(channels=16)
 def distance_finder(focal_length, real_face_width, face_width_in_frame):  
     distance = (real_face_width * focal_length) / face_width_in_frame  
     return distance
@@ -38,7 +38,7 @@ w = 0
 h = 0
 
 rot_angle = 90
-kit.servo[servo_pin].angle=rot_angle
+# kit.servo[servo_pin].angle=rot_angle
 print("ANGLE IS 90")
 print("SLEEPING FOR 3 S")
 time.sleep(2)
@@ -50,7 +50,8 @@ while(True):
     #ret2, frame2 = cap2.read()
     height, width, _ = frame.shape
     center = int(width/2)
-    boxes, weights = hog.detectMultiScale(frame,winStride=(8, 8), padding=(4, 4),scale=1.05)
+    boxes, weights = hog.detectMultiScale(frame,winStride=(4, 4), padding=(8, 8),scale=1.8)
+    # boxes, weights = hog.detectMultiScale(frame, scale=1.1, minNeighbors=5, minSize=(30, 30))    
 
     if keyboard.is_pressed("a"):
         flag = 1
@@ -73,16 +74,16 @@ while(True):
             y_medium = int((y + y + h) / 2)  
         break
     cv2.line(frame, (x_medium, 0), (x_medium, 480), (255, 255, 0), 2)
-    cv2.line(frame, (0, y_medium), (640, y_medium), (255, 255, 0), 2)
-    if x_medium < center - 90:
-        rot_angle = rot_angle + 2
-        kit.servo[servo_pin].angle=rot_angle    
-    elif x_medium > center + 90:
-        rot_angle = rot_angle - 2
-        kit.servo[servo_pin].angle=rot_angle
-    else:
-        rot_angle = rot_angle
-        kit.servo[servo_pin].angle=rot_angle
+    #cv2.line(frame, (0, y_medium), (640, y_medium), (255, 255, 0), 2)
+    # if x_medium < center - 90:
+    #     rot_angle = rot_angle + 2
+    #     kit.servo[servo_pin].angle=rot_angle    
+    # elif x_medium > center + 90:
+    #     rot_angle = rot_angle - 2
+    #     kit.servo[servo_pin].angle=rot_angle
+    # else:
+    #     rot_angle = rot_angle
+    #     kit.servo[servo_pin].angle=rot_angle
 
 
 
