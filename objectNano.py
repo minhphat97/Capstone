@@ -13,7 +13,7 @@ focal_length_found = (140 * DECLARED_LEN) / DECLARED_WID
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 WHITE = (255, 255, 255)
-fonts = cv2.FONT_HERSHEY_COMPLEX
+
 soccer_ball_distance = 1.5
 soccer_ball_diameter = 0.22
 radius = 0
@@ -25,8 +25,7 @@ def distance_finder(focal_length, real_face_width, face_width_in_frame):
     return distance
 
 cap = cv2.VideoCapture(0)
-# cap2 = cv2.VideoCapture(1)
-#fgbg = cv2.createBackgroundSubtractorMOG2() ##HERE##########################################
+
 hog = cv2.HOGDescriptor()
 hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
 cap.set(3, 640)
@@ -37,19 +36,15 @@ x = 0
 y = 0
 w = 0
 h = 0
-x_ball = 0
-y_ball = 0
+
 rot_angle = 90
-#kit.servo[servo_pin].angle=rot_angle
+kit.servo[servo_pin].angle=rot_angle
 print("ANGLE IS 90")
 print("SLEEPING FOR 3 S")
 time.sleep(2)
 
-lower_range = np.array([30, 50, 50])
-upper_range = np.array([80, 255, 255])
-object_detector = cv2.createBackgroundSubtractorMOG2(history=10, varThreshold=5)
 flag = 2
-kernel = np.ones((5, 5), np.uint8)
+
 while(True):
     ret, frame = cap.read()
     #ret2, frame2 = cap2.read()
@@ -57,7 +52,6 @@ while(True):
     center = int(width/2)
     boxes, weights = hog.detectMultiScale(frame,winStride=(8, 8), padding=(4, 4),scale=1.05)
 
-    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     if keyboard.is_pressed("a"):
         flag = 1
         print("a is pressed")
@@ -133,7 +127,6 @@ while(True):
 
 
     cv2.imshow("Human", frame)
-    # cv2.imshow("Ball", frame2)
     if cv2.waitKey(1) == ord("q"):
         break
 cap.release()

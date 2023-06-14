@@ -59,12 +59,9 @@ while True:
     #if cv2.waitKey(1) & 0xFF == ord('k'):
     
     if radius >= 30.00 and radius <= 50.00:
-        #if result:
         result, image = cap.read()
         print("result: ", result)
         if result == True:
-            x_list = []
-            y_list = []
             cv2.imshow("Ball", image)
             print ("X: ", x)
             print ("Y: ", y)
