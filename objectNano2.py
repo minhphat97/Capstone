@@ -75,9 +75,9 @@ while(True):
         # Calculate velocity and update flag
         if previous_x_medium is not None:
             velocity = x_medium - previous_x_medium
-            if velocity < 30:
+            if velocity > 30:
                 flag = 3  # Positive velocity (if wrong, swap with flag 1)
-            elif velocity > -30:
+            elif velocity < -30:
                 flag = 1  # Negative velocity
             else:
                 flag = 2  # No velocity
