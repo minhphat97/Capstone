@@ -5,7 +5,7 @@ import math
 from csv import writer
 # from adafruit_servokit import ServoKit
 import keyboard
-import Jetson.GPIO as GPIO
+# import Jetson.GPIO as GPIO
 import time
 
 # GPIO.setmode(GPIO.BOARD)
@@ -75,9 +75,9 @@ while(True):
         # Calculate velocity and update flag
         if previous_x_medium is not None:
             velocity = x_medium - previous_x_medium
-            if velocity > 10:
+            if velocity < 30:
                 flag = 3  # Positive velocity (if wrong, swap with flag 1)
-            elif velocity < -10:
+            elif velocity > -30:
                 flag = 1  # Negative velocity
             else:
                 flag = 2  # No velocity
@@ -86,13 +86,15 @@ while(True):
 
         if flag == 1:
             x_medium = x_medium - 150
+            print("left (line on video)")
         elif flag == 3:
             x_medium = x_medium + 150
+            print("right (line on video)")
 
         break
 
     cv2.line(frame, (x_medium, 0), (x_medium, 480), (255, 255, 0), 2)
-    #cv2.line(frame, (0, y_medium), (640, y_medium), (255, 255, 0), 2)
+    # cv2.line(frame, (0, y_medium), (640, y_medium), (255, 255, 0), 2)
     # if x_medium < center - 50:
     #     rot_angle = rot_angle + 2
     #     if rot_angle >= 180:
