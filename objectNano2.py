@@ -5,7 +5,7 @@ import math
 from csv import writer
 # from adafruit_servokit import ServoKit
 import keyboard
-import Jetson.GPIO as GPIO
+# import Jetson.GPIO as GPIO
 import time
 
 # GPIO.setmode(GPIO.BOARD)
@@ -38,12 +38,15 @@ hog = cv2.HOGDescriptor()
 hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
 cap.set(3, 640)
 cap.set(4, 480)
+
 x_medium = 0
 y_medium = 0
 x = 0
 y = 0
 w = 0
 h = 0
+flag = 2
+previous_x_medium = None  # Store previous frame's x_medium to calculate velocity
 
 rot_angle = 90
 # kit.servo[servo_pin].angle=rot_angle
@@ -59,40 +62,39 @@ flag = 2
 
 while(True):
     ret, frame = cap.read()
-    # x = GPIO.input(inPin)
-    # y = GPIO.input(inPin2)
-    #ret2, frame2 = cap2.read()
+    # ret2, frame2 = cap2.read()
     height, width, _ = frame.shape
     center = int(width/2)
-    boxes, weights = hog.detectMultiScale(frame,winStride=(4, 4), padding=(8, 8),scale=1.8)
-    # boxes, weights = hog.detectMultiScale(frame, scale=1.1, minNeighbors=5, minSize=(30, 30))    
-
-    #if x == 1 and y == 0:
-    if keyboard.is_pressed("a"):
-        flag = 1
-    #elif x == 1 and y == 1:
-    elif keyboard.is_pressed("s"):
-        flag = 2
-    #elif x == 0 and y == 1:
-    elif keyboard.is_pressed("d"):
-        flag = 3
+    boxes, weights = hog.detectMultiScale(frame, winStride=(4, 4), padding=(8, 8), scale=1.8)
+    # boxes, weights = hog.detectMultiScale(frame, scale=1.1, minNeighbors=5, minSize=(30, 30)) 
 
     for (x, y, w, h) in boxes:
+        x_medium = int((x + x + w) / 2)
+        y_medium = int((y + y + h) / 2)
+
+        # Calculate velocity and update flag
+        if previous_x_medium is not None:
+            velocity = x_medium - previous_x_medium
+            if velocity > 30:
+                flag = 3  # Positive velocity (if wrong, swap with flag 1)
+            elif velocity < -30:
+                flag = 1  # Negative velocity
+            else:
+                flag = 2  # No velocity
+
+        previous_x_medium = x_medium  # Update previous_x_medium for next iteration
+
         if flag == 1:
-            x_medium = int((x + x + w) / 2) - 150
-            y_medium = int((y + y + h) / 2)
-            # print("left")
-        elif flag == 2:
-            x_medium = int((x + x + w) / 2) 
-            y_medium = int((y + y + h) / 2)
-            # print("middle")
+            x_medium = x_medium - 150
+            print("left (line on video)")
         elif flag == 3:
-            x_medium = int((x + x + w) / 2) + 150
-            y_medium = int((y + y + h) / 2)
-            # print("right")  
+            x_medium = x_medium + 150
+            print("right (line on video)")
+
         break
+
     cv2.line(frame, (x_medium, 0), (x_medium, 480), (255, 255, 0), 2)
-    #cv2.line(frame, (0, y_medium), (640, y_medium), (255, 255, 0), 2)
+    # cv2.line(frame, (0, y_medium), (640, y_medium), (255, 255, 0), 2)
     # if x_medium < center - 50:
     #     rot_angle = rot_angle + 2
     #     if rot_angle >= 180:
