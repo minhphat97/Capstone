@@ -3,8 +3,20 @@ import cv2
 import time
 import math
 from csv import writer
-#from adafruit_servokit import ServoKit
+from adafruit_servokit import ServoKit
 import keyboard
+import board
+import busio
+import time
+import Jetson.GPIO as GPIO
+import adafruit_ds3502
+
+# ******DECLARE i2c FOR POT AND SETUP SERVO AND OpenCV******
+
+servo_pin = 0
+i2c=busio.I2C(board.SCL_1,board.SDA_1)
+ds3502 = adafruit_ds3502.DS3502(i2c)
+kit = ServoKit(channels=16,i2c=i2c)
 
 position_laucnher_x_direction = 30
 DECLARED_LEN = 1.5 #m
@@ -18,15 +30,11 @@ soccer_ball_distance = 1.5
 soccer_ball_diameter = 0.22
 radius = 0
 
-servo_pin = 0
-#kit = ServoKit(channels=16)
+# servo_pin = 0
+# kit = ServoKit(channels=16)
 def distance_finder(focal_length, real_face_width, face_width_in_frame):  
     distance = (real_face_width * focal_length) / face_width_in_frame  
     return distance
-
-
-
-
 
 def distance_to_camera(known_width, focal_length, pixel_width):
     return (known_width * focal_length) / pixel_width
@@ -53,65 +61,95 @@ x = 0
 y = 0
 w = 1
 h = 0
-wiper = 0 
+ds3502.wiper = 0 
 rot_angle = 90
-#kit.servo[servo_pin].angle=rot_angle
+kit.servo[servo_pin].angle=rot_angle
 print("ANGLE IS 90")
-
+print("SLEEPING FOR 1 S")
+time.sleep(1)
+GPIO.setmode(GPIO.BOARD)
+InPin = 15
+GPIO.setup(InPin, GPIO.IN)
+InPin2 = 16
+GPIO.setup(InPin2, GPIO.IN)
 
 flag = 2
 
 while(True):
     ret, frame = cap.read()
+    x = GPIO.input(InPin)
+    y = GPIO.input(InPin2)
     height, width, _ = frame.shape
     center = int(width/2)
     boxes, weights = hog.detectMultiScale(frame,winStride=(8, 8), padding=(4, 4),scale=1.05)
     
-    if keyboard.is_pressed("a"):
+    if x == 1 and y == 0:
+    # if keyboard.is_pressed("a"):
         flag = 1
         print("a is pressed")
-    elif keyboard.is_pressed("s"):
+    elif x == 1 and y == 1:
+    # elif keyboard.is_pressed("s"):
         flag = 2
         print("s is pressed")
-    elif keyboard.is_pressed("d"):
+    elif x == 0 and y == 1:
+    # elif keyboard.is_pressed("d"):
         flag = 3
         print("d is pressed")
+    
+    # ******SERVO ROTATING LAZY SUSAN******
     for (x, y, w, h) in boxes:
         if flag == 1:
-            x_medium = int((x + x + w) / 2) - 80
+            x_medium = int((x + x + w) / 2) - 130
             y_medium = int((y + y + h) / 2)
         elif flag == 2:
             x_medium = int((x + x + w) / 2) 
             y_medium = int((y + y + h) / 2)
         elif flag == 3:
-            x_medium = int((x + x + w) / 2) + 80
+            x_medium = int((x + x + w) / 2) + 130
             y_medium = int((y + y + h) / 2)  
         break
     cv2.line(frame, (x_medium, 0), (x_medium, 480), (255, 255, 0), 2)
+
+    if x_medium < center - 50:
+        rot_angle = rot_angle + 2
+        if rot_angle >= 180:
+            rot_angle = 180
+        kit.servo[servo_pin].angle = rot_angle
+    elif x_medium < center + 50:
+        rot_angle = rot_angle - 2
+        if rot_angle <= 0:
+            rot_angle = 0
+        kit.servo[servo_pin].angle = rot_angle 
+    else:
+        rot_angle = rot_angle
+        kit.servo[servo_pin].angle = rot_angle      
+
+    # ******POT PERCENTAGE******
+
     #cv2.line(frame, (0, y_medium), (640, y_medium), (255, 255, 0), 2)
     # focal_length_found = (180 * DECLARED_LEN) / DECLARED_WID
     # Distance = (DECLARED_WID * focal_length_found) / w
 
     distance = distance_to_camera(DECLARED_WID, focal_length, w)
     if distance >= 50 and distance <= 170:
-        wiper = 5
+        ds3502.wiper = 5
     elif distance > 170 and distance <= 190:
-        wiper = 11
+        ds3502.wiper = 11
     elif distance > 190 and distance <= 200:
-        wiper = 18
+        ds3502.wiper = 18
     elif distance > 200 and distance <= 230:
-        wiper = 26
+        ds3502.wiper = 26
     elif distance > 230 and distance <= 250:
-        wiper = 31
+        ds3502.wiper = 31
     elif distance > 250 and distance <= 270:
-        wiper = 36
+        ds3502.wiper = 36
     elif distance > 270 and distance <= 290:
-        wiper = 40
+        ds3502.wiper = 40
     else:
-        wiper = 40
+        ds3502.wiper = 40
     #DECLARED_LEN = Distance
     print("Distance: ", distance)
-    print("Wiper: ", wiper)
+    print("Wiper: ", ds3502.wiper)
     # DECLARED_WID * w * DECLARED_LEN / (w*DECLARED_WID)
     # if x_medium < center - 90:
     #     rot_angle = rot_angle + 2
