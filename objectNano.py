@@ -14,8 +14,9 @@ import adafruit_ds3502
 # ******DECLARE i2c FOR POT AND SETUP SERVO AND OpenCV******
 
 servo_pin = 0
-i2c=busio.I2C(board.SCL_1,board.SDA_1)
+i2c=busio.I2C()
 ds3502 = adafruit_ds3502.DS3502(i2c)
+i2c=busio.I2C(board.SCL_1,board.SDA_1)
 kit = ServoKit(channels=16,i2c=i2c)
 
 position_laucnher_x_direction = 30
