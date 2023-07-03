@@ -3,13 +3,13 @@ import cv2
 import time
 import math
 from csv import writer
-from adafruit_servokit import ServoKit
+#from adafruit_servokit import ServoKit
 import keyboard
 
 position_laucnher_x_direction = 30
-DECLARED_LEN = 60
-DECLARED_WID = 14.3
-focal_length_found = (140 * DECLARED_LEN) / DECLARED_WID
+DECLARED_LEN = 1.5 #m
+DECLARED_WID = 0.6 #m
+focal_length_found = (800 * DECLARED_LEN) / DECLARED_WID
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 WHITE = (255, 255, 255)
@@ -19,12 +19,29 @@ soccer_ball_diameter = 0.22
 radius = 0
 
 servo_pin = 0
-kit = ServoKit(channels=16)
+#kit = ServoKit(channels=16)
 def distance_finder(focal_length, real_face_width, face_width_in_frame):  
     distance = (real_face_width * focal_length) / face_width_in_frame  
     return distance
 
+
+
+
+
+def distance_to_camera(known_width, focal_length, pixel_width):
+    return (known_width * focal_length) / pixel_width
+def calculate_focal_length(image_width, focal_length_mm):
+    return (image_width * focal_length_mm) / DECLARED_WID
 cap = cv2.VideoCapture(0)
+
+# Get the image width from the captured frame
+_, frame = cap.read()
+image_width = frame.shape[1]
+
+# Calculate the focal length based on the image width and a known focal length in millimeters
+focal_length_mm = 50  
+focal_length = calculate_focal_length(image_width, focal_length_mm)
+
 
 hog = cv2.HOGDescriptor()
 hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
@@ -34,24 +51,22 @@ x_medium = 0
 y_medium = 0
 x = 0
 y = 0
-w = 0
+w = 1
 h = 0
-
+wiper = 0 
 rot_angle = 90
-kit.servo[servo_pin].angle=rot_angle
+#kit.servo[servo_pin].angle=rot_angle
 print("ANGLE IS 90")
-print("SLEEPING FOR 3 S")
-time.sleep(2)
+
 
 flag = 2
 
 while(True):
     ret, frame = cap.read()
-    #ret2, frame2 = cap2.read()
     height, width, _ = frame.shape
     center = int(width/2)
     boxes, weights = hog.detectMultiScale(frame,winStride=(8, 8), padding=(4, 4),scale=1.05)
-
+    
     if keyboard.is_pressed("a"):
         flag = 1
         print("a is pressed")
@@ -73,16 +88,40 @@ while(True):
             y_medium = int((y + y + h) / 2)  
         break
     cv2.line(frame, (x_medium, 0), (x_medium, 480), (255, 255, 0), 2)
-    cv2.line(frame, (0, y_medium), (640, y_medium), (255, 255, 0), 2)
-    if x_medium < center - 90:
-        rot_angle = rot_angle + 2
-        kit.servo[servo_pin].angle=rot_angle    
-    elif x_medium > center + 90:
-        rot_angle = rot_angle - 2
-        kit.servo[servo_pin].angle=rot_angle
+    #cv2.line(frame, (0, y_medium), (640, y_medium), (255, 255, 0), 2)
+    # focal_length_found = (180 * DECLARED_LEN) / DECLARED_WID
+    # Distance = (DECLARED_WID * focal_length_found) / w
+
+    distance = distance_to_camera(DECLARED_WID, focal_length, w)
+    if distance >= 50 and distance <= 170:
+        wiper = 5
+    elif distance > 170 and distance <= 190:
+        wiper = 11
+    elif distance > 190 and distance <= 200:
+        wiper = 18
+    elif distance > 200 and distance <= 230:
+        wiper = 26
+    elif distance > 230 and distance <= 250:
+        wiper = 31
+    elif distance > 250 and distance <= 270:
+        wiper = 36
+    elif distance > 270 and distance <= 290:
+        wiper = 40
     else:
-        rot_angle = rot_angle
-        kit.servo[servo_pin].angle=rot_angle
+        wiper = 40
+    #DECLARED_LEN = Distance
+    print("Distance: ", distance)
+    print("Wiper: ", wiper)
+    # DECLARED_WID * w * DECLARED_LEN / (w*DECLARED_WID)
+    # if x_medium < center - 90:
+    #     rot_angle = rot_angle + 2
+    #     kit.servo[servo_pin].angle=rot_angle    
+    # elif x_medium > center + 90:
+    #     rot_angle = rot_angle - 2
+    #     kit.servo[servo_pin].angle=rot_angle
+    # else:
+    #     rot_angle = rot_angle
+    #     kit.servo[servo_pin].angle=rot_angle
 
 
 
@@ -90,8 +129,7 @@ while(True):
 
 
 
-    # Distance = distance_finder(focal_length_found, DECLARED_WID, w)
- 
+    
     # mask = cv2.inRange(hsv, lower_range, upper_range)
     # mask = cv2.erode(mask, kernel, iterations=2)
     # mask = cv2.dilate(mask, kernel, iterations=2)
