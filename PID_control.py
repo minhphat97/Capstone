@@ -85,18 +85,21 @@ while(True):
     
     # ******SERVO ROTATING LAZY SUSAN******
     for (x, y, w, h) in boxes:
-        # if flag == 1:
-        #     x_medium = int((x + x + w) / 2) - 130
-        #     y_medium = int((y + y + h) / 2)
-        # elif flag == 2:
-        x_medium = int((x + x + w) / 2) 
-        y_medium = int((y + y + h) / 2)
-        # elif flag == 3:
-        #     x_medium = int((x + x + w) / 2) + 130
-        #     y_medium = int((y + y + h) / 2)  
+        if flag == 1:
+            x_medium = int((x + x + w) / 2) - 200
+            face_centre_x = x+w/2 - 200
+            y_medium = int((y + y + h) / 2)
+        elif flag == 2:
+            x_medium = int((x + x + w) / 2) 
+            face_centre_x = x+w/2 
+            y_medium = int((y + y + h) / 2)
+        elif flag == 3:
+            x_medium = int((x + x + w) / 2) + 200
+            face_centre_x = x+w/2 + 200
+            y_medium = int((y + y + h) / 2)  
 
         cv2.line(frame, (x_medium, 0), (x_medium, 480), (255, 255, 0), 2)
-        face_centre_x = x+w/2 
+        # face_centre_x = x+w/2 
         error_x = face_centre_x - 320
         if abs(error_x) > 15:
             rot_angle = rot_angle - error_x/43
@@ -142,28 +145,28 @@ while(True):
 
     # ******POT PERCENTAGE******
 
-    if h >= 400:
-        ds3502.wiper = 20
-    elif h > 350 and h < 400:
-        ds3502.wiper = 24
-    elif h > 330 and h <= 350:
-        ds3502.wiper = 28
-    elif h > 300 and h <= 330:
-        ds3502.wiper = 33
-    elif h > 280 and h <= 300:
-        ds3502.wiper = 38
-    elif h > 250 and h <= 280:
-        ds3502.wiper = 44
-    elif h > 220 and h <= 250:
-        ds3502.wiper = 50
-    elif h > 200 and h <= 220:
-        ds3502.wiper = 56
-    elif h > 190 and h <= 200:
-        ds3502.wiper = 61
-    elif h <= 190:
-        ds3502.wiper = 65
-    print("Height in image: ", h)
-    print("Wiper: ", ds3502.wiper)
+    # if h >= 400:
+    #     ds3502.wiper = 20
+    # elif h > 350 and h < 400:
+    #     ds3502.wiper = 24
+    # elif h > 330 and h <= 350:
+    #     ds3502.wiper = 28
+    # elif h > 300 and h <= 330:
+    #     ds3502.wiper = 33
+    # elif h > 280 and h <= 300:
+    #     ds3502.wiper = 38
+    # elif h > 250 and h <= 280:
+    #     ds3502.wiper = 44
+    # elif h > 220 and h <= 250:
+    #     ds3502.wiper = 50
+    # elif h > 200 and h <= 220:
+    #     ds3502.wiper = 56
+    # elif h > 190 and h <= 200:
+    #     ds3502.wiper = 61
+    # elif h <= 190:
+    #     ds3502.wiper = 65
+    # print("Height in image: ", h)
+    # print("Wiper: ", ds3502.wiper)
 
     cv2.imshow("Human", frame)
     if cv2.waitKey(1) == ord("q"):
