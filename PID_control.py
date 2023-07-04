@@ -145,28 +145,28 @@ while(True):
 
     # ******POT PERCENTAGE******
 
-    # if h >= 400:
-    #     ds3502.wiper = 20
-    # elif h > 350 and h < 400:
-    #     ds3502.wiper = 24
-    # elif h > 330 and h <= 350:
-    #     ds3502.wiper = 28
-    # elif h > 300 and h <= 330:
-    #     ds3502.wiper = 33
-    # elif h > 280 and h <= 300:
-    #     ds3502.wiper = 38
-    # elif h > 250 and h <= 280:
-    #     ds3502.wiper = 44
-    # elif h > 220 and h <= 250:
-    #     ds3502.wiper = 50
-    # elif h > 200 and h <= 220:
-    #     ds3502.wiper = 56
-    # elif h > 190 and h <= 200:
-    #     ds3502.wiper = 61
-    # elif h <= 190:
-    #     ds3502.wiper = 65
-    # print("Height in image: ", h)
-    # print("Wiper: ", ds3502.wiper)
+    if h >= 400:
+        ds3502.wiper = 20
+    elif h > 350 and h < 400:
+        ds3502.wiper = 24
+    elif h > 330 and h <= 350:
+        ds3502.wiper = 28
+    elif h > 300 and h <= 330:
+        ds3502.wiper = 33
+    elif h > 280 and h <= 300:
+        ds3502.wiper = 38
+    elif h > 250 and h <= 280:
+        ds3502.wiper = 44
+    elif h > 220 and h <= 250:
+        ds3502.wiper = 50
+    elif h > 200 and h <= 220:
+        ds3502.wiper = 56
+    elif h > 190 and h <= 200:
+        ds3502.wiper = 61
+    elif h <= 190:
+        ds3502.wiper = 65
+    print("Height in image: ", h)
+    print("Wiper: ", ds3502.wiper)
 
     cv2.imshow("Human", frame)
     if cv2.waitKey(1) == ord("q"):
