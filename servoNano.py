@@ -9,9 +9,9 @@ while True:
     # kit.servo[servo_pin].angle=0
     # print("Angle is 0")
     # time.sleep(3)
-    i = 90 # angle
+    i = 80 # angle
     direction = 0 # 0 is positive, 1 is negative
-    step = 10 # change in angle
+    step = 20 # change in angle
     while True:
         kit.servo[servo_pin].angle=i
         result = f'Angle is {i}'
