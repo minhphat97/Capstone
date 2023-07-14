@@ -17,10 +17,10 @@ differential_x = 0
 prev_x = 0
 # ******DECLARE i2c FOR POT AND SETUP SERVO AND OpenCV******
 
-servo_pin = 0
+servo_pin = 1
 i2c=board.I2C()
-ds3502 = adafruit_ds3502.DS3502(i2c)
-i2c=busio.I2C(board.SCL_1,board.SDA_1)
+ds3502 = adafruit_ds3502.DS3502(i2c) # this is i2c 1
+i2c=busio.I2C(board.SCL_1,board.SDA_1) # this is i2c 0
 kit = ServoKit(channels=16,i2c=i2c)
 
 position_laucnher_x_direction = 30
