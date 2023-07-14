@@ -3,10 +3,10 @@ Description=Capstone Script
 After=graphical.target
 
 [Service]
-ExecStart=/usr/bin/gnome-terminal -- python3 /home/your_username/Capstone/script.py
-WorkingDirectory=/home/your_username/Capstone
+ExecStart=/usr/bin/gnome-terminal -- python3 /home/ironfoot/Capstone/script.py
+WorkingDirectory=/home/ironfoot/Capstone
 Type=simple
-User=your_username
+User=ironfoot
 Restart=on-failure
 RestartSec=10
 StartLimitInterval=0
