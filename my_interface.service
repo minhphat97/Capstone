@@ -3,7 +3,7 @@ Description=Capstone Script
 After=graphical.target
 
 [Service]
-ExecStart=/usr/bin/gnome-terminal -- python3 /home/ironfoot/Capstone/userInterface.py
+ExecStart=/usr/bin/gnome-terminal -- sudo -H -u ironfoot python3 /home/ironfoot/Capstone/userInterface.py
 WorkingDirectory=/home/ironfoot/Capstone
 Type=simple
 User=ironfoot
