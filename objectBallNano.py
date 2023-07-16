@@ -15,16 +15,18 @@ upper_range_blue = np.array([139,255,255])
 
 kernel = np.ones((5, 5), np.uint8)
 cap2 = cv2.VideoCapture(0)
+cap2.set(3, 640)
+cap2.set(4, 480)
 
 while True:
     ret2, frame2 = cap2.read()
     hsv = cv2.cvtColor(frame2, cv2.COLOR_BGR2HSV)
 
-    mask = cv2.inRange(hsv, lower_range_blue, upper_range_blue)
-    mask = cv2.erode(mask, kernel, iterations=2)
-    mask = cv2.dilate(mask, kernel, iterations=2)
+    mask_blue = cv2.inRange(hsv, lower_range_blue, upper_range_blue)
+    mask_blue = cv2.erode(mask_blue, kernel, iterations=2)
+    mask_blue = cv2.dilate(mask_blue, kernel, iterations=2)
 
-    contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    contours, _ = cv2.findContours(mask_blue, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     
     if len(contours) > 0:
         contour_sizes = [(cv2.contourArea(contour), contour) for contour in contours]
