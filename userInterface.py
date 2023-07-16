@@ -9,11 +9,16 @@ import csv
 import time
 import subprocess
 
+csv_file_path = 'outputtest.csv'
+
 def reset():
-    #do_nothing
-    print("do nothing")
+    with open(csv_file_path, 'w') as file:
+        file.truncate(0)
+    print("CSV file emptied successfully.")
+
 def show_frame(frame):
     frame.tkraise()
+    
 def helloCallBack():
     subprocess.run("python3 PID_control.py & python3 objectBallFeeder.py.py & python3 objectBallNano.py", shell=True) # previously python objectNano.py & python objectBallNano.py
     # to open python scripts in separate terminals. Maybe only the PID control should be opened in separate terminal. 
@@ -22,29 +27,27 @@ def helloCallBack():
     # subprocess.Popen(['gnome-terminal', '--', 'python3', 'objectBallFeeder.py'])
     # subprocess.Popen(['gnome-terminal', '--', 'python3', 'objectBallNano.py'])
 
-# x_ball = 50
-# y_ball = 100
-# x_ball_1 = 100
-# y_ball_1 = 50
-# x_ball_2 = 500
-# y_ball_2 = 500
 X = []
 Y = []
 X_player = []
 Y_player = []
-with open('outputtest.csv') as file:
-    for row in file:
-        X.append(row.split(",")[0])
-        Y.append(row.split(",")[1])
-        X_player.append(row.split(",")[2])
-        Y_player.append(row.split(",")[3])
 
-# for x in range(len(X)):
-#     print (X[x])
-# for x in range(len(Y)):
-#     print (Y[x])
+def is_csv_file_empty(csv_file):
+    with open(csv_file, 'r') as file:
+        csv_reader = csv.reader(file)
+        return not any(csv_reader)
 
-# time.sleep(5000)
+if is_csv_file_empty(csv_file_path):
+    print("The CSV file is empty.")
+    
+else:
+    print("The CSV file is not empty.")
+    with open('outputtest.csv') as file:
+        for row in file:
+            X.append(row.split(",")[0])
+            Y.append(row.split(",")[1])
+            X_player.append(row.split(",")[2])
+            Y_player.append(row.split(",")[3])
 
 radius = 18
 color = (255, 0, 0)
@@ -85,8 +88,6 @@ frame1_btn_3 = tk.Button(frame1, text='PAGE 2', command=lambda:show_frame(frame4
 frame1_btn_3.place(x=500, y=530)
 play_button = tk.Button(frame1, text='RUN', command=helloCallBack, bg='aquamarine', compound = LEFT)
 play_button.place(x=592, y=530)
-
-
 
 date = dt.datetime.now()
 label = Label(frame1, text=f"{date:%A, %B %d, %Y}", font="Calibri, 20")
@@ -129,7 +130,7 @@ Button(tool_bar, text="Reset", image=reset_image, command=reset, bg='aquamarine'
 home_image=PhotoImage(file = "home.png")
 Button(tool_bar, text="Home", image=home_image, command=lambda:show_frame(frame1), bg='dodgerblue1', width = 50).grid(row=2, column=0, padx=5, pady=3, ipadx=10)
 next_image=PhotoImage(file = "next.png")
-Button(tool_bar, text="Next", image=next_image, command=lambda:show_frame(frame3), bg='khaki1', width = 50).grid(row=3, column=0, padx=5, pady=3, ipadx=10)
+Button(tool_bar, text="Next", image=next_image, command=lambda:show_frame(frame4), bg='khaki1', width = 50).grid(row=3, column=0, padx=5, pady=3, ipadx=10)
 
 Label(tool_bar, text="PERFORMANCE RATE:",font=("Comic Sans MS", 15, "bold"),bg='pink').grid(row=4, column=0, padx=5, pady=3, ipadx=10)
 textbox.grid(row=5, column=0, padx=5, pady=3, ipadx=10)
