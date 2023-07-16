@@ -18,7 +18,7 @@ def reset():
 
 def show_frame(frame):
     frame.tkraise()
-    
+
 def helloCallBack():
     subprocess.run("python3 PID_control.py & python3 objectBallFeeder.py.py & python3 objectBallNano.py", shell=True) # previously python objectNano.py & python objectBallNano.py
     # to open python scripts in separate terminals. Maybe only the PID control should be opened in separate terminal. 
@@ -117,8 +117,6 @@ canvas.create_image(0, 0, anchor=NW, image=image2)
 
 for i in range(len(X)):
    canvas.create_oval(float(X[i])-radius, float(Y[i])-radius, float(X[i])+radius, float(Y[i])+radius, outline="blue", width=3) 
-
-
 
 tool_bar = Frame(left_frame, width=180, height=185, bg='pink')
 tool_bar.grid(row=2, column=0, padx=5, pady=5)
