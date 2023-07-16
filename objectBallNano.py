@@ -18,7 +18,7 @@ lower_range_blue = np.array([98,50,50]) #BLUE
 upper_range_blue = np.array([139,255,255])
 
 kernel = np.ones((5, 5), np.uint8)
-cap2 = cv2.VideoCapture(0)
+cap2 = cv2.VideoCapture(1)
 cap2.set(3, 640)
 cap2.set(4, 480)
 
