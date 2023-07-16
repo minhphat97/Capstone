@@ -6,11 +6,12 @@ from csv import writer
 radius = 0
 x_ball = 0
 y_ball = 0
-# lower_range = np.array([30, 50, 50])
-# upper_range = np.array([80, 255, 255])
 
-lower_range = np.array([98,50,50])
-upper_range = np.array([139,255,255])
+lower_range_green = np.array([30, 50, 50]) #GREEN
+upper_range_green = np.array([80, 255, 255])
+
+lower_range_blue = np.array([98,50,50]) #BLUE
+upper_range_blue = np.array([139,255,255])
 
 kernel = np.ones((5, 5), np.uint8)
 cap2 = cv2.VideoCapture(0)
@@ -19,7 +20,7 @@ while True:
     ret2, frame2 = cap2.read()
     hsv = cv2.cvtColor(frame2, cv2.COLOR_BGR2HSV)
 
-    mask = cv2.inRange(hsv, lower_range, upper_range)
+    mask = cv2.inRange(hsv, lower_range_blue, upper_range_blue)
     mask = cv2.erode(mask, kernel, iterations=2)
     mask = cv2.dilate(mask, kernel, iterations=2)
 
