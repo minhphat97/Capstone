@@ -17,7 +17,9 @@ while True:
         print (angle)
         time.sleep(0.5)
         angle = 30
+        print (angle)
         # kit.servo[servo_pin].angle = 30
+        time.sleep(5)
     print (angle)
 
 
