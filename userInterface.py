@@ -15,7 +15,7 @@ def reset():
 def show_frame(frame):
     frame.tkraise()
 def helloCallBack():
-   subprocess.run("python3 objectBallFeeder.py.py & python3 objectBallNano.py", shell=True) # previously python objectNani.py & python objectBallNano.py
+   subprocess.run("python3 PID_control.py & python3 objectBallFeeder.py.py & python3 objectBallNano.py", shell=True) # previously python objectNani.py & python objectBallNano.py
 
 # x_ball = 50
 # y_ball = 100
