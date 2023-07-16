@@ -29,14 +29,6 @@ Known_width = 90 #cm
 
 cap = cv2.VideoCapture(0)
 
-def Focal_length_finder(measured_distance, real_width, width_in_rf_image):
-    focal_length = (width_in_rf_image*measured_distance)/real_width
-    return focal_length
-
-def Distance_finder(Focal_length, real_face_width, face_width_in_frame):
-    distance = (real_face_width * Focal_length)/face_width_in_frame
-    return distance
-
 hog = cv2.HOGDescriptor()
 hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
 cap.set(3, 640)
@@ -114,34 +106,6 @@ while(True):
 
         kit.servo[servo_pin].angle = rot_angle  
         break
-  
-
-
-
-
-   
-
-
-
-
-
-
-
-    # cv2.line(frame, (x_medium, 0), (x_medium, 480), (255, 255, 0), 2)
-
-    # if x_medium < center - 80:
-    #     rot_angle = rot_angle + 4
-    #     if rot_angle >= 180:
-    #         rot_angle = 180
-    #     kit.servo[servo_pin].angle = rot_angle
-    # elif x_medium > center + 80:
-    #     rot_angle = rot_angle - 4
-    #     if rot_angle <= 30:
-    #         roeight_angle = 30
-    #     kit.servo[servo_pin].angle = rot_angle 
-    # else:
-    #     rot_angle = rot_angle
-    #     kit.servo[servo_pin].angle = rot_angle      
 
     # ******POT PERCENTAGE******
 
