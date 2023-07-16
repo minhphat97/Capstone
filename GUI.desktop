@@ -5,7 +5,7 @@ Terminal=true
 Exec=sudo gnome-terminal -- python3 /home/ironfoot/Capstone/userInterface.py
 Name=GUI
 Comment=Launch GUI
-Icon=/home/ironfoot/Captsone/my_icon.png
+Icon=/home/ironfoot/Captsone/icon.png
 
 # Do the following to setup
 # cp GUI.desktop /home/ironfoot/Desktop
