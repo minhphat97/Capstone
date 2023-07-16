@@ -36,8 +36,8 @@ with open('outputtest.csv') as file:
     for row in file:
         X.append(row.split(",")[0])
         Y.append(row.split(",")[1])
-        X_player.append(row.split(",")[0])
-        Y_player.append(row.split(",")[1])
+        X_player.append(row.split(",")[2])
+        Y_player.append(row.split(",")[3])
 
 # for x in range(len(X)):
 #     print (X[x])
