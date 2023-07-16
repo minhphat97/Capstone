@@ -15,7 +15,12 @@ def reset():
 def show_frame(frame):
     frame.tkraise()
 def helloCallBack():
-   subprocess.run("python3 PID_control.py & python3 objectBallFeeder.py.py & python3 objectBallNano.py", shell=True) # previously python objectNano.py & python objectBallNano.py
+    subprocess.run("python3 PID_control.py & python3 objectBallFeeder.py.py & python3 objectBallNano.py", shell=True) # previously python objectNano.py & python objectBallNano.py
+    # to open python scripts in separate terminals. Maybe only the PID control should be opened in separate terminal. 
+    # in that case, then remove PID control from the above subprocess, then copy and paste the below line before the subprocess.run line
+    # subprocess.Popen(['gnome-terminal', '--', 'python3', 'PID_control.py'])
+    # subprocess.Popen(['gnome-terminal', '--', 'python3', 'objectBallFeeder.py'])
+    # subprocess.Popen(['gnome-terminal', '--', 'python3', 'objectBallNano.py'])
 
 # x_ball = 50
 # y_ball = 100
