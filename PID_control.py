@@ -1,4 +1,5 @@
 import numpy as np
+import config
 import cv2
 import time
 import math
@@ -11,6 +12,7 @@ import time
 import Jetson.GPIO as GPIO
 import adafruit_ds3502
 
+distance = 2 #m
 Px, Ix, Dx = -1/160, 0, 0
 integral_x = 0
 differential_x = 0
@@ -107,28 +109,42 @@ while(True):
         kit.servo[servo_pin].angle = rot_angle  
         break
 
+    # determine second_angle passed to objectBallFeeder.py
+    config.second_angle = rot_angle 
+
     # ******POT PERCENTAGE******
 
     if h >= 400:
         ds3502.wiper = 20
+        config.distance = 2
     elif h > 350 and h < 400:
         ds3502.wiper = 24
+        config.distance = 2.7
     elif h > 330 and h <= 350:
         ds3502.wiper = 28
+        config.distance = 3.1
     elif h > 300 and h <= 330:
         ds3502.wiper = 33
+        config.distance = 3.6
     elif h > 280 and h <= 300:
         ds3502.wiper = 38
+        config.distance = 4.0
     elif h > 250 and h <= 280:
         ds3502.wiper = 44
+        config.distance = 4.4
     elif h > 220 and h <= 250:
         ds3502.wiper = 50
+        config.distance = 4.9
     elif h > 200 and h <= 220:
         ds3502.wiper = 56
+        config.distance = 5.3
     elif h > 190 and h <= 200:
         ds3502.wiper = 61
+        config.distance = 5.8
     elif h <= 190:
         ds3502.wiper = 65
+        config.distance = 6.4
+
     print("Height in image: ", h)
     print("Wiper: ", ds3502.wiper)
 

@@ -2,6 +2,10 @@ import cv2
 import numpy as np
 import math
 from csv import writer
+import config
+import PID_control
+
+position_launcher_x_direction = 5 #m REMEMBER TO DETERMINE THE DISTANCE OF BALLL LAUNCHER
 
 radius = 0
 x_ball = 0
@@ -42,12 +46,23 @@ while True:
     
     if radius >= 30.00 and radius <= 50.00:
         result, image = cap2.read()
-        print("result: ", result)
+        #print("result: ", result)
         if result == True:
+            if config.second_angle >= 90:
+                new_angle = abs(config.second_angle - 90)
+                position_player_x_direction = (math.sin(math.radian(new_angle)) * config.distance) + position_launcher_x_direction
+                position_player_y_direction = math.cos(math.radian(new_angle)) * (config.distance)
+            else:
+                new_angle = abs(90 - config.second_angle)
+                position_player_x_direction = position_launcher_x_direction - (math.sin(math.radian(new_angle)) * config.distance) 
+                position_player_y_direction = math.cos(math.radian(new_angle)) * (config.distance)
+                
             cv2.imshow("Ball", image)
             print ("X: ", x_ball)
             print ("Y: ", y_ball)
-            List = [x_ball, y_ball]
+            print ("X_player: ", position_player_x_direction)
+            print ("Y_player: ", position_player_y_direction)
+            List = [x_ball, y_ball, position_player_x_direction, position_player_y_direction]
             with open("outputtest.csv", 'a', newline='') as csvfile:
                 writer_object = writer(csvfile)
                 writer_object.writerow(List)
