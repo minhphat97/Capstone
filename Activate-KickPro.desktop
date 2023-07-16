@@ -5,7 +5,7 @@ Terminal=true
 Exec=sudo /bin/bash -c "/home/ironfoot/Capstone/run.sh"
 Name=Activate KickPro
 Comment=Run Ball-Launcher
-Icon=/home/ironfoot/Capstone/my_icon.png
+Icon=/home/ironfoot/Capstone/icon.png
 
 # Do the following to setup
 # cp Activate-KickPro.desktop /home/ironfoot/Desktop
