@@ -2,7 +2,7 @@
 Version=1.0
 Type=Application
 Terminal=true
-Exec=sudo gnome-terminal -- python3 /home/ironfoot/Capstone/userInterface.py
+Exec=sudo python3 /home/ironfoot/Capstone/userInterface.py
 Name=GUI
 Comment=Launch GUI
 Icon=/home/ironfoot/Capstone/icon.png
