@@ -14,11 +14,8 @@ y_ball = 0
 lower_range_green = np.array([30, 50, 50]) #GREEN
 upper_range_green = np.array([80, 255, 255])
 
-lower_range_blue = np.array([98,50,50]) #BLUE
-upper_range_blue = np.array([139,255,255])
-
-lower_range_yellow = np.array([0,50,50]) #BLUE
-upper_range_yellow = np.array([30,255,255])
+lower_range_blue = np.array([0,0,255]) #WHITE
+upper_range_blue = np.array([179,62,255])
 
 kernel = np.ones((5, 5), np.uint8)
 cap2 = cv2.VideoCapture(0)
