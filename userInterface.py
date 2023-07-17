@@ -9,7 +9,7 @@ import csv
 import time
 import subprocess
 
-csv_file_path = 'outputtest.csv'
+csv_file_path = '/home/ironfoot/Capstone/outputtest.csv'
 
 def reset():
     with open(csv_file_path, 'w') as file:
@@ -60,7 +60,7 @@ root.geometry("1080x566")
 #root.geometry("1000x500")
 root.title("IronFoot Technologies")  # title of the GUI window
 root.config(bg="pink")  # specify background color
-p1 = PhotoImage(file = "icon.png")
+p1 = PhotoImage(file = "/home/ironfoot/Capstone/icon.png")
 root.iconphoto(False, p1)
 root.rowconfigure(0, weight=1)
 root.columnconfigure(0, weight=1)
@@ -72,7 +72,7 @@ for frame in (frame1, frame2, frame3, frame4):
     frame.grid(row=0, column=0, sticky='nsew')
 
 #============================================Frame 1 code============================================
-bg_img = PhotoImage(file='imagBall.png', master=frame1)
+bg_img = PhotoImage(file='/home/ironfoot/Capstone/imagBall.png', master=frame1)
 label = Label(root, image = bg_img)
 label.pack
 canvas = Canvas(frame1, width=1080, height=566)
@@ -105,11 +105,11 @@ left_frame.grid(row=0, column=0, padx=10, pady=10)
 right_frame = Frame(frame2, width=650, height=400, bg='pink')
 right_frame.grid(row=0, column=1, padx=10, pady=10)
 
-image = PhotoImage(file="ironfoot.png")
+image = PhotoImage(file="/home/ironfoot/Capstone/ironfoot.png")
 original_image = image.subsample(3,3)  # resize image using subsample
 
 Label(left_frame, image=original_image).grid(row=0, column=0, padx=5, pady=5)
-image2 = PhotoImage(file="netImage.png") #760x532
+image2 = PhotoImage(file="/home/ironfoot/Capstone/netImage.png") #760x532
 
 canvas = Canvas(right_frame, bg = "green", height = 532, width = 760)
 canvas.pack(padx = 5, pady = 5)
@@ -121,13 +121,13 @@ for i in range(len(X)):
 tool_bar = Frame(left_frame, width=180, height=185, bg='pink')
 tool_bar.grid(row=2, column=0, padx=5, pady=5)
 textbox = Text(left_frame, width=20, height=10)
-exit_image=PhotoImage(file='exit.png')
+exit_image=PhotoImage(file='/home/ironfoot/Capstone/exit.png')
 Button(tool_bar, text="Exit", image=exit_image,command=root.quit, bg='red3', width = 50).grid(row=0, column=0, padx=5, pady=3, ipadx=10) 
-reset_image=PhotoImage(file='reset.png')
+reset_image=PhotoImage(file='/home/ironfoot/Capstone/reset.png')
 Button(tool_bar, text="Reset", image=reset_image, command=reset, bg='aquamarine', width = 50).grid(row=1, column=0, padx=5, pady=3, ipadx=10)
-home_image=PhotoImage(file = "home.png")
+home_image=PhotoImage(file = "/home/ironfoot/Capstone/home.png")
 Button(tool_bar, text="Home", image=home_image, command=lambda:show_frame(frame1), bg='dodgerblue1', width = 50).grid(row=2, column=0, padx=5, pady=3, ipadx=10)
-next_image=PhotoImage(file = "next.png")
+next_image=PhotoImage(file = "/home/ironfoot/Capstone/next.png")
 Button(tool_bar, text="Next", image=next_image, command=lambda:show_frame(frame4), bg='khaki1', width = 50).grid(row=3, column=0, padx=5, pady=3, ipadx=10)
 
 Label(tool_bar, text="PERFORMANCE RATE:",font=("Comic Sans MS", 15, "bold"),bg='pink').grid(row=4, column=0, padx=5, pady=3, ipadx=10)
@@ -185,7 +185,7 @@ textbox.grid(row=5, column=0, padx=5, pady=3, ipadx=10)
 # webcam_image=PhotoImage(file='webcam.png')
 # Button(tool_bar, text="Webcam", image=webcam_image, command=open_camera, bg='aqua', width = 50).grid(row=2, column=0, padx=5, pady=3, ipadx=10)
 # Button(tool_bar, text="Next", image=next_image, command=lambda:show_frame(frame4), bg='dodgerblue1', width = 50).grid(row=3, column=0, padx=5, pady=3, ipadx=10)
-back_image=PhotoImage(file='back.png')
+back_image=PhotoImage(file='/home/ironfoot/Capstone/back.png')
 # Button(tool_bar, text="Back", image=back_image, command=lambda:show_frame(frame2), bg='khaki1', width = 50).grid(row=4, column=0, padx=5, pady=3, ipadx=10)
 
 #==============================================Frame 4 code=========================================
@@ -198,7 +198,7 @@ right_frame.grid(row=0, column=1, padx=10, pady=10)
 
 Label(left_frame, image=original_image).grid(row=0, column=0, padx=5, pady=5)
 
-image4 = PhotoImage(file="soccerfield.png") #760x532
+image4 = PhotoImage(file="/home/ironfoot/Capstone/soccerfield.png") #760x532
 canvas = Canvas(right_frame, bg = "green", height = 532, width = 760)
 canvas.pack(padx = 5, pady = 5)
 canvas.create_image(0, 0, anchor=NW, image=image4)
