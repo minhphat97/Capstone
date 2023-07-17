@@ -2,16 +2,16 @@ from adafruit_servokit import ServoKit
 import time
 import board
 import busio
-servo_pin = 1
+servo_pin = 12
 i2c=busio.I2C(board.SCL_1,board.SDA_1)
 kit = ServoKit(channels=16,i2c=i2c)
 while True:
     # kit.servo[servo_pin].angle=0
     # print("Angle is 0")
     # time.sleep(3)
-    i = 80 # angle
+    i = 90 # angle
     direction = 0 # 0 is positive, 1 is negative
-    step = 20 # change in angle
+    step = 10 # change in angle
     while True:
         kit.servo[servo_pin].angle=i
         result = f'Angle is {i}'
