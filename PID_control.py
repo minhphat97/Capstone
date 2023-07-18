@@ -44,7 +44,7 @@ ds3502.wiper = 10
 rot_angle = 90
 kit.servo[servo_pin].angle=rot_angle
 print("ANGLE IS 90")
-print("SLEEPING FOR 1 S")
+#print("SLEEPING FOR 1 S")
 time.sleep(1)
 ds3502.wiper = 20
 
