@@ -140,7 +140,7 @@ while(True):
     print("Wiper: ", ds3502.wiper)
 
     cv2.imshow("Human", frame)
-    if cv2.waitKey(1) == ord("q"):
+    if cv2.waitKey(1) == ord("0"):
         ds3502.wiper = 0
         break
 cap.release()

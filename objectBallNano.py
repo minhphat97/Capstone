@@ -54,7 +54,7 @@ while True:
         cv2.circle(frame2, center, radius, (0, 255, 0), 2)
 
     cv2.imshow("frame", frame2)
-    if cv2.waitKey(1) & 0xFF == ord('q'):
+    if cv2.waitKey(1) & 0xFF == ord('0'):
         break
     
     if radius >= 30.00 and radius <= 50.00:
