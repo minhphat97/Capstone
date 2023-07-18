@@ -19,9 +19,10 @@ upper_range_blue = np.array([179,62,255])
 
 kernel = np.ones((5, 5), np.uint8)
 cap2 = cv2.VideoCapture(0)
-cap2.set(3, 640)
-cap2.set(4, 480)
-
+# cap2.set(3, 640)
+# cap2.set(4, 480)
+cap2.set(3, 760)
+cap2.set(4, 532)
 while True:
     ret2, frame2 = cap2.read()
     hsv = cv2.cvtColor(frame2, cv2.COLOR_BGR2HSV)
