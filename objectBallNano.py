@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import math
 from csv import writer
+import keyboard
 # import config
 # import PID_control
 
@@ -56,7 +57,9 @@ while True:
         cv2.circle(frame2, center, radius, (0, 255, 0), 2)
 
     cv2.imshow("frame", frame2)
-    if cv2.waitKey(1) & 0xFF == ord('q'):
+    #if cv2.waitKey(1) & 0xFF == ord('0'):
+    if cv2.waitKey(1) & keyboard.is_pressed("0"):
+        print("BALL DETECTOR TURNING OFF")
         break
     
     if radius >= 30.00 and radius <= 50.00:

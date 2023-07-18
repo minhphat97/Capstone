@@ -1,3 +1,4 @@
+
 import time
 from adafruit_servokit import ServoKit
 import keyboard
@@ -12,16 +13,21 @@ kit = ServoKit(channels=16,i2c=i2c)
 print("STARTING")
 kit.servo[servo_pin].angle = 90
 while True:
-    if keyboard.is_pressed("f"):
+    if keyboard.is_pressed("4"):
         #ngle = 60
         kit.servo[servo_pin].angle = 120
-        print ("120")
-        time.sleep(0.33)
+       #  print ("120")
+        time.sleep(0.352)
         #angle = 30
         #print (angle)
         kit.servo[servo_pin].angle = 90
         time.sleep(3)
         print("DELAY OVER")
+
+    elif keyboard.is_pressed("0"):
+        print("BALL FEEDER TURNING OFF")
+        break
+        
     #print (angle)
 
 

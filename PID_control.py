@@ -11,6 +11,7 @@ import busio
 import time
 import Jetson.GPIO as GPIO
 import adafruit_ds3502
+import keyboard
 
 distance = 2 #m
 Px, Ix, Dx = -1/160, 0, 0
@@ -19,7 +20,7 @@ differential_x = 0
 prev_x = 0
 # ******DECLARE i2c FOR POT AND SETUP SERVO AND OpenCV******
 
-servo_pin = 1
+servo_pin = 4
 i2c=board.I2C()
 ds3502 = adafruit_ds3502.DS3502(i2c) # this is i2c 1
 i2c=busio.I2C(board.SCL_1,board.SDA_1) # this is i2c 0
@@ -65,17 +66,17 @@ while(True):
     boxes, weights = hog.detectMultiScale(frame,winStride=(8, 8), padding=(4, 4),scale=1.05)
     
     # if x == 1 and y == 0:
-    if keyboard.is_pressed("a"):
+    if keyboard.is_pressed("1"):
         flag = 1
-        print("a is pressed")
+        # print("a is pressed")
     # elif x == 1 and y == 1:
-    elif keyboard.is_pressed("s"):
+    elif keyboard.is_pressed("2"):
         flag = 2
-        print("s is pressed")
+        # print("s is pressed")
     # elif x == 0 and y == 1:
-    elif keyboard.is_pressed("d"):
+    elif keyboard.is_pressed("3"):
         flag = 3
-        print("d is pressed")
+        # print("d is pressed")
     
     # ******SERVO ROTATING LAZY SUSAN******
     for (x, y, w, h) in boxes:
@@ -149,8 +150,12 @@ while(True):
     print("Wiper: ", ds3502.wiper)
 
     cv2.imshow("Human", frame)
-    if cv2.waitKey(1) == ord("q"):
+    #if keyboard.is_pressed("5"):
+    if cv2.waitKey(1) & keyboard.is_pressed("0"):
+        
+
         ds3502.wiper = 0
+        print("BALL LAUNCHER TURNING OFF")
         break
 cap.release()
 cv2.destroyAllWindows()
