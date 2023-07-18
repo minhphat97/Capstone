@@ -142,9 +142,27 @@ while(True):
     elif h > 190 and h <= 200:
         ds3502.wiper = 61
         config.distance = 5.8
-    elif h <= 190:
+    elif h > 180 and h <= 190:
         ds3502.wiper = 65
         config.distance = 6.4
+    elif h > 172 and h <= 180:
+        ds3502.wiper = 70
+        config.distance = 6.8
+    elif h > 164 and h <= 172:
+        ds3502.wiper = 75
+        config.distance = 7.3
+    elif h > 158 and h <= 164:
+        ds3502.wiper = 78
+        config.distance = 8
+    elif h > 152 and h <= 158:
+        ds3502.wiper = 83 
+        config.distance = 10
+    elif h > 145 and h <= 155:
+        ds3502.wiper = 87
+        config.distance = 12
+    elif h <= 145:
+        ds3502.wiper = 90
+        config.distance = 13
 
     print("Height in image: ", h)
     print("Wiper: ", ds3502.wiper)
