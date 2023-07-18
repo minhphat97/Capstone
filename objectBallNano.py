@@ -44,7 +44,7 @@ while True:
         center = (int(x_ball), int(y_ball))
         radius = int(radius)
         cv2.circle(frame2, center, radius, (0, 255, 0), 2)
-    if len(contours_green) > 0:
+    elif len(contours_green) > 0:
         contour_sizes = [(cv2.contourArea(contour), contour) for contour in contours_green]
         largest_contour = max(contour_sizes, key=lambda x: x[0])[1]
         (x_ball, y_ball), radius = cv2.minEnclosingCircle(largest_contour)

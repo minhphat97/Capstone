@@ -56,17 +56,17 @@ while(True):
     center = int(width/2)
     boxes, weights = hog.detectMultiScale(frame,winStride=(8, 8), padding=(4, 4),scale=1.05)
     
-    if keyboard.is_pressed("a"):
+    if keyboard.is_pressed("1"):
         flag = 1
-        print("a is pressed")
+        #print("a is pressed")
 
-    elif keyboard.is_pressed("s"):
+    elif keyboard.is_pressed("2"):
         flag = 2
-        print("s is pressed")
+        #print("s is pressed")
    
-    elif keyboard.is_pressed("d"):
+    elif keyboard.is_pressed("3"):
         flag = 3
-        print("d is pressed")
+        #print("d is pressed")
     
     # ******SERVO ROTATING LAZY SUSAN******
     for (x, y, w, h) in boxes:
