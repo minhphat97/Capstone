@@ -9,7 +9,6 @@ import keyboard
 import board
 import busio
 import time
-import Jetson.GPIO as GPIO
 import adafruit_ds3502
 
 distance = 2 #m
@@ -48,31 +47,23 @@ print("ANGLE IS 90")
 print("SLEEPING FOR 1 S")
 time.sleep(1)
 ds3502.wiper = 20
-# GPIO.setmode(GPIO.BOARD)
-# InPin = 15
-# GPIO.setup(InPin, GPIO.IN)
-# InPin2 = 16
-# GPIO.setup(InPin2, GPIO.IN)
 
 flag = 2
 
 while(True):
     ret, frame = cap.read()
-    # x = GPIO.input(InPin)
-    # y = GPIO.input(InPin2)
     height, width, _ = frame.shape
     center = int(width/2)
     boxes, weights = hog.detectMultiScale(frame,winStride=(8, 8), padding=(4, 4),scale=1.05)
     
-    # if x == 1 and y == 0:
     if keyboard.is_pressed("a"):
         flag = 1
         print("a is pressed")
-    # elif x == 1 and y == 1:
+
     elif keyboard.is_pressed("s"):
         flag = 2
         print("s is pressed")
-    # elif x == 0 and y == 1:
+   
     elif keyboard.is_pressed("d"):
         flag = 3
         print("d is pressed")
@@ -98,12 +89,12 @@ while(True):
         if abs(error_x) > 15:
             rot_angle = rot_angle - error_x/43
         
-        if rot_angle < 30:
-            rot_angle = 30
+        if rot_angle < 43:
+            rot_angle = 43
             print("Servo out of range")
         
-        if rot_angle > 170:
-            rot_angle = 170
+        if rot_angle > 137:
+            rot_angle = 137
             print("Servo out of range")
 
         kit.servo[servo_pin].angle = rot_angle  
