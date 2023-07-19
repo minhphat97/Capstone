@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
-python objectBallFeeder.py &
-python objectBallNano.py &
+python3 PID_control.py &
+python3 objectBallFeeder.py &
+python3 objectBallNano.py &
