@@ -14,8 +14,8 @@ y_ball = 0
 lower_range_green = np.array([30, 50, 50]) #GREEN
 upper_range_green = np.array([80, 255, 255])
 
-lower_range_blue = np.array([0,0,255]) #WHITE
-upper_range_blue = np.array([179,62,255])
+lower_range_white = np.array([0,0,255]) #WHITE
+upper_range_white = np.array([179,62,255])
 
 kernel = np.ones((5, 5), np.uint8)
 cap2 = cv2.VideoCapture(0)
@@ -31,15 +31,15 @@ while True:
     mask_green = cv2.erode(mask_green, kernel, iterations=2)
     mask_green = cv2.dilate(mask_green, kernel, iterations=2)
 
-    mask_blue = cv2.inRange(hsv, lower_range_blue, upper_range_blue)
-    mask_blue = cv2.erode(mask_blue, kernel, iterations=2)
-    mask_blue = cv2.dilate(mask_blue, kernel, iterations=2)
+    mask_white = cv2.inRange(hsv, lower_range_white, upper_range_white)
+    mask_white = cv2.erode(mask_white, kernel, iterations=2)
+    mask_white = cv2.dilate(mask_white, kernel, iterations=2)
 
-    contours_blue, _ = cv2.findContours(mask_blue, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    contours_white, _ = cv2.findContours(mask_white, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     contours_green, _ = cv2.findContours(mask_green, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     
-    if len(contours_blue) > 0:
-        contour_sizes = [(cv2.contourArea(contour), contour) for contour in contours_blue]
+    if len(contours_white) > 0:
+        contour_sizes = [(cv2.contourArea(contour), contour) for contour in contours_white]
         largest_contour = max(contour_sizes, key=lambda x: x[0])[1]
         (x_ball, y_ball), radius = cv2.minEnclosingCircle(largest_contour)
         center = (int(x_ball), int(y_ball))

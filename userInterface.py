@@ -38,10 +38,10 @@ def is_csv_file_empty(csv_file):
         return not any(csv_reader)
 
 if is_csv_file_empty(csv_file_path):
-    print("The CSV file is empty.")
+    print("No data")
     
 else:
-    print("The CSV file is not empty.")
+    print("Some data")
     with open('outputtest.csv') as file:
         for row in file:
             X.append(row.split(",")[0])
