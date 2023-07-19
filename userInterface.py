@@ -118,7 +118,7 @@ for i in range(len(X)):
 
 tool_bar = Frame(left_frame, width=180, height=185, bg='pink')
 tool_bar.grid(row=2, column=0, padx=5, pady=5)
-textbox = Text(left_frame, width=20, height=10)
+
 exit_image=PhotoImage(file='/home/ironfoot/Capstone/exit.png')
 Button(tool_bar, text="Exit", image=exit_image,command=lambda: [root.quit(), reset()], bg='red3', width = 50).grid(row=0, column=0, padx=5, pady=3, ipadx=10) 
 # reset_image=PhotoImage(file='/home/ironfoot/Capstone/reset.png')
@@ -128,8 +128,7 @@ Button(tool_bar, text="Home", image=home_image, command=lambda:show_frame(frame1
 next_image=PhotoImage(file = "/home/ironfoot/Capstone/next.png")
 Button(tool_bar, text="Next", image=next_image, command=lambda:show_frame(frame4), bg='khaki1', width = 50).grid(row=3, column=0, padx=5, pady=3, ipadx=10)
 
-Label(tool_bar, text="PERFORMANCE RATE:",font=("Comic Sans MS", 15, "bold"),bg='pink').grid(row=4, column=0, padx=5, pady=3, ipadx=10)
-textbox.grid(row=5, column=0, padx=5, pady=3, ipadx=10)
+Label(tool_bar, text="GOAL POSITION:",font=("Comic Sans MS", 15, "bold"),bg='pink').grid(row=4, column=0, padx=5, pady=3, ipadx=10)
 
 #==============================================Frame 3 code=========================================
 # frame3.config(bg="pink")  # specify background color
