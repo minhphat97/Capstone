@@ -9,7 +9,6 @@ i2c=board.I2C()
 i2c=busio.I2C(board.SCL_1,board.SDA_1) # this is i2c 0
 kit = ServoKit(channels=16,i2c=i2c)
 
-#angle = 30
 print("STARTING")
 kit.servo[servo_pin].angle = 90
 while True:

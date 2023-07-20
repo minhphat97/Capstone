@@ -38,10 +38,10 @@ def is_csv_file_empty(csv_file):
         return not any(csv_reader)
 
 if is_csv_file_empty(csv_file_path):
-    print("The CSV file is empty.")
+    print("No data")
     
 else:
-    print("The CSV file is not empty.")
+    print("Some data")
     with open('outputtest.csv') as file:
         for row in file:
             X.append(row.split(",")[0])
@@ -85,9 +85,7 @@ frame1_btn.place(x=408, y=530)
 # frame1_btn_2 = tk.Button(frame1, text='PAGE 2', command=lambda:show_frame(frame3), bg='cyan2', compound = LEFT)
 # frame1_btn_2.place(x=500, y=530)
 frame1_btn_3 = tk.Button(frame1, text='PAGE 2', command=lambda:show_frame(frame4), bg='cyan2', compound = LEFT)
-frame1_btn_3.place(x=500, y=530)
-play_button = tk.Button(frame1, text='RUN', command=helloCallBack, bg='aquamarine', compound = LEFT)
-play_button.place(x=592, y=530)
+frame1_btn_3.place(x=628, y=530)
 
 date = dt.datetime.now()
 label = Label(frame1, text=f"{date:%A, %B %d, %Y}", font="Calibri, 20")
@@ -120,18 +118,17 @@ for i in range(len(X)):
 
 tool_bar = Frame(left_frame, width=180, height=185, bg='pink')
 tool_bar.grid(row=2, column=0, padx=5, pady=5)
-textbox = Text(left_frame, width=20, height=10)
+
 exit_image=PhotoImage(file='/home/ironfoot/Capstone/exit.png')
-Button(tool_bar, text="Exit", image=exit_image,command=root.quit, bg='red3', width = 50).grid(row=0, column=0, padx=5, pady=3, ipadx=10) 
-reset_image=PhotoImage(file='/home/ironfoot/Capstone/reset.png')
-Button(tool_bar, text="Reset", image=reset_image, command=reset, bg='aquamarine', width = 50).grid(row=1, column=0, padx=5, pady=3, ipadx=10)
+Button(tool_bar, text="Exit", image=exit_image,command=lambda: [root.quit(), reset()], bg='red3', width = 50).grid(row=0, column=0, padx=5, pady=3, ipadx=10) 
+# reset_image=PhotoImage(file='/home/ironfoot/Capstone/reset.png')
+# Button(tool_bar, text="Reset", image=reset_image, command=reset, bg='aquamarine', width = 50).grid(row=1, column=0, padx=5, pady=3, ipadx=10)
 home_image=PhotoImage(file = "/home/ironfoot/Capstone/home.png")
 Button(tool_bar, text="Home", image=home_image, command=lambda:show_frame(frame1), bg='dodgerblue1', width = 50).grid(row=2, column=0, padx=5, pady=3, ipadx=10)
 next_image=PhotoImage(file = "/home/ironfoot/Capstone/next.png")
 Button(tool_bar, text="Next", image=next_image, command=lambda:show_frame(frame4), bg='khaki1', width = 50).grid(row=3, column=0, padx=5, pady=3, ipadx=10)
 
-Label(tool_bar, text="PERFORMANCE RATE:",font=("Comic Sans MS", 15, "bold"),bg='pink').grid(row=4, column=0, padx=5, pady=3, ipadx=10)
-textbox.grid(row=5, column=0, padx=5, pady=3, ipadx=10)
+Label(tool_bar, text="GOAL POSITION:",font=("Comic Sans MS", 15, "bold"),bg='pink').grid(row=4, column=0, padx=5, pady=3, ipadx=10)
 
 #==============================================Frame 3 code=========================================
 # frame3.config(bg="pink")  # specify background color
@@ -210,8 +207,8 @@ tool_bar = Frame(left_frame, width=180, height=185, bg='pink')
 tool_bar.grid(row=2, column=0, padx=5, pady=5)
 textbox = Text(left_frame, width=20, height=10)
 
-Button(tool_bar, text="Exit", image=exit_image,command=root.quit, bg='red3', width = 50).grid(row=0, column=0, padx=5, pady=3, ipadx=10) 
-Button(tool_bar, text="Reset", image=reset_image, command=reset, bg='aquamarine', width = 50).grid(row=1, column=0, padx=5, pady=3, ipadx=10)
+Button(tool_bar, text="Exit", image=exit_image,command=lambda: [root.quit(), reset()], bg='red3', width = 50).grid(row=0, column=0, padx=5, pady=3, ipadx=10) 
+# Button(tool_bar, text="Reset", image=reset_image, command=reset, bg='aquamarine', width = 50).grid(row=1, column=0, padx=5, pady=3, ipadx=10)
 Button(tool_bar, text="Home", image=home_image, command=lambda:show_frame(frame1), bg='dodgerblue1', width = 50).grid(row=2, column=0, padx=5, pady=3, ipadx=10)
 Button(tool_bar, text="Back", image=back_image, command=lambda:show_frame(frame2), bg='khaki1', width = 50).grid(row=3, column=0, padx=5, pady=3, ipadx=10)
 

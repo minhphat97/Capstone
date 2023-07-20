@@ -2,7 +2,7 @@
 Version=1.0
 Type=Application
 Terminal=true
-Exec=sudo /bin/bash -c "/home/ironfoot/Capstone/run.sh"
+Exec=sudo /bin/bash /home/ironfoot/Capstone/run.sh
 Name=Activate KickPro
 Comment=Run Ball-Launcher
 Icon=/home/ironfoot/Capstone/icon.png
