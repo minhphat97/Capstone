@@ -2,8 +2,8 @@ import cv2
 import numpy as np
 import math
 from csv import writer
-# import config
-# import PID_control
+import config
+import PID_control
 
 position_launcher_x_direction = 5 #m REMEMBER TO DETERMINE THE DISTANCE OF BALLL LAUNCHER
 
@@ -19,10 +19,10 @@ upper_range_white = np.array([179,62,255])
 
 kernel = np.ones((5, 5), np.uint8)
 cap2 = cv2.VideoCapture(0)
-# cap2.set(3, 640)
-# cap2.set(4, 480)
-cap2.set(3, 760)
-cap2.set(4, 532)
+cap2.set(3, 640)
+cap2.set(4, 480)
+# cap2.set(3, 760)
+# cap2.set(4, 532)
 while True:
     ret2, frame2 = cap2.read()
     hsv = cv2.cvtColor(frame2, cv2.COLOR_BGR2HSV)
@@ -61,25 +61,31 @@ while True:
         result, image = cap2.read()
         #print("result: ", result)
         if result == True:
-        #     if config.second_angle >= 90:
-        #         new_angle = abs(config.second_angle - 90)
-        #         position_player_x_direction = (math.sin(math.radian(new_angle)) * config.distance) + position_launcher_x_direction
-        #         position_player_y_direction = math.cos(math.radian(new_angle)) * (config.distance)
-        #     else:
-        #         new_angle = abs(90 - config.second_angle)
-        #         position_player_x_direction = position_launcher_x_direction - (math.sin(math.radian(new_angle)) * config.distance) 
-        #         position_player_y_direction = math.cos(math.radian(new_angle)) * (config.distance)
-                
+            if config.second_angle >= 90:
+                new_angle = abs(config.second_angle - 90)
+                # position_player_x_direction = (math.sin(math.radian(new_angle)) * config.distance) + position_launcher_x_direction
+                position_player_x_direction = (760/532) * (math.cos(math.radian(new_angle)) * (config.distance))
+                # position_player_y_direction = math.cos(math.radian(new_angle)) * (config.distance)
+                position_player_y_direction = (532/760) * ((math.sin(math.radian(new_angle)) * config.distance) + position_launcher_x_direction)
+            else:
+                new_angle = abs(90 - config.second_angle)
+                #position_player_x_direction = position_launcher_x_direction - (math.sin(math.radian(new_angle)) * config.distance) 
+                position_player_x_direction = (760/532) * (math.cos(math.radian(new_angle)) * (config.distance))
+                #position_player_y_direction = math.cos(math.radian(new_angle)) * (config.distance)
+                position_player_y_direction = (532/760) * (position_launcher_x_direction - (math.sin(math.radian(new_angle)) * config.distance))
+            
             cv2.imshow("Ball", image)
             # print ("X: ", x_ball)
             # print ("Y: ", y_ball)
             # print ("X_player: ", position_player_x_direction)
             # print ("Y_player: ", position_player_y_direction)
-            # List = [x_ball, y_ball, position_player_x_direction, position_player_y_direction]
-            # with open("outputtest.csv", 'a', newline='') as csvfile:
-            #     writer_object = writer(csvfile)
-            #     writer_object.writerow(List)
-            #     csvfile.close()
+            x_ball_new = (760/320) * y_ball
+            y_ball_new = (532/760) * x_ball 
+            List = [x_ball_new, y_ball_new, position_player_x_direction, position_player_y_direction]
+            with open("outputtest.csv", 'a', newline='') as csvfile:
+                writer_object = writer(csvfile)
+                writer_object.writerow(List)
+                csvfile.close()
             
 cap2.release()
 cv2.destroyAllWindows()
