@@ -61,7 +61,7 @@ while True:
         result, image = cap2.read()
         #print("result: ", result)
         if result == True:
-            if config.second_angle >= 90:
+            if config.second_angle < 90:
                 new_angle = abs(config.second_angle - 90)
                 position_player_x_direction = ((math.sin(math.radian(new_angle)) * config.distance) + position_launcher_x_direction) * 100
                 position_player_y_direction = (math.cos(math.radian(new_angle)) * (config.distance)) * 100
