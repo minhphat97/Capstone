@@ -44,10 +44,10 @@ ds3502.wiper = 10
 rot_angle = 90
 kit.servo[servo_pin].angle=rot_angle
 print("ANGLE IS 90")
-#print("SLEEPING FOR 1 S")
-time.sleep(1)
+#print("SLEEPING FOR 2 S")
+time.sleep(2)
 ds3502.wiper = 20
-
+time.sleep(2)
 flag = 2
 
 while(True):
@@ -105,10 +105,7 @@ while(True):
 
     # ******POT PERCENTAGE******
 
-    if h >= 400:
-        ds3502.wiper = 20
-        config.distance = 2
-    elif h > 350 and h < 400:
+    if h > 350:
         ds3502.wiper = 24
         config.distance = 2.7
     elif h > 330 and h <= 350:

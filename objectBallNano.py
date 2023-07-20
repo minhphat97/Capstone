@@ -63,24 +63,21 @@ while True:
         if result == True:
             if config.second_angle >= 90:
                 new_angle = abs(config.second_angle - 90)
-                # position_player_x_direction = (math.sin(math.radian(new_angle)) * config.distance) + position_launcher_x_direction
-                position_player_x_direction = (760/532) * (math.cos(math.radian(new_angle)) * (config.distance))
-                # position_player_y_direction = math.cos(math.radian(new_angle)) * (config.distance)
-                position_player_y_direction = (532/760) * ((math.sin(math.radian(new_angle)) * config.distance) + position_launcher_x_direction)
+                position_player_x_direction = ((math.sin(math.radian(new_angle)) * config.distance) + position_launcher_x_direction) * 100
+                position_player_y_direction = (math.cos(math.radian(new_angle)) * (config.distance)) * 100
+        
             else:
                 new_angle = abs(90 - config.second_angle)
-                #position_player_x_direction = position_launcher_x_direction - (math.sin(math.radian(new_angle)) * config.distance) 
-                position_player_x_direction = (760/532) * (math.cos(math.radian(new_angle)) * (config.distance))
-                #position_player_y_direction = math.cos(math.radian(new_angle)) * (config.distance)
-                position_player_y_direction = (532/760) * (position_launcher_x_direction - (math.sin(math.radian(new_angle)) * config.distance))
+                position_player_x_direction = (position_launcher_x_direction - (math.sin(math.radian(new_angle)) * config.distance)) * 100 
+                position_player_y_direction = (math.cos(math.radian(new_angle)) * (config.distance))*100
             
             cv2.imshow("Ball", image)
             # print ("X: ", x_ball)
             # print ("Y: ", y_ball)
             # print ("X_player: ", position_player_x_direction)
             # print ("Y_player: ", position_player_y_direction)
-            x_ball_new = (760/320) * y_ball
-            y_ball_new = (532/760) * x_ball 
+            x_ball_new = (760/640) * x_ball
+            y_ball_new = (532/480) * y_ball 
             List = [x_ball_new, y_ball_new, position_player_x_direction, position_player_y_direction]
             with open("outputtest.csv", 'a', newline='') as csvfile:
                 writer_object = writer(csvfile)
