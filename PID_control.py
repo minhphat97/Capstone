@@ -46,9 +46,10 @@ ds3502.wiper = 10
 rot_angle = 90
 kit.servo[servo_pin].angle=rot_angle
 print("ANGLE IS 90")
-print("SLEEPING FOR 1 S")
-time.sleep(1)
+# print("SLEEPING FOR  S")
+time.sleep(2)
 ds3502.wiper = 20
+time.sleep(2)
 # GPIO.setmode(GPIO.BOARD)
 # InPin = 15
 # GPIO.setup(InPin, GPIO.IN)
@@ -56,7 +57,7 @@ ds3502.wiper = 20
 # GPIO.setup(InPin2, GPIO.IN)
 
 flag = 2
-
+print("STARTING SERVO AND TRACKING COMPONENTS")
 while(True):
     ret, frame = cap.read()
     # x = GPIO.input(InPin)

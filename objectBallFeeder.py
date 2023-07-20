@@ -10,7 +10,7 @@ i2c=busio.I2C(board.SCL_1,board.SDA_1) # this is i2c 0
 kit = ServoKit(channels=16,i2c=i2c)
 
 #angle = 30
-print("STARTING")
+print("STARTING BALL FEEDER COMPONENT")
 kit.servo[servo_pin].angle = 90
 while True:
     if keyboard.is_pressed("4"):
