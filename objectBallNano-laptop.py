@@ -93,7 +93,7 @@ while True:
     if not data_received:
         print("ERROR: BALL DETECTOR TURNING OFF")
         break
-    distance, rot_angle, wiper= map(float, data_received.split(','))
+    distance, rot_angle, wiper, launch_ball= map(float, data_received.split(','))
     #if cv2.waitKey(1) & 0xFF == ord('0'):
     if cv2.waitKey(1) & keyboard.is_pressed("0"):
         print("BALL DETECTOR TURNING OFF")

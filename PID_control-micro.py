@@ -9,9 +9,6 @@ import time
 import adafruit_ds3502
 import socket
 
-# RUN $ hostname -I
-# to detect ip adress of this device
-
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Jetson Nano IP address (localhost)
@@ -40,7 +37,6 @@ time.sleep(2)
 ds3502.wiper = 20
 time.sleep(2)
 
-
 print("STARTING SERVO AND TRACKING COMPONENTS")
 while(True):
     data_received = sock.recv(1024).decode()
@@ -48,7 +44,7 @@ while(True):
         ds3502.wiper = 0
         print("ERROR: BALL LAUNCHER TURNING OFF")
         break
-    distance, rot_angle, wiper= map(float, data_received.split(','))
+    distance, rot_angle, wiper, launch_ball= map(float, data_received.split(','))
     ds3502.wiper = wiper
 
     if keyboard.is_pressed("0"):
