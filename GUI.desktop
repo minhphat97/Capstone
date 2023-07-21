@@ -2,10 +2,10 @@
 Version=1.0
 Type=Application
 Terminal=true
-Exec=sudo python3 /home/ironfoot/Capstone/userInterface.py
+Exec=sudo python3 /home/jg26/Capstone/userInterface.py
 Name=GUI
 Comment=Launch GUI
-Icon=/home/ironfoot/Capstone/icon.png
+Icon=/home/jg26/Capstone/icon.png
 
 # Do the following to setup
 # cp GUI.desktop /home/ironfoot/Desktop

@@ -1,0 +1,24 @@
+[Unit]
+Description=KickPro Nano Service
+After=network.target 
+#graphical-session.target
+
+[Service]
+Type=simple
+TimeoutStartSec=2
+User=ironfoot
+WorkingDirectory=/home/ironfoot
+ExecStart=sudo /bin/bash /home/ironfoot/start-micro.sh
+
+[Install]
+WantedBy=multi-user.target
+
+# commands to start, stop, restart the service
+# replace my_script with service name
+# must restart and reload after every modification to service
+# sudo systemctl start my_script.service    # Start the service
+# sudo systemctl stop my_script.service     # Stop the service
+# sudo systemctl restart my_script.service  # Restart the service
+# sudo systemctl daemon-reload
+
+
