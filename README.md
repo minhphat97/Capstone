@@ -28,7 +28,7 @@ The Jetson.GPIO should come built-in for the Jetson.
 
 ## Downloading Code
 
-To download the code and use the correct branch, run the following commands on both the laptop and pi:
+To download the code and use the correct branch, run the following commands on both the laptop and Nano:
 
 ```bash
 git clone https://github.com/minhphat97/Capstone.git
