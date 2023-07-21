@@ -138,33 +138,43 @@ while(True):
 
     if h > 350:
         wiper = 24
+        ds3502.wiper = 24
         distance = 2.7
     elif h > 330 and h <= 350:
         wiper = 28
+        ds3502.wiper = 28
         distance = 3.1
     elif h > 300 and h <= 330:
         wiper = 33
+        ds3502.wiper = 33
         distance = 3.6
     elif h > 280 and h <= 300:
         wiper = 38
+        ds3502.wiper = 38
         distance = 4.0
     elif h > 250 and h <= 280:
         wiper = 44
+        ds3502.wiper = 44
         distance = 4.4
     elif h > 220 and h <= 250:
         wiper = 50
+        ds3502.wiper = 50
         distance = 4.9
     elif h > 200 and h <= 220:
         wiper = 56
+        ds3502.wiper = 56
         distance = 5.3
     elif h > 190 and h <= 200:
         wiper = 61
+        ds3502.wiper = 61
         distance = 5.8
     elif h > 180 and h <= 190:
         wiper = 65
+        ds3502.wiper = 65
         distance = 6.4
     elif h <= 180:
         wiper = 70
+        ds3502.wiper = 70
         distance = 6.8
     # elif h > 164 and h <= 172:
     #     ds3502.wiper = 75
@@ -197,7 +207,7 @@ while(True):
         launch_ball = 2
         data_to_send = f"{distance},{rot_angle},{wiper},{launch_ball}"
         conn1.sendall(data_to_send.encode())
-        conn2.sendall(data_to_send.encode())
+        # conn2.sendall(data_to_send.encode())
         # conn3.sendall(data_to_send.encode())
         print("BALL LAUNCHER TURNING OFF")
         print("BALL DETECTOR TURNING OFF")
