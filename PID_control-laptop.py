@@ -4,26 +4,42 @@ import cv2
 import time
 import math
 from csv import writer
-from adafruit_servokit import ServoKit
+import socket
 import keyboard
-import board
-import busio
-import time
-import adafruit_ds3502
-import keyboard
+
+# RUN $ hostname -I
+# to detect ip adress of this device
+
+# Create a TCP/IP socket
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+# Replace 'YOUR_LAPTOP_IP_ADDRESS' with the actual IP address of the laptop on the local network
+laptop_ip = '127.0.0.1'
+laptop_port = 12345
+
+# Bind the socket to the laptop's IP address and port
+sock.bind((laptop_ip, laptop_port))
+
+# Listen for two incoming connections: PID_control-micro.py, objectBallNano-laptop.py
+sock.listen(3)
+
+# Accept the first connection
+conn1, addr1 = sock.accept()
+print("Connected to the first client at", addr1)
+
+# Accept the second connection
+conn2, addr2 = sock.accept()
+print("Connected to the second client at", addr2)
+
+# Accept the third connection
+# conn3, addr3 = sock.accept()
+# print("Connected to the third client at", addr3)
 
 distance = 2 #m
 Px, Ix, Dx = -1/160, 0, 0
 integral_x = 0
 differential_x = 0
 prev_x = 0
-# ******DECLARE i2c FOR POT AND SETUP SERVO AND OpenCV******
-
-servo_pin = 4
-i2c=board.I2C()
-ds3502 = adafruit_ds3502.DS3502(i2c) # this is i2c 1
-i2c=busio.I2C(board.SCL_1,board.SDA_1) # this is i2c 0
-kit = ServoKit(channels=16,i2c=i2c)
 
 position_laucnher_x_direction = 30
 Known_distance = 300 #cm
@@ -39,15 +55,13 @@ x_medium = 0
 y_medium = 0
 x = 0
 y = 0
-w = 1
+w = 0
 h = 0
-ds3502.wiper = 10 
-rot_angle = 90
-kit.servo[servo_pin].angle=rot_angle
+distance = 0
 print("ANGLE IS 90")
+rot_angle = 90
 # print("SLEEPING FOR  S")
-time.sleep(2)
-ds3502.wiper = 20
+wiper = 0
 time.sleep(2)
 # GPIO.setmode(GPIO.BOARD)
 # InPin = 15
@@ -56,6 +70,8 @@ time.sleep(2)
 # GPIO.setup(InPin2, GPIO.IN)
 
 flag = 2
+wiper = 0
+distance = 0
 print("STARTING SERVO AND TRACKING COMPONENTS")
 while(True):
     ret, frame = cap.read()
@@ -105,44 +121,44 @@ while(True):
             rot_angle = 137
             print("Servo out of range")
 
-        kit.servo[servo_pin].angle = rot_angle  
+        # kit.servo[servo_pin].angle = rot_angle  
         break
 
     # determine second_angle passed to objectBallFeeder.py
-    config.second_angle = rot_angle 
+    # second_angle = rot_angle # NOT NEEDED, rot_angle already passed in connection
 
     # ******POT PERCENTAGE******
 
     if h > 350:
-        ds3502.wiper = 24
-        config.distance = 2.7
+        wiper = 24
+        distance = 2.7
     elif h > 330 and h <= 350:
-        ds3502.wiper = 28
-        config.distance = 3.1
+        wiper = 28
+        distance = 3.1
     elif h > 300 and h <= 330:
-        ds3502.wiper = 33
-        config.distance = 3.6
+        wiper = 33
+        distance = 3.6
     elif h > 280 and h <= 300:
-        ds3502.wiper = 38
-        config.distance = 4.0
+        wiper = 38
+        distance = 4.0
     elif h > 250 and h <= 280:
-        ds3502.wiper = 44
-        config.distance = 4.4
+        wiper = 44
+        distance = 4.4
     elif h > 220 and h <= 250:
-        ds3502.wiper = 50
-        config.distance = 4.9
+        wiper = 50
+        distance = 4.9
     elif h > 200 and h <= 220:
-        ds3502.wiper = 56
-        config.distance = 5.3
+        wiper = 56
+        distance = 5.3
     elif h > 190 and h <= 200:
-        ds3502.wiper = 61
-        config.distance = 5.8
+        wiper = 61
+        distance = 5.8
     elif h > 180 and h <= 190:
-        ds3502.wiper = 65
-        config.distance = 6.4
+        wiper = 65
+        distance = 6.4
     elif h <= 180:
-        ds3502.wiper = 70
-        config.distance = 6.8
+        wiper = 70
+        distance = 6.8
     # elif h > 164 and h <= 172:
     #     ds3502.wiper = 75
     #     config.distance = 7.3
@@ -162,11 +178,21 @@ while(True):
     # print("Height in image: ", h)
     # print("Wiper: ", ds3502.wiper)
 
+    data_to_send = f"{distance},{rot_angle},{wiper}"
+    conn1.sendall(data_to_send.encode())
+    conn2.sendall(data_to_send.encode())
+    # conn3.sendall(data_to_send.encode())
+
     cv2.imshow("Human", frame)
     #if keyboard.is_pressed("5"):
     if cv2.waitKey(1) & keyboard.is_pressed("0"):
-        ds3502.wiper = 0
+        wiper = 0
+        data_to_send = f"{distance},{rot_angle},{wiper}"
+        conn1.sendall(data_to_send.encode())
+        conn2.sendall(data_to_send.encode())
+        # conn3.sendall(data_to_send.encode())
         print("BALL LAUNCHER TURNING OFF")
+        print("BALL DETECTOR TURNING OFF")
         break
 cap.release()
 cv2.destroyAllWindows()
