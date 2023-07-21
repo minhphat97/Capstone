@@ -10,6 +10,7 @@ import board
 import busio
 import time
 import adafruit_ds3502
+import keyboard
 
 distance = 2 #m
 Px, Ix, Dx = -1/160, 0, 0
@@ -18,7 +19,7 @@ differential_x = 0
 prev_x = 0
 # ******DECLARE i2c FOR POT AND SETUP SERVO AND OpenCV******
 
-servo_pin = 1
+servo_pin = 4
 i2c=board.I2C()
 ds3502 = adafruit_ds3502.DS3502(i2c) # this is i2c 1
 i2c=busio.I2C(board.SCL_1,board.SDA_1) # this is i2c 0
@@ -44,29 +45,36 @@ ds3502.wiper = 10
 rot_angle = 90
 kit.servo[servo_pin].angle=rot_angle
 print("ANGLE IS 90")
-#print("SLEEPING FOR 2 S")
+# print("SLEEPING FOR  S")
 time.sleep(2)
 ds3502.wiper = 20
 time.sleep(2)
-flag = 2
+# GPIO.setmode(GPIO.BOARD)
+# InPin = 15
+# GPIO.setup(InPin, GPIO.IN)
+# InPin2 = 16
+# GPIO.setup(InPin2, GPIO.IN)
 
+flag = 2
+print("STARTING SERVO AND TRACKING COMPONENTS")
 while(True):
     ret, frame = cap.read()
     height, width, _ = frame.shape
     center = int(width/2)
     boxes, weights = hog.detectMultiScale(frame,winStride=(8, 8), padding=(4, 4),scale=1.05)
     
+    # if x == 1 and y == 0:
     if keyboard.is_pressed("1"):
         flag = 1
-        #print("a is pressed")
-
+        # print("a is pressed")
+    # elif x == 1 and y == 1:
     elif keyboard.is_pressed("2"):
         flag = 2
-        #print("s is pressed")
-   
+        # print("s is pressed")
+    # elif x == 0 and y == 1:
     elif keyboard.is_pressed("3"):
         flag = 3
-        #print("d is pressed")
+        # print("d is pressed")
     
     # ******SERVO ROTATING LAZY SUSAN******
     for (x, y, w, h) in boxes:
@@ -129,16 +137,38 @@ while(True):
     elif h > 190 and h <= 200:
         ds3502.wiper = 61
         config.distance = 5.8
-    elif h <= 190:
+    elif h > 180 and h <= 190:
         ds3502.wiper = 65
         config.distance = 6.4
+    elif h > 172 and h <= 180:
+        ds3502.wiper = 70
+        config.distance = 6.8
+    elif h > 164 and h <= 172:
+        ds3502.wiper = 75
+        config.distance = 7.3
+    elif h > 158 and h <= 164:
+        ds3502.wiper = 78
+        config.distance = 8
+    elif h > 152 and h <= 158:
+        ds3502.wiper = 83 
+        config.distance = 10
+    elif h > 145 and h <= 155:
+        ds3502.wiper = 87
+        config.distance = 12
+    elif h <= 145:
+        ds3502.wiper = 90
+        config.distance = 13
 
     print("Height in image: ", h)
     print("Wiper: ", ds3502.wiper)
 
     cv2.imshow("Human", frame)
-    if cv2.waitKey(1) == ord("0"):
+    #if keyboard.is_pressed("5"):
+    if cv2.waitKey(1) & keyboard.is_pressed("0"):
+        
+
         ds3502.wiper = 0
+        print("BALL LAUNCHER TURNING OFF")
         break
 cap.release()
 cv2.destroyAllWindows()
