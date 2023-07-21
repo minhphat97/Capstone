@@ -12,7 +12,7 @@ import keyboard
 # Create a TCP/IP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-# Replace 'YOUR_LAPTOP_IP_ADDRESS' with the actual IP address of the laptop on the local network
+# Replace 'ip address' with the actual IP address of the nano
 laptop_ip = '127.0.0.1'
 laptop_port = 12345
 
@@ -27,7 +27,7 @@ conn1, addr1 = sock.accept()
 print("Connected to the first client at", addr1)
 
 # Accept the second connection
-# conn2, addr2 = sock.accept()
+# conn2, addr2 = sock.accept()                    
 # print("Connected to the second client at", addr2)
 
 # Accept the third connection

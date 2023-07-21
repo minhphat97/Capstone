@@ -11,8 +11,8 @@ import socket
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-# Jetson Nano IP address (localhost)
-nano_ip = '127.0.0.1'
+# Laptop IP address (localhost)
+nano_ip = '192.168.1.100'
 nano_port = 12345
 
 # Connect to the laptop's IP address and port
