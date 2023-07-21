@@ -5,6 +5,19 @@ import math
 from csv import writer
 import socket
 import keyboard
+import numpy as np
+import config
+import cv2
+import time
+import math
+from csv import writer
+from adafruit_servokit import ServoKit
+import keyboard
+import board
+import busio
+import time
+import adafruit_ds3502
+import keyboard
 
 # RUN $ hostname -I
 # to detect ip adress of this device
@@ -27,8 +40,8 @@ conn1, addr1 = sock.accept()
 print("Connected to the first client at", addr1)
 
 # Accept the second connection
-# conn2, addr2 = sock.accept()                    
-# print("Connected to the second client at", addr2)
+conn2, addr2 = sock.accept()                    
+print("Connected to the second client at", addr2)
 
 # Accept the third connection
 # conn3, addr3 = sock.accept()
@@ -197,7 +210,7 @@ while(True):
 
     data_to_send = f"{distance},{rot_angle},{wiper}"
     conn1.sendall(data_to_send.encode())
-    # conn2.sendall(data_to_send.encode())
+    conn2.sendall(data_to_send.encode())
     # conn3.sendall(data_to_send.encode())
 
     cv2.imshow("Human", frame)
@@ -207,7 +220,7 @@ while(True):
         launch_ball = 2
         data_to_send = f"{distance},{rot_angle},{wiper},{launch_ball}"
         conn1.sendall(data_to_send.encode())
-        # conn2.sendall(data_to_send.encode())
+        conn2.sendall(data_to_send.encode())
         # conn3.sendall(data_to_send.encode())
         print("BALL LAUNCHER TURNING OFF")
         print("BALL DETECTOR TURNING OFF")

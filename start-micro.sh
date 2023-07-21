@@ -11,7 +11,7 @@ cleanup() {
 trap cleanup EXIT
 
 cd Capstone
-sudo ./run-micro.sh
+sudo ./run.sh
 cd ..
 echo "ALL DONE"
 exit 0
