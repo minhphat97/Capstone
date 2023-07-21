@@ -39,6 +39,6 @@ git checkout UsingLaptop
 
 Turn on the JetsonNano. The appropriate scripts should run from launch.
 
-Then navigate to the terminal on the laptop and launch the VM Workstation and the 'Demo' VM. The appropraite scripts should launch automatically
+Then navigate to the terminal on the laptop and launch the VM Workstation and the 'Demo' VM. The appropraite scripts should launch automatically.
 
-Make sure it is after the program on the Nano is running. Also ensure the webcams are connected and there is an ethernet connection between the laptop and nano.
+Make sure it turns on after the program on the Nano is running. Also ensure the webcams are connected and there is an ethernet connection between the laptop and nano.
