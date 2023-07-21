@@ -11,7 +11,7 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Laptop IP address (localhost)
 laptop_ip = '127.0.0.1'
-laptop_port = 12345
+laptop_port = 12349
 
 # Connect to the laptop's IP address and port for the PID_control.py data (distance, second_angle)
 sock.connect((laptop_ip, laptop_port))

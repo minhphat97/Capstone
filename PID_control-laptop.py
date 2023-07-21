@@ -19,6 +19,12 @@ import time
 import adafruit_ds3502
 import keyboard
 
+servo_pin = 4
+i2c=board.I2C()
+ds3502 = adafruit_ds3502.DS3502(i2c) # this is i2c 1
+i2c=busio.I2C(board.SCL_1,board.SDA_1) # this is i2c 0
+kit = ServoKit(channels=16,i2c=i2c)
+
 # RUN $ hostname -I
 # to detect ip adress of this device
 
@@ -27,13 +33,13 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Replace 'ip address' with the actual IP address of the nano
 laptop_ip = '127.0.0.1'
-laptop_port = 12345
+laptop_port = 12349
 
 # Bind the socket to the laptop's IP address and port
 sock.bind((laptop_ip, laptop_port))
 
 # Listen for three incoming connections: PID_control-micro.py, objectBallNano-laptop.py, objectBallFeeder-micro.py
-sock.listen(6)
+sock.listen(3)
 
 # Accept the first connection
 conn1, addr1 = sock.accept()
@@ -44,8 +50,8 @@ conn2, addr2 = sock.accept()
 print("Connected to the second client at", addr2)
 
 # Accept the third connection
-# conn3, addr3 = sock.accept()
-# print("Connected to the third client at", addr3)
+conn3, addr3 = sock.accept()
+print("Connected to the third client at", addr3)
 
 distance = 2 #m
 Px, Ix, Dx = -1/160, 0, 0
@@ -73,7 +79,8 @@ distance = 0
 print("ANGLE IS 90")
 rot_angle = 90
 # print("SLEEPING FOR  S")
-wiper = 0
+wiper = 10
+ds3502.wiper = 10 
 time.sleep(2)
 # GPIO.setmode(GPIO.BOARD)
 # InPin = 15
@@ -82,7 +89,8 @@ time.sleep(2)
 # GPIO.setup(InPin2, GPIO.IN)
 
 flag = 2
-wiper = 0
+wiper = 20
+ds3502.wiper = 20
 distance = 0
 launch_ball=0
 print("STARTING BALL DETECTOR")
@@ -211,7 +219,7 @@ while(True):
     data_to_send = f"{distance},{rot_angle},{wiper}"
     conn1.sendall(data_to_send.encode())
     conn2.sendall(data_to_send.encode())
-    # conn3.sendall(data_to_send.encode())
+    conn3.sendall(data_to_send.encode())
 
     cv2.imshow("Human", frame)
     #if keyboard.is_pressed("5"):
@@ -221,7 +229,7 @@ while(True):
         data_to_send = f"{distance},{rot_angle},{wiper},{launch_ball}"
         conn1.sendall(data_to_send.encode())
         conn2.sendall(data_to_send.encode())
-        # conn3.sendall(data_to_send.encode())
+        conn3.sendall(data_to_send.encode())
         print("BALL LAUNCHER TURNING OFF")
         print("BALL DETECTOR TURNING OFF")
         print("BALL FEEDER TURNING OFF")

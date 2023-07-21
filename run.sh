@@ -7,9 +7,11 @@
 # # Trap the EXIT signal and call the cleanup function
 # trap cleanup EXIT
 
+sudo python3 /home/ironfoot/Capstone/PID_control-laptop.py &
+sleep 3
 sudo python3 /home/ironfoot/Capstone/objectBallFeeder.py &
-sudo python3 /home/ironfoot/Capstone/objectBallNano-laptop.py &
-sudo python3 /home/ironfoot/Capstone/PID_control-laptop.py #&
+sudo python3 /home/ironfoot/Capstone/objectBallNano-laptop.py #&
+
 
 echo "ALL DONE"
 exit 0
