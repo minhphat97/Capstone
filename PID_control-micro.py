@@ -47,7 +47,7 @@ while(True):
     distance, rot_angle, wiper, launch_ball= map(float, data_received.split(','))
     ds3502.wiper = wiper
 
-    if keyboard.is_pressed("0"):
+    if launch_ball == 2:
         ds3502.wiper = 0
         print("BALL LAUNCHER TURNING OFF")
         break

@@ -1,3 +1,3 @@
 GUI icon enabled in Applications topbar by placing GUI.desktop into /usr/share/applications
-Scripts automatically run after user logins by putting script path at end of .bashrc and reloading it by entering $ source ~/.bashrc
-
+#Scripts automatically run after user logins by putting script path at end of .bashrc and reloading it by entering $ source ~/.bashrc
+Created a keyboard shutcut for the equal sign that runs $ gnome-terminal -- /bin/bash /home/jg26/start-laptop.sh
