@@ -51,7 +51,7 @@ lower_range_yellow = np.array([0,50,50]) #BLUE
 upper_range_yellow = np.array([30,255,255])
 
 kernel = np.ones((5, 5), np.uint8)
-cap2 = cv2.VideoCapture(1) # set to 1
+cap2 = cv2.VideoCapture(2) # set to 2 when connected to laptop
 cap2.set(3, 640)
 cap2.set(4, 480)
 time.sleep(1)
