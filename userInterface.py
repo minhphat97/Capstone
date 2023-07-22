@@ -83,7 +83,7 @@ canvas.create_rectangle(3, 3, 1075, 556, outline = "lightpink2", width = 60)
 frame1_btn = tk.Button(frame1, text='PAGE 1', command=lambda:show_frame(frame2), bg='cyan2', compound = LEFT)
 frame1_btn.place(x=408, y=530)
 frame1_btn_3 = tk.Button(frame1, text='PAGE 2', command=lambda:show_frame(frame4), bg='cyan2', compound = LEFT)
-frame1_btn_3.place(x=628, y=530)
+frame1_btn_3.place(x=590, y=530)
 
 date = dt.datetime.now()
 label = Label(frame1, text=f"{date:%A, %B %d, %Y}", font="Calibri, 20")
