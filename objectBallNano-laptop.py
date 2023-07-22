@@ -123,12 +123,12 @@ while True:
             if result == True:
                 if rot_angle < 90:
                     new_angle = abs(rot_angle - 90)
-                    position_player_x_direction = ((math.sin(math.radian(new_angle)) * distance) + position_launcher_x_direction) * 100
-                    position_player_y_direction = (math.cos(math.radian(new_angle)) * (distance)) * 100/2
+                    position_player_x_direction = ((math.sin(math.radians(new_angle)) * distance) + position_launcher_x_direction) * 100
+                    position_player_y_direction = (math.cos(math.radians(new_angle)) * (distance)) * 100/2
                 else:
                     new_angle = abs(90 - rot_angle)
-                    position_player_x_direction = (position_launcher_x_direction - (math.sin(math.radian(new_angle)) * distance)) * 100 
-                    position_player_y_direction = (math.cos(math.radian(new_angle)) * (distance)) * 100/2
+                    position_player_x_direction = (position_launcher_x_direction - (math.sin(math.radians(new_angle)) * distance)) * 100 
+                    position_player_y_direction = (math.cos(math.radians(new_angle)) * (distance)) * 100/2
                     
                 cv2.imshow("Ball", image)
                 # print ("X: ", x_ball)
