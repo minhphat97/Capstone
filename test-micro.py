@@ -30,6 +30,10 @@ while(True):
     # time.sleep(0.1)
     rot_angle, wiper, launch_ball = map(float, data_received.split(',')) #distance, 
     # print("Distance is ", distance)
+    print("Distance:", distance)
+    print("Rotational Angle:", rot_angle)
+    print("Wiper:", wiper)
+    print("Launch Ball:", launch_ball)
 
     if launch_ball == 2:
         print("TEST TURNING OFF")
