@@ -136,6 +136,7 @@ while(True):
 
     # determine second_angle passed to objectBallFeeder.py
     # second_angle = rot_angle # NOT NEEDED, rot_angle already passed in connection
+    rot_angle = rot_angle
 
     # ******POT PERCENTAGE******
 
@@ -188,7 +189,7 @@ while(True):
     # print("Height in image: ", h)
     # print("Wiper: ", ds3502.wiper)
 
-    data_to_send = f"{distance},{rot_angle},{wiper},{launch_ball}"
+    data_to_send = f"{rot_angle},{wiper},{launch_ball}" #{distance},
     sock.sendall(data_to_send.encode())
     # conn2.sendall(data_to_send.encode())
     # conn3.sendall(data_to_send.encode())
