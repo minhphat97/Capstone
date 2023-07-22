@@ -62,7 +62,8 @@ position_laucnher_x_direction = 30
 Known_distance = 300 #cm
 Known_width = 90 #cm
 
-cap = cv2.VideoCapture(0)
+# cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture("/dev/v4l/by-id/usb-GENERAL_GENERAL_WEBCAM_JH0319_20200710_v012-video-index0")
 
 hog = cv2.HOGDescriptor()
 hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
