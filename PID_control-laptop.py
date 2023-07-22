@@ -213,7 +213,8 @@ while(True):
         for conn, addr in connections:
             data_to_send = f"{distance},{rot_angle},{wiper},{launch_ball}"
             sock.sendall(data_to_send.encode())
-            print(f"Sent data to server at {addr}")
+            # print(f"Sent data to server at {addr}")
+            
     # conn2.sendall(data_to_send.encode())
     # conn3.sendall(data_to_send.encode())
 
@@ -226,7 +227,8 @@ while(True):
         for conn, addr in connections:
             data_to_send = f"{distance},{rot_angle},{wiper},{launch_ball}"
             sock.sendall(data_to_send.encode())
-            print(f"Sent data to server at {addr}")
+            # print(f"Sent data to server at {addr}")
+
         # conn2.sendall(data_to_send.encode())
         # conn3.sendall(data_to_send.encode())
         print("BALL LAUNCHER TURNING OFF")
