@@ -4,9 +4,6 @@ import math
 from csv import writer
 import keyboard
 import time
-import config
-import PID_control 
-# from PID_control import somefunc
 
 position_launcher_x_direction = 5 #m REMEMBER TO DETERMINE THE DISTANCE OF BALLL LAUNCHER
 
@@ -19,13 +16,12 @@ upper_range_green = np.array([80, 255, 255])
 
 lower_range_white = np.array([0,0,255]) #WHITE
 upper_range_white = np.array([179,62,255])
-config.distance
+
 kernel = np.ones((5, 5), np.uint8)
 cap2 = cv2.VideoCapture(1)
 cap2.set(3, 640)
 cap2.set(4, 480)
-# cap2.set(3, 760)
-# cap2.set(4, 532)
+
 while True:
     ret2, frame2 = cap2.read()
     hsv = cv2.cvtColor(frame2, cv2.COLOR_BGR2HSV)
@@ -75,12 +71,12 @@ while True:
             if config.second_angle < 90:
                 new_angle = abs(config.second_angle - 90)
                 position_player_x_direction = ((math.sin(math.radian(new_angle)) * config.distance) + position_launcher_x_direction) * 100
-                position_player_y_direction = (math.cos(math.radian(new_angle)) * (config.distance)) * 100
+                position_player_y_direction = (math.cos(math.radian(new_angle)) * (config.distance)) * 100 / 2
         
             else:
                 new_angle = abs(90 - config.second_angle)
                 position_player_x_direction = (position_launcher_x_direction - (math.sin(math.radian(new_angle)) * config.distance)) * 100 
-                position_player_y_direction = (math.cos(math.radian(new_angle)) * (config.distance))*100
+                position_player_y_direction = (math.cos(math.radian(new_angle)) * (config.distance))*100 / 2
             
             cv2.imshow("Ball", image)
             # print ("X: ", x_ball)
@@ -89,7 +85,7 @@ while True:
             # print ("Y_player: ", position_player_y_direction)
             x_ball_new = (760/640) * x_ball
             y_ball_new = (532/480) * y_ball 
-            List = [x_ball_new, y_ball_new, position_player_x_direction, position_player_y_direction]
+            List = [x_ball_new, y_ball_new]
             with open("outputtest.csv", 'a', newline='') as csvfile:
                 writer_object = writer(csvfile)
                 writer_object.writerow(List)
