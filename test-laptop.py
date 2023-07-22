@@ -208,4 +208,4 @@ while(True):
         break
 cap.release()
 cv2.destroyAllWindows()
-socket.close()
+sock.close()

@@ -35,4 +35,4 @@ while(True):
         break
 
 conn.close()
-socket.close()
+sock.close()
