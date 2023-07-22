@@ -28,9 +28,8 @@ while(True):
         break
 
     # time.sleep(0.1)
-    rot_angle, wiper, launch_ball = map(float, data_received.split(',')) #distance, 
-    # print("Distance is ", distance)
-    print("Distance:", distance)
+    distance, rot_angle, wiper, launch_ball = map(float, data_received.split(','))
+    print("Distance is ", distance)
     print("Rotational Angle:", rot_angle)
     print("Wiper:", wiper)
     print("Launch Ball:", launch_ball)
