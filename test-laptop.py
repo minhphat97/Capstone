@@ -75,6 +75,8 @@ flag = 2
 # wiper = 0
 distance = 0
 launch_ball=0
+rot_angle2 = 0
+temp = 0
 print("STARTING BALL DETECTOR")
 print("STARTING BALL LAUNCHER")
 print("STARTING BALL FEEDER")
@@ -104,6 +106,7 @@ while(True):
     
     # ******SERVO ROTATING LAZY SUSAN******
     for (x, y, w, h) in boxes:
+        temp = rot_angle
         if flag == 1:
             x_medium = int((x + x + w) / 2) - 200
             face_centre_x = x+w/2 - 200
@@ -136,7 +139,8 @@ while(True):
 
     # determine second_angle passed to objectBallFeeder.py
     # second_angle = rot_angle # NOT NEEDED, rot_angle already passed in connection
-    rot_angle = rot_angle
+    # if rot_angle is NULL:
+
 
     # ******POT PERCENTAGE******
 
@@ -188,9 +192,9 @@ while(True):
 
     # print("Height in image: ", h)
     # print("Wiper: ", ds3502.wiper)
-
-    data_to_send = f"{rot_angle},{wiper},{launch_ball}" #{distance},
-    sock.sendall(data_to_send.encode())
+    if rot_angle is not None and wiper is not None and launch_ball is not None and distance is not None:
+        data_to_send = f"{distance},{rot_angle},{wiper},{launch_ball}" #
+        sock.sendall(data_to_send.encode())
     # conn2.sendall(data_to_send.encode())
     # conn3.sendall(data_to_send.encode())
 
@@ -207,6 +211,7 @@ while(True):
         print("BALL DETECTOR TURNING OFF")
         print("BALL FEEDER TURNING OFF")
         break
+    rot_angle = temp
 cap.release()
 cv2.destroyAllWindows()
 sock.close()
