@@ -28,7 +28,7 @@ print("STARTING CONNECTIONS")
 servers = [
     # ('192.168.1.74', 12345),  # Replace with the actual IP and port of server 1
     ('127.0.0.1', 12345),  # Replace with the actual IP and port of server 2
-    # ('192.168.1.102', 12345),  # Replace with the actual IP and port of server 3
+    # ('192.168.1.74', 12345),  # May need to connect to the nano twice
     # Add more server IP addresses and ports as needed
 ]
 
@@ -214,7 +214,7 @@ while(True):
             data_to_send = f"{distance},{rot_angle},{wiper},{launch_ball}"
             sock.sendall(data_to_send.encode())
             # print(f"Sent data to server at {addr}")
-            
+
     # conn2.sendall(data_to_send.encode())
     # conn3.sendall(data_to_send.encode())
 
