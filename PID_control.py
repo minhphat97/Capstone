@@ -159,8 +159,6 @@ while(True):
     cv2.imshow("Human", frame)
     #if keyboard.is_pressed("5"):
     if cv2.waitKey(1) & keyboard.is_pressed("0"):
-        
-
         ds3502.wiper = 0
         print("BALL LAUNCHER TURNING OFF")
         break
