@@ -5,6 +5,7 @@ import math
 from csv import writer
 import socket
 import keyboard
+import pickle
 
 # RUN $ hostname -I
 # to detect ip adress of this device
@@ -13,18 +14,18 @@ import keyboard
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Replace 'ip address' with the actual IP address of the nano
-laptop_ip = '127.0.0.1'
-laptop_port = 12345
+ip = '192.168.1.74'
+ort = 12345
 
 # Bind the socket to the nano's IP address and port
-sock.bind((laptop_ip, laptop_port))
+sock.connect((ip, port))
 
 # Listen for ## three incoming connections: PID_control-micro.py, objectBallNano-laptop.py, objectBallFeeder-micro.py
-sock.listen(6)
+# sock.listen(6)
 
-# Accept the first connection
-conn1, addr1 = sock.accept()
-print("Connected to the first client at", addr1)
+# # Accept the first connection
+# conn1, addr1 = sock.accept()
+# print("Connected to the first client at", addr1)
 
 # Accept the second connection
 # conn2, addr2 = sock.accept()                    
@@ -188,7 +189,7 @@ while(True):
     # print("Wiper: ", ds3502.wiper)
 
     data_to_send = f"{distance},{rot_angle},{wiper},{launch_ball}"
-    conn1.sendall(data_to_send.encode())
+    sock.sendall(data_to_send.encode())
     # conn2.sendall(data_to_send.encode())
     # conn3.sendall(data_to_send.encode())
 
@@ -198,7 +199,7 @@ while(True):
         wiper = 0
         launch_ball = 2
         data_to_send = f"{distance},{rot_angle},{wiper},{launch_ball}"
-        conn1.sendall(data_to_send.encode())
+        sock.sendall(data_to_send.encode())
         # conn2.sendall(data_to_send.encode())
         # conn3.sendall(data_to_send.encode())
         print("BALL LAUNCHER TURNING OFF")
@@ -207,3 +208,4 @@ while(True):
         break
 cap.release()
 cv2.destroyAllWindows()
+socket.close()

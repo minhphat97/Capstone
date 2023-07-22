@@ -8,13 +8,16 @@ import socket
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-# Laptop IP address
-nano_ip = '192.168.153.129'
-nano_port = 12345
+# Accept connections from any port
+ip = ""
+port = 12345
 
 # Connect to the laptop's IP address and port
-sock.connect((nano_ip, nano_port))
-print("Connected to laptop at", (nano_ip, nano_port))
+sock.connect((ip, port))
+print("Connected to laptop at", (ip, port))
+socket.bind((ip, port))
+socket.listen(1)  # Listen for incoming connections, with a backlog of 1 connection
+conn, addr = socket.accept()  # Accept an incoming connection
 
 print("STARTING TEST")
 while(True):
@@ -30,3 +33,6 @@ while(True):
     if launch_ball == 2:
         print("TEST TURNING OFF")
         break
+
+conn.close()
+socket.close()
