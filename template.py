@@ -10,22 +10,18 @@ import time
 import subprocess
 
 csv_file_path = 'outputtest.csv'
-
+csv_file_path_2 = 'outputtestPlayer.csv'
 def reset():
     with open(csv_file_path, 'w') as file:
         file.truncate(0)
-    print("CSV file emptied successfully.")
+    print("CSV file ball emptied successfully.")
+
+    with open(csv_file_path_2, 'w') as file:
+        file.truncate(0)
+    print("CSV file player emptied successfully.")
 
 def show_frame(frame):
     frame.tkraise()
-
-def helloCallBack():
-    subprocess.run("python3 PID_control.py & python3 objectBallFeeder.py.py & python3 objectBallNano.py", shell=True) # previously python objectNano.py & python objectBallNano.py
-    # to open python scripts in separate terminals. Maybe only the PID control should be opened in separate terminal. 
-    # in that case, then remove PID control from the above subprocess, then copy and paste the below line before the subprocess.run line
-    # subprocess.Popen(['gnome-terminal', '--', 'python3', 'PID_control.py'])
-    # subprocess.Popen(['gnome-terminal', '--', 'python3', 'objectBallFeeder.py'])
-    # subprocess.Popen(['gnome-terminal', '--', 'python3', 'objectBallNano.py'])
 
 X = []
 Y = []
@@ -38,16 +34,23 @@ def is_csv_file_empty(csv_file):
         return not any(csv_reader)
 
 if is_csv_file_empty(csv_file_path):
-    print("No data")
-    
+    print("No data ball")
 else:
-    print("Some data")
-    with open('outputtest.csv') as file:
+    print("Some data ball")
+    with open(csv_file_path) as file:
         for row in file:
             X.append(row.split(",")[0])
             Y.append(row.split(",")[1])
-            X_player.append(row.split(",")[2])
-            Y_player.append(row.split(",")[3])
+
+if is_csv_file_empty(csv_file_path_2):
+    print("No data player")
+else:
+    print("Some data player")
+    with open(csv_file_path_2) as file:
+        for row in file:
+            X_player.append(row.split(",")[0])
+            Y_player.append(row.split(",")[1])
+
 
 radius = 18
 color = (255, 0, 0)
