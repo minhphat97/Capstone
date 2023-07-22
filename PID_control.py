@@ -11,7 +11,7 @@ import time
 import adafruit_ds3502
 import keyboard
 
-distance = 2 #m
+distance = 100 #m
 Px, Ix, Dx = -1/160, 0, 0
 integral_x = 0
 differential_x = 0
