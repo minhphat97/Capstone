@@ -24,10 +24,6 @@ ds3502 = adafruit_ds3502.DS3502(i2c) # this is i2c 1
 i2c=busio.I2C(board.SCL_1,board.SDA_1) # this is i2c 0
 kit = ServoKit(channels=16,i2c=i2c)
 
-position_laucnher_x_direction = 30
-Known_distance = 300 #cm
-Known_width = 90 #cm
-
 cap = cv2.VideoCapture(0)
 
 hog = cv2.HOGDescriptor()
@@ -49,10 +45,14 @@ ds3502.wiper = 20
 time.sleep(1.5)
 ds3502.wiper = 25
 flag = 2
+count = 0
+player_x = 0
+player_y = 0
 
 print("BALL LAUNCHER STARTING")
 
 while(True):
+    count = count + 1
     ret, frame = cap.read()
     height, width, _ = frame.shape
     center = int(width/2)
@@ -96,7 +96,6 @@ while(True):
         kit.servo[servo_pin].angle = rot_angle  
         break
  
-
     # ******POT PERCENTAGE******
 
     if h > 250:
@@ -129,9 +128,24 @@ while(True):
     elif h <= 140:
         ds3502.wiper = 72
         distance = 13
-
+    
     print("Height in image: ", h)
     print("Wiper: ", ds3502.wiper)
+
+    if count == 200:
+        count = 0
+        if rot_angle >= 90:
+            player_x = (20 + (math.sin(math.radian(rot_angle - 90)) * distance)) * (760/40)
+            player_y = (math.cos(math.radian(rot_angle - 90)) * distance) * (532/16)
+        else:
+            player_x = (20 - (math.sin(math.radian(90 - rot_angle)) * distance)) * (760/40)
+            player_y = (math.cos(math.radian(rot_angle - 90)) * distance) * (532/16)
+
+        List = [player_x, player_y]
+        with open("outputtestPlayer.csv", 'a', newline='') as csvfile:
+            writer_object = writer(csvfile)
+            writer_object.writerow(List)
+            csvfile.close()
 
     cv2.imshow("Human", frame)
 
@@ -141,13 +155,3 @@ while(True):
         break
 cap.release()
 cv2.destroyAllWindows()
-
-if config.second_angle < 90:
-                new_angle = abs(config.second_angle - 90)
-                position_player_x_direction = ((math.sin(math.radian(new_angle)) * config.distance) + position_launcher_x_direction) * 100
-                position_player_y_direction = (math.cos(math.radian(new_angle)) * (config.distance)) * 100 / 2
-        
-            else:
-                new_angle = abs(90 - config.second_angle)
-                position_player_x_direction = (position_launcher_x_direction - (math.sin(math.radian(new_angle)) * config.distance)) * 100 
-                position_player_y_direction = (math.cos(math.radian(new_angle)) * (config.distance))*100 / 2
