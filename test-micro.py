@@ -9,7 +9,7 @@ import socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Laptop IP address
-nano_ip = '192.168.1.100'
+nano_ip = '192.168.153.129'
 nano_port = 12345
 
 # Connect to the laptop's IP address and port
