@@ -21,7 +21,7 @@ conn, addr = sock.accept()  # Accept an incoming connection
 
 print("STARTING TEST")
 while(True):
-    data_received = sock.recv(1024).decode()
+    data_received = conn.recv(1024).decode()
     if not data_received:
         print("ERROR: TEST TURNING OFF")
         break
