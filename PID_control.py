@@ -134,11 +134,11 @@ while(True):
     if count == 200:
         count = 0
         if rot_angle >= 90:
-            player_x = (20 + (math.sin(math.radian(rot_angle - 90)) * distance)) * (760/40)
-            player_y = (math.cos(math.radian(rot_angle - 90)) * distance) * (532/16)
+            player_x = (20 + (math.sin(math.radians(rot_angle - 90)) * distance)) * (760/40)
+            player_y = (math.cos(math.radians(rot_angle - 90)) * distance) * (532/16)
         else:
-            player_x = (20 - (math.sin(math.radian(90 - rot_angle)) * distance)) * (760/40)
-            player_y = (math.cos(math.radian(rot_angle - 90)) * distance) * (532/16)
+            player_x = (20 - (math.sin(math.radians(90 - rot_angle)) * distance)) * (760/40)
+            player_y = (math.cos(math.radians(rot_angle - 90)) * distance) * (532/16)
 
         List = [player_x, player_y]
         with open("outputtestPlayer.csv", 'a', newline='') as csvfile:
