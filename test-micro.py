@@ -21,14 +21,15 @@ conn, addr = sock.accept()  # Accept an incoming connection
 
 print("STARTING TEST")
 while(True):
-    data_received = conn.recv(1024).decode()
+    data_received = conn.recv(4096)
+    data_received = data_received.decode()
     if not data_received:
         print("ERROR: TEST TURNING OFF")
         break
 
-    distance, rot_angle, wiper, launch_ball= map(float, data_received.split(','))
-    print("Distance is ", distance)
-    print
+    # time.sleep(0.1)
+    rot_angle, wiper, launch_ball = map(float, data_received.split(',')) #distance, 
+    # print("Distance is ", distance)
 
     if launch_ball == 2:
         print("TEST TURNING OFF")
