@@ -14,18 +14,22 @@ kit = ServoKit(channels=16,i2c=i2c)
 #angle = 30
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-# Laptop IP address (localhost)
-nano_ip = '192.168.1.100'
-nano_port = 12345
+# Accept connections from any port
+ip = ""
+port = 12345
 
 # Connect to the laptop's IP address and port
-sock.connect((nano_ip, nano_port))
-print("Connected to laptop at", (nano_ip, nano_port))
+# sock.bind((ip, port))
+print("Connected to laptop at", (ip, port))
+sock.bind((ip, port))
+sock.listen(1)  # Listen for incoming connections, with a backlog of 1 connection
+conn, addr = sock.accept()  # Accept an incoming connection
 
 print("STARTING BALL FEEDER COMPONENT")
 kit.servo[servo_pin].angle = 90
 while True:
-    data_received = sock.recv(1024).decode()
+    data_received = conn.recv(4096)
+    data_received = data_received.decode()
     if not data_received:
         kit.servo[servo_pin].angle = 90
         print("ERROR: BALL FEEDER TURNING OFF")
@@ -48,6 +52,9 @@ while True:
         break
         
     #print (angle)
+
+conn.close()
+sock.close()
 
 
 

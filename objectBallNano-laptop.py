@@ -7,15 +7,30 @@ import time
 import socket
 # import PID_control
 
+# ***************************************************************
+# sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+# # Laptop IP address (localhost)
+# laptop_ip = '127.0.0.1'
+# laptop_port = 12345
+
+# # Connect to the laptop's IP address and port for the PID_control.py data (distance, second_angle)
+# sock.connect((laptop_ip, laptop_port))
+# print("Connected to laptop at", (laptop_ip, laptop_port))
+# ****************************************************************
+
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-# Laptop IP address (localhost)
-laptop_ip = '127.0.0.1'
-laptop_port = 12345
+# Accept connections from any port
+ip = "127.0.0.1"
+port = 12345
 
-# Connect to the laptop's IP address and port for the PID_control.py data (distance, second_angle)
-sock.connect((laptop_ip, laptop_port))
-print("Connected to laptop at", (laptop_ip, laptop_port))
+# Connect to the laptop's IP address and port
+# sock.bind((ip, port))
+print("Connected to laptop at", (ip, port))
+sock.bind((ip, port))
+sock.listen(1)  # Listen for incoming connections, with a backlog of 1 connection
+conn, addr = sock.accept()  # Accept an incoming connection)
 
 position_launcher_x_direction = 5 #m REMEMBER TO DETERMINE THE DISTANCE OF BALLL LAUNCHER
 
@@ -89,41 +104,48 @@ while True:
     #     cv2.circle(frame2, center, radius, (0, 255, 0), 2)
 
     cv2.imshow("frame", frame2)
-    data_received = sock.recv(1024).decode()
+    data_received = conn.recv(4096)
+    data_received = data_received.decode()
     if not data_received:
         print("ERROR: BALL DETECTOR TURNING OFF")
         break
-    distance, rot_angle, wiper, launch_ball= map(float, data_received.split(','))
+    
     #if cv2.waitKey(1) & 0xFF == ord('0'):
     if cv2.waitKey(1) & keyboard.is_pressed("0"):
         print("BALL DETECTOR TURNING OFF")
         break
-    
-    if radius >= 30.00 and radius <= 50.00:
-        result, image = cap2.read()
-        #print("result: ", result)
-        if result == True:
-            if rot_angle < 90:
-                new_angle = abs(rot_angle - 90)
-                position_player_x_direction = ((math.sin(math.radian(new_angle)) * distance) + position_launcher_x_direction) * 100
-                position_player_y_direction = (math.cos(math.radian(new_angle)) * (distance)) * 100/2
-            else:
-                new_angle = abs(90 - rot_angle)
-                position_player_x_direction = (position_launcher_x_direction - (math.sin(math.radian(new_angle)) * distance)) * 100 
-                position_player_y_direction = (math.cos(math.radian(new_angle)) * (distance)) * 100/2
+
+    try:
+        distance, rot_angle, wiper, launch_ball= map(float, data_received.split(','))
+        if radius >= 30.00 and radius <= 50.00:
+            result, image = cap2.read()
+            #print("result: ", result)
+            if result == True:
+                if rot_angle < 90:
+                    new_angle = abs(rot_angle - 90)
+                    position_player_x_direction = ((math.sin(math.radian(new_angle)) * distance) + position_launcher_x_direction) * 100
+                    position_player_y_direction = (math.cos(math.radian(new_angle)) * (distance)) * 100/2
+                else:
+                    new_angle = abs(90 - rot_angle)
+                    position_player_x_direction = (position_launcher_x_direction - (math.sin(math.radian(new_angle)) * distance)) * 100 
+                    position_player_y_direction = (math.cos(math.radian(new_angle)) * (distance)) * 100/2
+                    
+                cv2.imshow("Ball", image)
+                # print ("X: ", x_ball)
+                # print ("Y: ", y_ball)
+                # print ("X_player: ", position_player_x_direction)
+                # print ("Y_player: ", position_player_y_direction)
+                x_ball_new = (760/640) * x_ball
+                y_ball_new = (532/480) * y_ball
+                List = [x_ball_new, y_ball_new, position_player_x_direction, position_player_y_direction]
+                with open("outputtest.csv", 'a', newline='') as csvfile:
+                    writer_object = writer(csvfile)
+                    writer_object.writerow(List)
+                    csvfile.close()
+    except ValueError as e:
+        print("Error while parsing data:", e)
                 
-            cv2.imshow("Ball", image)
-            # print ("X: ", x_ball)
-            # print ("Y: ", y_ball)
-            # print ("X_player: ", position_player_x_direction)
-            # print ("Y_player: ", position_player_y_direction)
-            x_ball_new = (760/640) * x_ball
-            y_ball_new = (532/480) * y_ball
-            List = [x_ball_new, y_ball_new, position_player_x_direction, position_player_y_direction]
-            with open("outputtest.csv", 'a', newline='') as csvfile:
-                writer_object = writer(csvfile)
-                writer_object.writerow(List)
-                csvfile.close()
-            
 cap2.release()
 cv2.destroyAllWindows()
+conn.close()
+sock.close()

@@ -9,31 +9,48 @@ import pickle
 
 # RUN $ hostname -I
 # to detect ip adress of this device
+print("STARTING CONNECTIONS")
+# ******************************************
 
-# Create a TCP/IP socket
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+# # Create a TCP/IP socket
+# sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-# Replace 'ip address' with the actual IP address of the nano
-ip = '192.168.1.74'
-port = 12345
+# # Replace 'ip address' with the actual IP address of the nano
+# ip = '192.168.1.74'
+# port = 12345
 
-# Bind the socket to the nano's IP address and port
-sock.connect((ip, port))
+# # Bind the socket to the nano's IP address and port
+# sock.connect((ip, port))
 
-# Listen for ## three incoming connections: PID_control-micro.py, objectBallNano-laptop.py, objectBallFeeder-micro.py
-# sock.listen(6)
+# ****************************************
 
-# # Accept the first connection
-# conn1, addr1 = sock.accept()
-# print("Connected to the first client at", addr1)
+# List of server IP addresses and corresponding ports
+servers = [
+    # ('192.168.1.74', 12345),  # Replace with the actual IP and port of server 1
+    ('127.0.0.1', 12345),  # Replace with the actual IP and port of server 2
+    # ('192.168.1.102', 12345),  # Replace with the actual IP and port of server 3
+    # Add more server IP addresses and ports as needed
+]
 
-# Accept the second connection
-# conn2, addr2 = sock.accept()                    
-# print("Connected to the second client at", addr2)
+# Create a list to store the connections
+connections = []
 
-# Accept the third connection
-# conn3, addr3 = sock.accept()
-# print("Connected to the third client at", addr3)
+# Connect to each server
+for server_ip, server_port in servers:
+    try:
+        # Create a TCP/IP socket
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        
+        # Connect to the server
+        sock.connect((server_ip, server_port))
+        
+        # Append the connection to the list
+        connections.append((sock, (server_ip, server_port)))
+        
+        print("Connected to server at", (server_ip, server_port))
+    except Exception as e:
+        print(f"Failed to connect to server at {server_ip}:{server_port}: {e}")
+
 
 distance = 2 #m
 Px, Ix, Dx = -1/160, 0, 0
@@ -193,8 +210,10 @@ while(True):
     # print("Height in image: ", h)
     # print("Wiper: ", ds3502.wiper)
     if rot_angle is not None and wiper is not None and launch_ball is not None and distance is not None:
-        data_to_send = f"{distance},{rot_angle},{wiper},{launch_ball}" #
-        sock.sendall(data_to_send.encode())
+        for conn, addr in connections:
+            data_to_send = f"{distance},{rot_angle},{wiper},{launch_ball}"
+            sock.sendall(data_to_send.encode())
+            print(f"Sent data to server at {addr}")
     # conn2.sendall(data_to_send.encode())
     # conn3.sendall(data_to_send.encode())
 
@@ -203,8 +222,11 @@ while(True):
     if cv2.waitKey(1) & keyboard.is_pressed("0"):
         wiper = 0
         launch_ball = 2
-        data_to_send = f"{distance},{rot_angle},{wiper},{launch_ball}"
-        sock.sendall(data_to_send.encode())
+
+        for conn, addr in connections:
+            data_to_send = f"{distance},{rot_angle},{wiper},{launch_ball}"
+            sock.sendall(data_to_send.encode())
+            print(f"Sent data to server at {addr}")
         # conn2.sendall(data_to_send.encode())
         # conn3.sendall(data_to_send.encode())
         print("BALL LAUNCHER TURNING OFF")

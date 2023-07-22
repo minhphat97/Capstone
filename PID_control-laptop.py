@@ -5,34 +5,52 @@ import math
 from csv import writer
 import socket
 import keyboard
+import pickle
 
 # RUN $ hostname -I
 # to detect ip adress of this device
+print("STARTING CONNECTIONS")
+# ******************************************
 
-# Create a TCP/IP socket
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+# # Create a TCP/IP socket
+# sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-# Replace 'ip address' with the actual IP address of the nano
-laptop_ip = '127.0.0.1'
-laptop_port = 12345
+# # Replace 'ip address' with the actual IP address of the nano
+# ip = '192.168.1.74'
+# port = 12345
 
-# Bind the socket to the laptop's IP address and port
-sock.bind((laptop_ip, laptop_port))
+# # Bind the socket to the nano's IP address and port
+# sock.connect((ip, port))
 
-# Listen for three incoming connections: PID_control-micro.py, objectBallNano-laptop.py, objectBallFeeder-micro.py
-sock.listen(6)
+# ****************************************
 
-# Accept the first connection
-conn1, addr1 = sock.accept()
-print("Connected to the first client at", addr1)
+# List of server IP addresses and corresponding ports
+servers = [
+    # ('192.168.1.74', 12345),  # Replace with the actual IP and port of server 1
+    ('127.0.0.1', 12345),  # Replace with the actual IP and port of server 2
+    # ('192.168.1.102', 12345),  # Replace with the actual IP and port of server 3
+    # Add more server IP addresses and ports as needed
+]
 
-# Accept the second connection
-# conn2, addr2 = sock.accept()                    
-# print("Connected to the second client at", addr2)
+# Create a list to store the connections
+connections = []
 
-# Accept the third connection
-# conn3, addr3 = sock.accept()
-# print("Connected to the third client at", addr3)
+# Connect to each server
+for server_ip, server_port in servers:
+    try:
+        # Create a TCP/IP socket
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        
+        # Connect to the server
+        sock.connect((server_ip, server_port))
+        
+        # Append the connection to the list
+        connections.append((sock, (server_ip, server_port)))
+        
+        print("Connected to server at", (server_ip, server_port))
+    except Exception as e:
+        print(f"Failed to connect to server at {server_ip}:{server_port}: {e}")
+
 
 distance = 2 #m
 Px, Ix, Dx = -1/160, 0, 0
@@ -57,11 +75,13 @@ y = 0
 w = 0
 h = 0
 distance = 0
+wiper = 0
 print("ANGLE IS 90")
 rot_angle = 90
 # print("SLEEPING FOR  S")
-wiper = 0
+wiper = 10
 time.sleep(2)
+wiper = 20
 # GPIO.setmode(GPIO.BOARD)
 # InPin = 15
 # GPIO.setup(InPin, GPIO.IN)
@@ -69,9 +89,11 @@ time.sleep(2)
 # GPIO.setup(InPin2, GPIO.IN)
 
 flag = 2
-wiper = 0
+# wiper = 0
 distance = 0
 launch_ball=0
+rot_angle2 = 0
+temp = 0
 print("STARTING BALL DETECTOR")
 print("STARTING BALL LAUNCHER")
 print("STARTING BALL FEEDER")
@@ -101,6 +123,7 @@ while(True):
     
     # ******SERVO ROTATING LAZY SUSAN******
     for (x, y, w, h) in boxes:
+        temp = rot_angle
         if flag == 1:
             x_medium = int((x + x + w) / 2) - 200
             face_centre_x = x+w/2 - 200
@@ -133,48 +156,40 @@ while(True):
 
     # determine second_angle passed to objectBallFeeder.py
     # second_angle = rot_angle # NOT NEEDED, rot_angle already passed in connection
+    # if rot_angle is NULL:
+
 
     # ******POT PERCENTAGE******
 
     if h > 350:
         wiper = 24
-        ds3502.wiper = 24
         distance = 2.7
     elif h > 330 and h <= 350:
         wiper = 28
-        ds3502.wiper = 28
         distance = 3.1
     elif h > 300 and h <= 330:
         wiper = 33
-        ds3502.wiper = 33
         distance = 3.6
     elif h > 280 and h <= 300:
         wiper = 38
-        ds3502.wiper = 38
         distance = 4.0
     elif h > 250 and h <= 280:
         wiper = 44
-        ds3502.wiper = 44
         distance = 4.4
     elif h > 220 and h <= 250:
         wiper = 50
-        ds3502.wiper = 50
         distance = 4.9
     elif h > 200 and h <= 220:
         wiper = 56
-        ds3502.wiper = 56
         distance = 5.3
     elif h > 190 and h <= 200:
         wiper = 61
-        ds3502.wiper = 61
         distance = 5.8
     elif h > 180 and h <= 190:
         wiper = 65
-        ds3502.wiper = 65
         distance = 6.4
     elif h <= 180:
         wiper = 70
-        ds3502.wiper = 70
         distance = 6.8
     # elif h > 164 and h <= 172:
     #     ds3502.wiper = 75
@@ -194,9 +209,11 @@ while(True):
 
     # print("Height in image: ", h)
     # print("Wiper: ", ds3502.wiper)
-
-    data_to_send = f"{distance},{rot_angle},{wiper}"
-    conn1.sendall(data_to_send.encode())
+    if rot_angle is not None and wiper is not None and launch_ball is not None and distance is not None:
+        for conn, addr in connections:
+            data_to_send = f"{distance},{rot_angle},{wiper},{launch_ball}"
+            sock.sendall(data_to_send.encode())
+            print(f"Sent data to server at {addr}")
     # conn2.sendall(data_to_send.encode())
     # conn3.sendall(data_to_send.encode())
 
@@ -205,13 +222,18 @@ while(True):
     if cv2.waitKey(1) & keyboard.is_pressed("0"):
         wiper = 0
         launch_ball = 2
-        data_to_send = f"{distance},{rot_angle},{wiper},{launch_ball}"
-        conn1.sendall(data_to_send.encode())
+
+        for conn, addr in connections:
+            data_to_send = f"{distance},{rot_angle},{wiper},{launch_ball}"
+            sock.sendall(data_to_send.encode())
+            print(f"Sent data to server at {addr}")
         # conn2.sendall(data_to_send.encode())
         # conn3.sendall(data_to_send.encode())
         print("BALL LAUNCHER TURNING OFF")
         print("BALL DETECTOR TURNING OFF")
         print("BALL FEEDER TURNING OFF")
         break
+    rot_angle = temp
 cap.release()
 cv2.destroyAllWindows()
+sock.close()

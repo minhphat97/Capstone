@@ -33,12 +33,11 @@ while(True):
         print("Rotational Angle:", rot_angle)
         print("Wiper:", wiper)
         print("Launch Ball:", launch_ball)
+        if launch_ball == 2:
+            print("TEST TURNING OFF")
+            break
     except ValueError as e:
         print("Error while parsing data:", e)
-
-    if launch_ball == 2:
-        print("TEST TURNING OFF")
-        break
 
 conn.close()
 sock.close()
