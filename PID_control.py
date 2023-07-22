@@ -43,50 +43,44 @@ h = 0
 ds3502.wiper = 10 
 rot_angle = 90
 kit.servo[servo_pin].angle=rot_angle
-print("ANGLE IS 90")
-#print("SLEEPING FOR 2 S")
-time.sleep(2)
+#print("ANGLE IS 90")
+time.sleep(1.5)
 ds3502.wiper = 20
-time.sleep(2)
+time.sleep(1.5)
 ds3502.wiper = 25
 flag = 2
+
+print("BALL LAUNCHER STARTING")
 
 while(True):
     ret, frame = cap.read()
     height, width, _ = frame.shape
     center = int(width/2)
     boxes, weights = hog.detectMultiScale(frame,winStride=(8, 8), padding=(4, 4),scale=1.05)
-    
-    # if x == 1 and y == 0:
+
     if keyboard.is_pressed("1"):
         flag = 1
-        # print("a is pressed")
-    # elif x == 1 and y == 1:
     elif keyboard.is_pressed("2"):
         flag = 2
-        # print("s is pressed")
-    # elif x == 0 and y == 1:
     elif keyboard.is_pressed("3"):
         flag = 3
-        # print("d is pressed")
     
     # ******SERVO ROTATING LAZY SUSAN******
     for (x, y, w, h) in boxes:
         if flag == 1:
             x_medium = int((x + x + w) / 2) - 200
-            face_centre_x = x+w/2 - 200
+            face_centre_x = x + w/2 - 200
             y_medium = int((y + y + h) / 2)
         elif flag == 2:
             x_medium = int((x + x + w) / 2) 
-            face_centre_x = x+w/2 
+            face_centre_x = x + w/2 
             y_medium = int((y + y + h) / 2)
         elif flag == 3:
             x_medium = int((x + x + w) / 2) + 200
-            face_centre_x = x+w/2 + 200
+            face_centre_x = x + w/2 + 200
             y_medium = int((y + y + h) / 2)  
 
         cv2.line(frame, (x_medium, 0), (x_medium, 480), (255, 255, 0), 2)
-        # face_centre_x = x+w/2 
         error_x = face_centre_x - 320
         if abs(error_x) > 15:
             rot_angle = rot_angle - error_x/43
@@ -99,24 +93,18 @@ while(True):
             rot_angle = 137
             print("Servo out of range")
 
-        #kit.servo[servo_pin].angle = rot_angle  
+        kit.servo[servo_pin].angle = rot_angle  
         break
-
-    # determine second_angle passed to objectBallFeeder.py
-    #config.second_angle = rot_angle 
+ 
 
     # ******POT PERCENTAGE******
-
 
     if h > 250:
         ds3502.wiper = 25
         distance = 4.4
-    elif h > 220 and h <= 250:
-        ds3502.wiper = 30
+    elif h > 200 and h <= 250:
+        ds3502.wiper = 32
         distance = 4.9
-    elif h > 200 and h <= 220:
-        ds3502.wiper = 35
-        distance = 5.3
     elif h > 190 and h <= 200:
         ds3502.wiper = 40
         distance = 5.8
@@ -129,16 +117,16 @@ while(True):
     elif h > 164 and h <= 172:
         ds3502.wiper = 55
         distance = 7.3
-    elif h > 158 and h <= 164:
+    elif h > 155 and h <= 164:
         ds3502.wiper = 60
         distance = 8
-    elif h > 152 and h <= 158:
+    elif h > 146 and h <= 155:
         ds3502.wiper = 65
         distance = 10
-    elif h > 145 and h <= 155:
+    elif h > 140 and h <= 146:
         ds3502.wiper = 70
         distance = 12
-    elif h <= 145:
+    elif h <= 140:
         ds3502.wiper = 72
         distance = 13
 
@@ -153,3 +141,13 @@ while(True):
         break
 cap.release()
 cv2.destroyAllWindows()
+
+if config.second_angle < 90:
+                new_angle = abs(config.second_angle - 90)
+                position_player_x_direction = ((math.sin(math.radian(new_angle)) * config.distance) + position_launcher_x_direction) * 100
+                position_player_y_direction = (math.cos(math.radian(new_angle)) * (config.distance)) * 100 / 2
+        
+            else:
+                new_angle = abs(90 - config.second_angle)
+                position_player_x_direction = (position_launcher_x_direction - (math.sin(math.radian(new_angle)) * config.distance)) * 100 
+                position_player_y_direction = (math.cos(math.radian(new_angle)) * (config.distance))*100 / 2

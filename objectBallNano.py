@@ -21,6 +21,7 @@ kernel = np.ones((5, 5), np.uint8)
 cap2 = cv2.VideoCapture(1)
 cap2.set(3, 640)
 cap2.set(4, 480)
+print("BALL DETECTOR STARTING")
 
 while True:
     ret2, frame2 = cap2.read()
@@ -66,23 +67,8 @@ while True:
     
     if radius >= 30.00 and radius <= 50.00:
         result, image = cap2.read()
-        #print("result: ", result)
         if result == True:
-            if config.second_angle < 90:
-                new_angle = abs(config.second_angle - 90)
-                position_player_x_direction = ((math.sin(math.radian(new_angle)) * config.distance) + position_launcher_x_direction) * 100
-                position_player_y_direction = (math.cos(math.radian(new_angle)) * (config.distance)) * 100 / 2
-        
-            else:
-                new_angle = abs(90 - config.second_angle)
-                position_player_x_direction = (position_launcher_x_direction - (math.sin(math.radian(new_angle)) * config.distance)) * 100 
-                position_player_y_direction = (math.cos(math.radian(new_angle)) * (config.distance))*100 / 2
-            
             cv2.imshow("Ball", image)
-            # print ("X: ", x_ball)
-            # print ("Y: ", y_ball)
-            # print ("X_player: ", position_player_x_direction)
-            # print ("Y_player: ", position_player_y_direction)
             x_ball_new = (760/640) * x_ball
             y_ball_new = (532/480) * y_ball 
             List = [x_ball_new, y_ball_new]
