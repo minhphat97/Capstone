@@ -17,7 +17,7 @@ port = 12345
 print("Connected to laptop at", (ip, port))
 sock.bind((ip, port))
 sock.listen(1)  # Listen for incoming connections, with a backlog of 1 connection
-conn, addr = socket.accept()  # Accept an incoming connection
+conn, addr = sock.accept()  # Accept an incoming connection
 
 print("STARTING TEST")
 while(True):
