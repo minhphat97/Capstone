@@ -13,7 +13,7 @@ ip = ""
 port = 12345
 
 # Connect to the laptop's IP address and port
-sock.connect((ip, port))
+# sock.bind((ip, port))
 print("Connected to laptop at", (ip, port))
 socket.bind((ip, port))
 socket.listen(1)  # Listen for incoming connections, with a backlog of 1 connection

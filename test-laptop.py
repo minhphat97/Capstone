@@ -15,7 +15,7 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Replace 'ip address' with the actual IP address of the nano
 ip = '192.168.1.74'
-ort = 12345
+port = 12345
 
 # Bind the socket to the nano's IP address and port
 sock.connect((ip, port))
