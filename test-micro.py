@@ -27,12 +27,14 @@ while(True):
         print("ERROR: TEST TURNING OFF")
         break
 
-    # time.sleep(0.1)
-    distance, rot_angle, wiper, launch_ball = map(float, data_received.split(','))
-    print("Distance is ", distance)
-    print("Rotational Angle:", rot_angle)
-    print("Wiper:", wiper)
-    print("Launch Ball:", launch_ball)
+    try:
+        distance, rot_angle, wiper, launch_ball = map(float, data_received.split(','))
+        print("Distance is ", distance)
+        print("Rotational Angle:", rot_angle)
+        print("Wiper:", wiper)
+        print("Launch Ball:", launch_ball)
+    except ValueError as e:
+        print("Error while parsing data:", e)
 
     if launch_ball == 2:
         print("TEST TURNING OFF")
