@@ -1,9 +1,7 @@
 import cv2
 import numpy as np
-import math
 from csv import writer
 import keyboard
-import time
 
 position_launcher_x_direction = 5 #m REMEMBER TO DETERMINE THE DISTANCE OF BALLL LAUNCHER
 

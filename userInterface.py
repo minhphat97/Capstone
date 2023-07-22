@@ -6,8 +6,6 @@ import pathlib
 import datetime as dt
 from time import strftime
 import csv
-import time
-import subprocess
 
 csv_file_path = '/home/ironfoot/Capstone/outputtest.csv'
 csv_file_path_2 = '/home/ironfoot/Capstone/outputtestPlayer.csv'
