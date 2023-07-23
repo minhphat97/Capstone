@@ -16,13 +16,13 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Accept connections from any port
 ip = ""
-port = 12346
+port = 12345
 
 # Connect to the laptop's IP address and port
 # sock.bind((ip, port))
 print("Connected to laptop at", (ip, port))
 sock.bind((ip, port))
-sock.listen(1)  # Listen for incoming connections, with a backlog of 1 connection
+sock.listen(2)  # Listen for incoming connections, with a backlog of 1 connection
 conn, addr = sock.accept()  # Accept an incoming connection
 
 print("STARTING BALL FEEDER COMPONENT")
