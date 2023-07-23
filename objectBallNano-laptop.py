@@ -52,6 +52,7 @@ upper_range_white = np.array([179,62,255])
 
 kernel = np.ones((5, 5), np.uint8)
 # cap2 = cv2.VideoCapture(2) # set to 2 when connected to laptop
+# cap2 = cv2.VideoCapture("/dev/v4l/by-id/usb-046d_BRIO_300_2238CFA04218-video-index0")
 cap2 = cv2.VideoCapture("/dev/v4l/by-id/usb-046d_BRIO_300_2238CFA04218-video-index0")
 cap2.set(3, 640)
 cap2.set(4, 480)

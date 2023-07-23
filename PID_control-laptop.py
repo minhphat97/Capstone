@@ -64,7 +64,8 @@ Known_distance = 300 #cm
 Known_width = 90 #cm
 
 # cap = cv2.VideoCapture(0)
-cap = cv2.VideoCapture("/dev/v4l/by-id/usb-GENERAL_GENERAL_WEBCAM_JH0319_20200710_v012-video-index0")
+# cap = cv2.VideoCapture("/dev/v4l/by-id/usb-GENERAL_GENERAL_WEBCAM_JH0319_20200710_v012-video-index0")
+cap = cv2.VideoCapture("/dev/v4l/by-id/usb-046d_0825_EC51DD20-video-index0")
 
 hog = cv2.HOGDescriptor()
 hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
@@ -126,7 +127,7 @@ while(True):
     
     # ******SERVO ROTATING LAZY SUSAN******
     for (x, y, w, h) in boxes:
-        temp = rot_angle
+        rot_angle
         if flag == 1:
             x_medium = int((x + x + w) / 2) - 200
             face_centre_x = x+w/2 - 200
@@ -270,7 +271,6 @@ while(True):
         print("BALL DETECTOR TURNING OFF")
         print("BALL FEEDER TURNING OFF")
         break
-    rot_angle = temp
 cap.release()
 cv2.destroyAllWindows()
 sock.close()
