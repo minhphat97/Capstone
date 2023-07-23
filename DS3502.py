@@ -11,3 +11,5 @@ for i in range (0, 127, 5):
     ds3502.wiper = i
     print("Wiper value set to ", i)
     sleep(3.0)
+print("SETTING WIPER TO 0")
+ds3502.wiper = 0
