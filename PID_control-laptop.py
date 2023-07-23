@@ -26,7 +26,7 @@ print("STARTING CONNECTIONS")
 
 # List of server IP addresses and corresponding ports
 servers = [
-    ('207.23.178.64', 12346),  # Replace with the actual IP and port of server 1
+    ('207.23.178.64', 12345),  # Replace with the actual IP and port of server 1
     ('207.23.178.64', 12347),  # May need to connect to the nano twice
     ('127.0.0.1', 12345),  # IP address of local connection
     # Add more server IP addresses and ports as needed
@@ -89,14 +89,12 @@ wiper = 20
 # InPin = 15
 # GPIO.setup(InPin, GPIO.IN)
 # InPin2 = 16
-# GPIO.setup(InPin2, GPIO.IN)
+# GPIO.setup(InPin2, GPIO.IN)   
 
 flag = 2
 # wiper = 0
 distance = 0
 launch_ball=0
-rot_angle2 = 0
-temp = 0
 print("STARTING BALL DETECTOR")
 print("STARTING BALL LAUNCHER")
 print("STARTING BALL FEEDER")
@@ -127,7 +125,6 @@ while(True):
     
     # ******SERVO ROTATING LAZY SUSAN******
     for (x, y, w, h) in boxes:
-        rot_angle
         if flag == 1:
             x_medium = int((x + x + w) / 2) - 200
             face_centre_x = x+w/2 - 200
@@ -144,16 +141,18 @@ while(True):
         cv2.line(frame, (x_medium, 0), (x_medium, 480), (255, 255, 0), 2)
         # face_centre_x = x+w/2 
         error_x = face_centre_x - 320
-        if abs(error_x) > 15:
-            rot_angle = rot_angle - error_x/43
-        
-        if rot_angle < 43:
-            rot_angle = 43
-            print("Servo out of range")
-        
-        if rot_angle > 137:
-            rot_angle = 137
-            print("Servo out of range")
+
+        if boxes.any():
+            if abs(error_x) > 15:
+                rot_angle = rot_angle - error_x/43
+            
+            if rot_angle < 43:
+                rot_angle = 43
+                print("Servo out of range: ", rot_angle)
+            
+            if rot_angle > 137:
+                rot_angle = 137
+                print("Servo out of range: ", rot_angle)
 
         # kit.servo[servo_pin].angle = rot_angle  
         break

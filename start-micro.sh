@@ -5,6 +5,8 @@
 cleanup() {
     echo "Cleaning up..."
     sudo fuser -k 12345/tcp  # This will forcibly kill the process using port 12345
+    sudo fuser -k 12346/tcp  # This will forcibly kill the process using port 12345
+    sudo fuser -k 12347/tcp  # This will forcibly kill the process using port 12345
 }
 
 # Trap the EXIT signal and call the cleanup function

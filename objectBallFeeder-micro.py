@@ -16,7 +16,7 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Accept connections from any port
 ip = ""
-port = 12346
+port = 12345
 
 # Connect to the laptop's IP address and port
 # sock.bind((ip, port))
