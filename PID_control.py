@@ -23,7 +23,9 @@ ds3502 = adafruit_ds3502.DS3502(i2c) # this is i2c 1
 i2c=busio.I2C(board.SCL_1,board.SDA_1) # this is i2c 0
 kit = ServoKit(channels=16,i2c=i2c)
 
-cap = cv2.VideoCapture(0)
+# cap = cv2.VideoCapture(0)
+# cap = cv2.VideoCapture("/dev/v4l/by-id/usb-046d_BRIO_300_2238CFA04218-video-index0")
+cap = cv2.VideoCapture("/dev/v4l/by-id/usb-046d_0825_EC51DD20-video-index0")
 
 hog = cv2.HOGDescriptor()
 hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())

@@ -19,7 +19,9 @@ lower_range_blue = np.array([98,50,50]) #BLUE
 upper_range_blue = np.array([139,255,255])
 
 kernel = np.ones((5, 5), np.uint8)
-cap2 = cv2.VideoCapture(1)
+# cap2 = cv2.VideoCapture(1)
+# cap2 = cv2.VideoCapture("/dev/v4l/by-id/usb-046d_0825_EC51DD20-video-index0")
+cap2 = cv2.VideoCapture("/dev/v4l/by-id/usb-046d_BRIO_300_2238CFA04218-video-index0")
 cap2.set(3, 640)
 cap2.set(4, 480)
 print("BALL DETECTOR STARTING")
