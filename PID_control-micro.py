@@ -56,13 +56,13 @@ while(True):
     kit.servo[servo_pin].angle = rot_angle
     print("ROTATING ANGLE RECEIVED: ",rot_angle)
 
-    if launch_ball == 2:
-        ds3502.wiper = 0
-        kit.servo[servo_pin].angle = rot_angle
-        print("BALL LAUNCHER TURNING OFF")
-        break
+    # if launch_ball == 2:
+    #     ds3502.wiper = 0
+    #     kit.servo[servo_pin].angle = rot_angle
+    #     print("BALL LAUNCHER TURNING OFF")
+    #     break
 # except ValueError as e:
-    print("Error while parsing data:", e)
+    # print("Error while parsing data:", e)
 
 
 conn.close()
