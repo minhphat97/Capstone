@@ -42,6 +42,7 @@ time.sleep(2)
 
 print("STARTING SERVO AND TRACKING COMPONENTS")
 while(True):
+    print("inside loop ")
     data_received = conn.recv(4096)
     data_received = data_received.decode()
     if not data_received:
