@@ -237,14 +237,27 @@ while(True):
             sock.sendall(data_to_send.encode())
             # print(f"Sent data to server at {addr}")
 
+<<<<<<< HEAD
+    data_to_send = f"{distance},{rot_angle},{wiper}"
+    conn1.sendall(data_to_send.encode())
+    conn2.sendall(data_to_send.encode())
+    conn3.sendall(data_to_send.encode())
+=======
     # conn2.sendall(data_to_send.encode())
     # conn3.sendall(data_to_send.encode())
+>>>>>>> 80ce23c1aa9a18588518ffb9acf9b9ecf75712b0
 
     cv2.imshow("Human", frame)
     #if keyboard.is_pressed("5"):
     if cv2.waitKey(1) & keyboard.is_pressed("0"):
         wiper = 0
         launch_ball = 2
+<<<<<<< HEAD
+        data_to_send = f"{distance},{rot_angle},{wiper},{launch_ball}"
+        conn1.sendall(data_to_send.encode())
+        conn2.sendall(data_to_send.encode())
+        conn3.sendall(data_to_send.encode())
+=======
 
         for conn, addr in connections:
             data_to_send = f"{distance},{rot_angle},{wiper},{launch_ball}"
@@ -253,6 +266,7 @@ while(True):
 
         # conn2.sendall(data_to_send.encode())
         # conn3.sendall(data_to_send.encode())
+>>>>>>> 80ce23c1aa9a18588518ffb9acf9b9ecf75712b0
         print("BALL LAUNCHER TURNING OFF")
         print("BALL DETECTOR TURNING OFF")
         print("BALL FEEDER TURNING OFF")
