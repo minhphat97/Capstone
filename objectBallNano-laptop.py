@@ -104,7 +104,7 @@ while True:
         radius = int(radius)
         cv2.circle(frame2, center, radius, (0, 255, 0), 2)
 
-    cv2.imshow("frame", frame2)
+    cv2.imshow("Ball", frame2)
     data_received = conn.recv(4096)
     data_received = data_received.decode()
     if not data_received:
@@ -122,23 +122,13 @@ while True:
             result, image = cap2.read()
             #print("result: ", result)
             if result == True:
-                if rot_angle < 90:
-                    new_angle = abs(rot_angle - 90)
-                    position_player_x_direction = ((math.sin(math.radians(new_angle)) * distance) + position_launcher_x_direction) * 100
-                    position_player_y_direction = (math.cos(math.radians(new_angle)) * (distance)) * 100/2
-                else:
-                    new_angle = abs(90 - rot_angle)
-                    position_player_x_direction = (position_launcher_x_direction - (math.sin(math.radians(new_angle)) * distance)) * 100 
-                    position_player_y_direction = (math.cos(math.radians(new_angle)) * (distance)) * 100/2
+
                     
-                cv2.imshow("Ball", image)
-                # print ("X: ", x_ball)
-                # print ("Y: ", y_ball)
-                # print ("X_player: ", position_player_x_direction)
-                # print ("Y_player: ", position_player_y_direction)
+                cv2.imshow("BallCapture", image)
+
                 x_ball_new = (760/640) * x_ball
                 y_ball_new = (532/480) * y_ball
-                List = [x_ball_new, y_ball_new, position_player_x_direction, position_player_y_direction]
+                List = [x_ball_new, y_ball_new]
                 with open("outputtest.csv", 'a', newline='') as csvfile:
                     writer_object = writer(csvfile)
                     writer_object.writerow(List)
