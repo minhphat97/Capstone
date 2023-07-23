@@ -72,7 +72,7 @@ while True:
         cv2.circle(frame2, center, radius, (0, 255, 0), 2)
 
 
-    cv2.imshow("frame", frame2)
+    cv2.imshow("Ball", frame2)
     #if cv2.waitKey(1) & 0xFF == ord('0'):
     if cv2.waitKey(1) & keyboard.is_pressed("0"):
         print("BALL DETECTOR TURNING OFF")
@@ -81,7 +81,7 @@ while True:
     if radius >= 30.00 and radius <= 50.00:
         result, image = cap2.read()
         if result == True:
-            cv2.imshow("Ball", image)
+            cv2.imshow("BallCapture", image)
             x_ball_new = (760/640) * x_ball
             y_ball_new = (532/480) * y_ball 
             List = [x_ball_new, y_ball_new]
