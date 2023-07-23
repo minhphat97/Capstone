@@ -31,13 +31,13 @@ i2c=busio.I2C(board.SCL_1,board.SDA_1) # this is i2c 0
 kit = ServoKit(channels=16,i2c=i2c)
 
 
-ds3502.wiper = 10 
+ds3502.wiper = 20 
 rot_angle = 90
 kit.servo[servo_pin].angle=rot_angle
 print("ANGLE IS 90")
 # print("SLEEPING FOR  S")
 time.sleep(2)
-ds3502.wiper = 20
+ds3502.wiper = 29
 time.sleep(2)
 
 print("STARTING SERVO AND TRACKING COMPONENTS")

@@ -26,8 +26,8 @@ print("STARTING CONNECTIONS")
 
 # List of server IP addresses and corresponding ports
 servers = [
-    # ('192.168.1.74', 12346),  # Replace with the actual IP and port of server 1
-    # ('192.168.1.74', 12347),  # May need to connect to the nano twice
+    ('207.23.178.64', 12346),  # Replace with the actual IP and port of server 1
+    ('207.23.178.64', 12347),  # May need to connect to the nano twice
     ('127.0.0.1', 12345),  # IP address of local connection
     # Add more server IP addresses and ports as needed
 ]
@@ -164,37 +164,52 @@ while(True):
 
     # ******POT PERCENTAGE******
 
-    if h > 250:
-        wiper = 25
-        distance = 4.4
-    elif h > 200 and h <= 250:
-        wiper = 32
-        distance = 4.9
-    elif h > 190 and h <= 200:
-        wiper = 40
-        distance = 5.8
-    elif h > 180 and h <= 190:
-        wiper = 45
-        distance = 6.4
-    elif h > 172 and h <= 180:
-        wiper = 50
-        distance = 6.8
-    elif h > 164 and h <= 172:
-        wiper = 55
-        distance = 7.3
-    elif h > 155 and h <= 164:
-        wiper = 60
-        distance = 8
-    elif h > 146 and h <= 155:
-        wiper = 65
-        distance = 10
-    elif h > 140 and h <= 146:
-        wiper = 70
-        distance = 12
-    elif h <= 140:
-        wiper = 72
-        distance = 13
+    # if h > 250:
+    #     wiper = 25
+    #     distance = 4.4
+    # elif h > 200 and h <= 250:
+    #     wiper = 32
+    #     distance = 4.9
+    # elif h > 190 and h <= 200:
+    #     wiper = 40
+    #     distance = 5.8
+    # elif h > 180 and h <= 190:
+    #     wiper = 45
+    #     distance = 6.4
+    # elif h > 172 and h <= 180:
+    #     wiper = 50
+    #     distance = 6.8
+    # elif h > 164 and h <= 172:
+    #     wiper = 55
+    #     distance = 7.3
+    # elif h > 155 and h <= 164:
+    #     wiper = 60
+    #     distance = 8
+    # elif h > 146 and h <= 155:
+    #     wiper = 65
+    #     distance = 10
+    # elif h > 140 and h <= 146:
+    #     wiper = 70
+    #     distance = 12
+    # elif h <= 140:
+    #     wiper = 72
+    #     distance = 13
     
+    if h > 320:
+        wiper = 39
+        distance = 4.4
+    elif h > 250 and h <= 320:
+        wiper = 51
+        distance = 4.9
+    elif h > 180 and h <= 250:
+        wiper = 65
+        distance = 5.8
+    elif h > 140 and h <= 180:
+        wiper = 75
+        distance = 6.4
+    elif h <= 140:
+        wiper = 89
+        distance = 13
     # print("Height in image: ", h)
     # print("Wiper: ", wiper)
 
