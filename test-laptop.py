@@ -26,9 +26,9 @@ print("STARTING CONNECTIONS")
 
 # List of server IP addresses and corresponding ports
 servers = [
-    # ('192.168.1.74', 12346),  # Replace with the actual IP and port of server 1
-    # ('192.168.1.74', 12347),  # May need to connect to the nano twice
-    ('127.0.0.1', 12345),  # IP address of local connection
+    # ('192.168.1.74', 12345),  # Replace with the actual IP and port of server 1
+    ('127.0.0.1', 12345),  # Replace with the actual IP and port of server 2
+    # ('192.168.1.102', 12345),  # Replace with the actual IP and port of server 3
     # Add more server IP addresses and ports as needed
 ]
 
@@ -57,14 +57,12 @@ Px, Ix, Dx = -1/160, 0, 0
 integral_x = 0
 differential_x = 0
 prev_x = 0
-count = 0
 
 position_laucnher_x_direction = 30
 Known_distance = 300 #cm
 Known_width = 90 #cm
 
-# cap = cv2.VideoCapture(0)
-cap = cv2.VideoCapture("/dev/v4l/by-id/usb-GENERAL_GENERAL_WEBCAM_JH0319_20200710_v012-video-index0")
+cap = cv2.VideoCapture(0)
 
 hog = cv2.HOGDescriptor()
 hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
@@ -100,7 +98,6 @@ print("STARTING BALL DETECTOR")
 print("STARTING BALL LAUNCHER")
 print("STARTING BALL FEEDER")
 while(True):
-    count = count + 1
     ret, frame = cap.read()
     height, width, _ = frame.shape
     center = int(width/2)
@@ -164,93 +161,74 @@ while(True):
 
     # ******POT PERCENTAGE******
 
-    if h > 250:
-        wiper = 25
+    if h > 350:
+        wiper = 24
+        distance = 2.7
+    elif h > 330 and h <= 350:
+        wiper = 28
+        distance = 3.1
+    elif h > 300 and h <= 330:
+        wiper = 33
+        distance = 3.6
+    elif h > 280 and h <= 300:
+        wiper = 38
+        distance = 4.0
+    elif h > 250 and h <= 280:
+        wiper = 44
         distance = 4.4
-    elif h > 200 and h <= 250:
-        wiper = 32
+    elif h > 220 and h <= 250:
+        wiper = 50
         distance = 4.9
+    elif h > 200 and h <= 220:
+        wiper = 56
+        distance = 5.3
     elif h > 190 and h <= 200:
-        wiper = 40
+        wiper = 61
         distance = 5.8
     elif h > 180 and h <= 190:
-        wiper = 45
-        distance = 6.4
-    elif h > 172 and h <= 180:
-        wiper = 50
-        distance = 6.8
-    elif h > 164 and h <= 172:
-        wiper = 55
-        distance = 7.3
-    elif h > 155 and h <= 164:
-        wiper = 60
-        distance = 8
-    elif h > 146 and h <= 155:
         wiper = 65
-        distance = 10
-    elif h > 140 and h <= 146:
+        distance = 6.4
+    elif h <= 180:
         wiper = 70
-        distance = 12
-    elif h <= 140:
-        wiper = 72
-        distance = 13
-    
+        distance = 6.8
+    # elif h > 164 and h <= 172:
+    #     ds3502.wiper = 75
+    #     config.distance = 7.3
+    # elif h > 158 and h <= 164:
+    #     ds3502.wiper = 78
+    #     config.distance = 8
+    # elif h > 152 and h <= 158:
+    #     ds3502.wiper = 83 
+    #     config.distance = 10
+    # elif h > 145 and h <= 155:
+    #     ds3502.wiper = 87
+    #     config.distance = 12
+    # elif h <= 145:
+    #     ds3502.wiper = 90
+    #     config.distance = 13
+
     # print("Height in image: ", h)
-    # print("Wiper: ", wiper)
-
-    if count == 200:
-        count = 0
-        if rot_angle >= 90:
-            player_x = (20 + (math.sin(math.radians(rot_angle - 90)) * distance)) * (760/40)
-            player_y = (math.cos(math.radians(rot_angle - 90)) * distance) * (532/16)
-        else:
-            player_x = (20 - (math.sin(math.radians(90 - rot_angle)) * distance)) * (760/40)
-            player_y = (math.cos(math.radians(rot_angle - 90)) * distance) * (532/16)
-
-        List = [player_x, player_y]
-        with open("outputtestPlayer.csv", 'a', newline='') as csvfile:
-            writer_object = writer(csvfile)
-            writer_object.writerow(List)
-            csvfile.close()
-
-    cv2.imshow("Human", frame)
-
+    # print("Wiper: ", ds3502.wiper)
     if rot_angle is not None and wiper is not None and launch_ball is not None and distance is not None:
         for conn, addr in connections:
             data_to_send = f"{distance},{rot_angle},{wiper},{launch_ball}"
             sock.sendall(data_to_send.encode())
-            # print(f"Sent data to server at {addr}")
-
-<<<<<<< HEAD
-    data_to_send = f"{distance},{rot_angle},{wiper}"
-    conn1.sendall(data_to_send.encode())
-    conn2.sendall(data_to_send.encode())
-    conn3.sendall(data_to_send.encode())
-=======
+            print(f"Sent data to server at {addr}")
     # conn2.sendall(data_to_send.encode())
     # conn3.sendall(data_to_send.encode())
->>>>>>> 80ce23c1aa9a18588518ffb9acf9b9ecf75712b0
 
     cv2.imshow("Human", frame)
     #if keyboard.is_pressed("5"):
     if cv2.waitKey(1) & keyboard.is_pressed("0"):
         wiper = 0
         launch_ball = 2
-<<<<<<< HEAD
-        data_to_send = f"{distance},{rot_angle},{wiper},{launch_ball}"
-        conn1.sendall(data_to_send.encode())
-        conn2.sendall(data_to_send.encode())
-        conn3.sendall(data_to_send.encode())
-=======
 
         for conn, addr in connections:
             data_to_send = f"{distance},{rot_angle},{wiper},{launch_ball}"
             sock.sendall(data_to_send.encode())
-            # print(f"Sent data to server at {addr}")
-
+            print(f"Sent data to server at {addr}")
         # conn2.sendall(data_to_send.encode())
         # conn3.sendall(data_to_send.encode())
->>>>>>> 80ce23c1aa9a18588518ffb9acf9b9ecf75712b0
         print("BALL LAUNCHER TURNING OFF")
         print("BALL DETECTOR TURNING OFF")
         print("BALL FEEDER TURNING OFF")
