@@ -5,13 +5,16 @@
 cleanup() {
     echo "Cleaning up..."
     sudo fuser -k 12345/tcp  # This will forcibly kill the process using port 12345
+    sudo fuser -k 12346/tcp
+    sudo fuser -k 12347/tcp
+
 }
 
 # Trap the EXIT signal and call the cleanup function
 trap cleanup EXIT
 
 cd Capstone
-sudo ./run.sh
+sudo ./run-micro.sh
 cd ..
 echo "ALL DONE"
 exit 0
