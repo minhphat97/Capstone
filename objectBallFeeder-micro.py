@@ -34,22 +34,26 @@ while True:
         kit.servo[servo_pin].angle = 90
         print("ERROR: BALL FEEDER TURNING OFF")
         break
-    distance, rot_angle, wiper, launch_ball= map(float, data_received.split(','))
-    if launch_ball is 1:
-        #ngle = 60
-        kit.servo[servo_pin].angle = 120
-       #  print ("120")
-        time.sleep(0.352)
-        #angle = 30
-        #print (angle)
-        kit.servo[servo_pin].angle = 90
-        time.sleep(3)
-        print("DELAY OVER")
-        
-    elif launch_ball is 2:
-        kit.servo[servo_pin].angle = 90
-        print("BALL FEEDER TURNING OFF")
-        break
+    
+    try:
+        distance, rot_angle, wiper, launch_ball= map(float, data_received.split(','))
+        if launch_ball is 1:
+            #ngle = 60
+            kit.servo[servo_pin].angle = 120
+        #  print ("120")
+            time.sleep(0.352)
+            #angle = 30
+            #print (angle)
+            kit.servo[servo_pin].angle = 90
+            time.sleep(3)
+            print("DELAY OVER")
+            
+        elif launch_ball is 2:
+            kit.servo[servo_pin].angle = 90
+            print("BALL FEEDER TURNING OFF")
+            break
+    except ValueError as e:
+        print("Error while parsing data:", e)
         
     #print (angle)
 
