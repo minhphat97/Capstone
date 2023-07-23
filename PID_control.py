@@ -23,8 +23,8 @@ ds3502 = adafruit_ds3502.DS3502(i2c) # this is i2c 1
 i2c=busio.I2C(board.SCL_1,board.SDA_1) # this is i2c 0
 kit = ServoKit(channels=16,i2c=i2c)
 
-# cap = cv2.VideoCapture(0)
-# cap = cv2.VideoCapture("/dev/v4l/by-id/usb-046d_BRIO_300_2238CFA04218-video-index0")
+#cap = cv2.VideoCapture(1)
+#cap = cv2.VideoCapture("/dev/v4l/by-id/usb-046d_BRIO_300_2238CFA04218-video-index0")
 cap = cv2.VideoCapture("/dev/v4l/by-id/usb-046d_0825_EC51DD20-video-index0")
 
 hog = cv2.HOGDescriptor()
@@ -41,23 +41,25 @@ ds3502.wiper = 10
 rot_angle = 90
 kit.servo[servo_pin].angle=rot_angle
 #print("ANGLE IS 90")
-time.sleep(1.5)
+time.sleep(1)
 ds3502.wiper = 20
-time.sleep(1.5)
-ds3502.wiper = 25
+time.sleep(1)
+ds3502.wiper = 29
 flag = 2
 count = 0
 player_x = 0
 player_y = 0
 
 print("BALL LAUNCHER STARTING")
+print("DELAY OF 3 SECONDS")
+time.sleep(3)
 
 while(True):
     count = count + 1
     ret, frame = cap.read()
     height, width, _ = frame.shape
     center = int(width/2)
-    boxes, weights = hog.detectMultiScale(frame,winStride=(8, 8), padding=(4, 4),scale=1.05)
+    boxes, weights = hog.detectMultiScale(frame,winStride=(8, 8), padding=time.sleep(1.5))
 
     if keyboard.is_pressed("1"):
         flag = 1
@@ -99,54 +101,39 @@ while(True):
  
     # ******POT PERCENTAGE******
 
-    if h > 250:
-        ds3502.wiper = 25
+    if h > 320:
+        ds3502.wiper = 39
         distance = 4.4
-    elif h > 200 and h <= 250:
-        ds3502.wiper = 32
+    elif h > 250 and h <= 320:
+        ds3502.wiper = 51
         distance = 4.9
-    elif h > 190 and h <= 200:
-        ds3502.wiper = 40
-        distance = 5.8
-    elif h > 180 and h <= 190:
-        ds3502.wiper = 45
-        distance = 6.4
-    elif h > 172 and h <= 180:
-        ds3502.wiper = 50
-        distance = 6.8
-    elif h > 164 and h <= 172:
-        ds3502.wiper = 55
-        distance = 7.3
-    elif h > 155 and h <= 164:
-        ds3502.wiper = 60
-        distance = 8
-    elif h > 146 and h <= 155:
+    elif h > 180 and h <= 250:
         ds3502.wiper = 65
-        distance = 10
-    elif h > 140 and h <= 146:
-        ds3502.wiper = 70
-        distance = 12
+        distance = 5.8
+    elif h > 140 and h <= 180:
+        ds3502.wiper = 75
+        distance = 6.4
     elif h <= 140:
-        ds3502.wiper = 72
+        ds3502.wiper = 89
         distance = 13
     
     print("Height in image: ", h)
     print("Wiper: ", ds3502.wiper)
 
-    if count == 200:
-        count = 0
-        if rot_angle >= 90:
-            player_x = (20 + (math.sin(math.radians(rot_angle - 90)) * distance)) * (760/40)
-            player_y = (math.cos(math.radians(rot_angle - 90)) * distance) * (532/16)
-        else:
-            player_x = (20 - (math.sin(math.radians(90 - rot_angle)) * distance)) * (760/40)
-            player_y = (math.cos(math.radians(rot_angle - 90)) * distance) * (532/16)
+    # if count == 200:
+    #     count = 0
+    #     if rot_angle >= 90:
+    #         player_x = (20 + (math.sin(math.radians(rot_angle - 90)) * distance)) * (760/40)
+    #         player_y = (math.cos(math.radians(rot_angle - 90)) * distance) * (532/16)
+    #     else:
+    #         player_x = (20 - (math.sin(math.radians(90 - rot_angle)) * distance)) * (760/40)
+    #         player_y = (math.cos(math.radians(rot_angle - 90)) * distance) * (532/16)
 
-        List = [player_x, player_y]
-        with open("outputtestPlayer.csv", 'a', newline='') as csvfile:
-            writer_object = writer(csvfile)
-            writer_object.writerow(List)
-            csvfile.close()
+    #     List = [player_x, player_y]
+    #     with open("outputtestPlayer.csv", 'a', newline='') as csvfile:
+    #         writer_object = writer(csvfile)
+    #         writer_object.writerow(List)
+    #         csvfile.close()
 
     cv2.imshow("Human", frame)
 
