@@ -123,7 +123,7 @@ while(True):
     
     # ******SERVO ROTATING LAZY SUSAN******
     for (x, y, w, h) in boxes:
-        temp = rot_angle
+        rot_angle
         if flag == 1:
             x_medium = int((x + x + w) / 2) - 200
             face_centre_x = x+w/2 - 200
@@ -191,6 +191,24 @@ while(True):
     elif h <= 180:
         wiper = 70
         distance = 6.8
+    
+    i = 90 # angle
+    direction = 0 # 0 is positive, 1 is negative
+    step = 10 # change in angle
+    
+    rot_anglee=i
+    result = f'Angle is {i}'
+    print(result)
+    time.sleep(1)
+    if i >= 140:
+        direction = 1
+    elif i <= 40:
+        direction = 0
+    
+    if direction == 0:
+        i = i + step
+    elif direction >= 1:
+        i = i - step
     # elif h > 164 and h <= 172:
     #     ds3502.wiper = 75
     #     config.distance = 7.3
@@ -233,7 +251,6 @@ while(True):
         print("BALL DETECTOR TURNING OFF")
         print("BALL FEEDER TURNING OFF")
         break
-    rot_angle = temp
 cap.release()
 cv2.destroyAllWindows()
 sock.close()
