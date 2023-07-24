@@ -49,20 +49,20 @@ while(True):
         ds3502.wiper = 0
         print("ERROR: BALL LAUNCHER TURNING OFF")
         break
-    # try:
-        
-    distance, rot_angle, wiper, launch_ball= map(float, data_received.split(','))
-    ds3502.wiper = wiper
-    kit.servo[servo_pin].angle = rot_angle
-    print("ROTATING ANGLE RECEIVED: ",rot_angle)
+    try:
+            
+        distance, rot_angle, wiper, launch_ball= map(float, data_received.split(','))
+        ds3502.wiper = wiper
+        kit.servo[servo_pin].angle = rot_angle
+        print("ROTATING ANGLE RECEIVED: ",rot_angle)
 
     # if launch_ball == 2:
     #     ds3502.wiper = 0
     #     kit.servo[servo_pin].angle = rot_angle
     #     print("BALL LAUNCHER TURNING OFF")
     #     break
-# except ValueError as e:
-    # print("Error while parsing data:", e)
+    except ValueError as e:
+        print("Error while parsing data:", e)
 
 
 conn.close()

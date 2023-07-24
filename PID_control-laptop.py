@@ -28,7 +28,7 @@ print("STARTING CONNECTIONS")
 servers = [
     # ('207.23.178.64', 12346),  # Replace with the actual IP and port of server 1
     ('207.23.178.64', 12347),  # May need to connect to the nano twice
-    ('127.0.0.1', 12345),  # IP address of local connection
+    # ('127.0.0.1', 12345),  # IP address of local connection
     # Add more server IP addresses and ports as needed
 ]
 
