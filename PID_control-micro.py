@@ -52,7 +52,7 @@ while(True):
     try:
             
         distance, rot_angle, wiper, launch_ball= map(float, data_received.split(','))
-        ds3502.wiper = wiper
+        ds3502.wiper = int(wiper)
         kit.servo[servo_pin].angle = rot_angle
         print("ROTATING ANGLE RECEIVED: ",rot_angle)
 
