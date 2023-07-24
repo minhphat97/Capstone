@@ -145,7 +145,7 @@ while(True):
         if boxes.any():
             print(rot_angle)
             if abs(error_x) > 15:
-                rot_angle = rot_angle - error_x/43
+                rot_angle = rot_angle - error_x/23
             
             if rot_angle < 43:
                 rot_angle = 43
