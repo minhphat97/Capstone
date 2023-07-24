@@ -20,10 +20,11 @@ port = 12346
 
 # Connect to the laptop's IP address and port
 # sock.bind((ip, port))
-print("Connected to laptop at", (ip, port))
+
 sock.bind((ip, port))
 sock.listen(1)  # Listen for incoming connections, with a backlog of 1 connection
 conn, addr = sock.accept()  # Accept an incoming connection
+print("Connected to laptop at", (ip, port))
 
 print("STARTING BALL FEEDER COMPONENT")
 kit.servo[servo_pin].angle = 90
@@ -38,7 +39,7 @@ while True:
     
     try:
         distance, rot_angle, wiper, launch_ball= map(float, data_received.split(','))
-        if launch_ball is 1:
+        if launch_ball == 1:
             #ngle = 60
             kit.servo[servo_pin].angle = 120
         #  print ("120")
@@ -49,7 +50,7 @@ while True:
             time.sleep(3)
             print("DELAY OVER")
             
-        elif launch_ball is 2:
+        elif launch_ball == 2:
             kit.servo[servo_pin].angle = 90
             print("BALL FEEDER TURNING OFF")
             break
