@@ -28,7 +28,7 @@ print("STARTING CONNECTIONS")
 servers = [
     # ('207.23.178.64', 12346),  # Replace with the actual IP and port of server 1
     ('207.23.178.64', 12347),  # May need to connect to the nano twice
-    # ('127.0.0.1', 12345),  # IP address of local connection
+    ('127.0.0.1', 12345),  # IP address of local connection
     # Add more server IP addresses and ports as needed
 ]
 
@@ -120,7 +120,7 @@ while(True):
         flag = 3
         # print("d is pressed")
     if keyboard.is_pressed("4"):
-        print("THREE (3) SECOND DELAY FOR NEXT LAUNCH BALL")
+        print("ONE (1) SECOND DELAY FOR NEXT LAUNCH BALL")
         launch_ball = 1  
     
     # ******SERVO ROTATING LAZY SUSAN******
@@ -143,9 +143,9 @@ while(True):
         error_x = face_centre_x - 320
 
         if boxes.any():
-            print(rot_angle)
+            # print(rot_angle)
             if abs(error_x) > 15:
-                rot_angle = rot_angle - error_x/23
+                rot_angle = rot_angle - error_x/120
             
             if rot_angle < 43:
                 rot_angle = 43
@@ -229,7 +229,7 @@ while(True):
             writer_object.writerow(List)
             csvfile.close()
 
-    cv2.imshow("Human", frame)
+    # cv2.imshow("Human", frame)
 
     if rot_angle is not None and wiper is not None and launch_ball is not None and distance is not None:
         for conn, addr in connections:
