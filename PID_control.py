@@ -120,20 +120,20 @@ while(True):
     print("Height in image: ", h)
     print("Wiper: ", ds3502.wiper)
 
-    # if count == 200:
-    #     count = 0
-    #     if rot_angle >= 90:
-    #         player_x = (20 + (math.sin(math.radians(rot_angle - 90)) * distance)) * (760/40)
-    #         player_y = (math.cos(math.radians(rot_angle - 90)) * distance) * (532/16)
-    #     else:
-    #         player_x = (20 - (math.sin(math.radians(90 - rot_angle)) * distance)) * (760/40)
-    #         player_y = (math.cos(math.radians(rot_angle - 90)) * distance) * (532/16)
+    if count == 200:
+        count = 0
+        if rot_angle >= 90:
+            player_x = (20 + (math.sin(math.radians(rot_angle - 90)) * distance)) * (760/40)
+            player_y = (math.cos(math.radians(rot_angle - 90)) * distance) * (532/16)
+        else:
+            player_x = (20 - (math.sin(math.radians(90 - rot_angle)) * distance)) * (760/40)
+            player_y = (math.cos(math.radians(rot_angle - 90)) * distance) * (532/16)
 
-    #     List = [player_x, player_y]
-    #     with open("outputtestPlayer.csv", 'a', newline='') as csvfile:
-    #         writer_object = writer(csvfile)
-    #         writer_object.writerow(List)
-    #         csvfile.close()
+        List = [player_x, player_y]
+        with open("outputtestPlayer.csv", 'a', newline='') as csvfile:
+            writer_object = writer(csvfile)
+            writer_object.writerow(List)
+            csvfile.close()
 
     cv2.imshow("Human", frame)
 
