@@ -114,7 +114,7 @@ while(True):
         ds3502.wiper = 75
         distance = 6.4
     elif h <= 140:
-        ds3502.wiper = 89
+        ds3502.wiper = 86
         distance = 13
     
     print("Height in image: ", h)
