@@ -10,13 +10,13 @@ import csv
 csv_file_path = '/home/jg26/Capstone/outputtest.csv'
 csv_file_path_2 = '/home/jg26/Capstone/outputtestPlayer.csv'
 def reset():
-    with open(csv_file_path, 'w') as file:
-        file.truncate(0)
-    print("CSV file ball emptied successfully.")
+    # with open(csv_file_path, 'w') as file:
+    #     file.truncate(0)
+    print("CSV file ball saved successfully.")
 
-    with open(csv_file_path_2, 'w') as file:
-        file.truncate(0)
-    print("CSV file player emptied successfully.")
+    # with open(csv_file_path_2, 'w') as file:
+    #     file.truncate(0)
+    print("CSV file player saved successfully.")
 
 def show_frame(frame):
     frame.tkraise()
