@@ -59,7 +59,7 @@ while(True):
     ret, frame = cap.read()
     height, width, _ = frame.shape
     center = int(width/2)
-    boxes, weights = hog.detectMultiScale(frame,winStride=(8, 8), padding=time.sleep(1.5))
+    boxes, weights = hog.detectMultiScale(frame,winStride=(8, 8), padding=(4, 4),scale=1.05)
 
     if keyboard.is_pressed("1"):
         flag = 1
